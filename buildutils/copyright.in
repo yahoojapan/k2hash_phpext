@@ -1,0 +1,15 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: @K2H_PECL_NAME@
+Upstream-Contact: @DEV_NAME@ <@DEV_EMAIL@>
+Source: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@
+
+Files: *
+Copyright: @DEBLICENSER@
+License: @PKGLICENSE@
+
+Files: debian/*
+Copyright: @DEBLICENSER@
+License: @PKGLICENSE@
+
+License: @PKGLICENSE@
+@DEBCOPYING@

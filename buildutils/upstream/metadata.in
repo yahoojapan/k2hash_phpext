@@ -1,0 +1,7 @@
+Bug-Database: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/issues
+Bug-Submit: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/issues/new
+Changelog: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/blob/master/ChangeLog
+Documentation: @HOME_PAGE@
+Other-References: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/wiki
+Repository-Browse: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@
+Repository: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@.git

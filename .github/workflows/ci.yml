@@ -1,0 +1,214 @@
+#
+# Utility tools for building configure/packages by AntPickax
+#
+# Copyright 2022 Yahoo Japan Corporation.
+#
+# AntPickax provides utility tools for supporting autotools
+# builds.
+#
+# These tools retrieve the necessary information from the
+# repository and appropriately set the setting values of
+# configure, Makefile, spec,etc file and so on.
+# These tools were recreated to reduce the number of fixes and
+# reduce the workload of developers when there is a change in
+# the project configuration.
+# 
+# For the full copyright and license information, please view
+# the license file that was distributed with this source code.
+#
+# AUTHOR:   Takeshi Nakatani
+# CREATE:   Fri, Feb 24 2022
+# REVISION:
+#
+
+#----------------------------------------------------------
+# Github Actions
+#----------------------------------------------------------
+name: PHP AntPickax CI
+
+#
+# Events
+#
+on:
+  push:
+  pull_request:
+  #
+  # CRON event is fire on every sunday(UTC).
+  #
+  schedule:
+    - cron: '0 15 * * 0'
+
+#
+# Jobs
+#
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    #
+    # build matrix for containers
+    #
+    strategy:
+      #
+      # do not stop jobs automatically if any of the jobs fail
+      #
+      fail-fast: false
+
+      #
+      # matrix for containers
+      #
+      matrix:
+        container:
+          - ubuntu:20.04
+          - ubuntu:18.04
+          - quay.io/centos/centos:stream8
+          - quay.io/centos/centos:centos7
+        php:
+          - PHP74
+          - PHP80
+          - PHP81
+
+    container:
+      image: ${{ matrix.container }}
+
+    env:
+      #
+      # Installation special environment variables for ubuntu(debian).
+      #
+      DEBIAN_FRONTEND:  noninteractive
+
+      #
+      # For PHP Unit test
+      #
+      NO_INTERACTION: 1
+
+    steps:
+      #
+      # Checkout source code
+      #
+      # [NOTE] using checkout@v1 instead of @v2
+      # In the rpm/debian_build.sh script which run "git status", etc command,
+      # but the following error occurs.
+      #     "fatal: not a git repository (or any parent up to mount point /)"
+      # Thus, as a workaround, use @v1.
+      #
+      - name: Checkout sources
+        uses: actions/checkout@v1
+
+      #
+      # install_packages.sh installs the required packages depending on the OS
+      # and PHP. And BUILD_PLATFORM_COMMAND / RUBY_SCL_ENV_FILE environment
+      # variable is set in it.
+      #
+      - name: Install packages
+        run: |
+          /bin/sh -c ".github/workflows/install_packages.sh ${{ matrix.php }} ${{ matrix.container }}"
+
+      #
+      # CppCheck
+      #
+      - name: CppCheck
+        run: |
+          if command -v cppcheck >/dev/null 2>&1; then
+              cppcheck --quiet --error-exitcode=1 --inline-suppr --std=c++03 --xml --enable=warning,style,information --suppress=missingInclude .
+          else
+              echo "CppCheck is not installed, skip checking by CppCheck."
+          fi
+
+      #
+      # ShellCheck
+      #
+      - name: ShellCheck
+        run: |
+          if command -v shellcheck >/dev/null 2>&1; then
+              LC_ALL=C.UTF-8 shellcheck --shell=sh $(grep '#![[:space:]]*/bin/sh' $(find . -type f -name \*.sh) | sed -e 's|^\(.*\):#\!.*$|\1|g')
+          else
+              echo "ShellCheck is not installed, skip checking by ShellCheck."
+          fi
+
+      #
+      # Phpize
+      #
+      - name: Run phpize
+        run: |
+          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} phpize"
+
+      #
+      # Configure
+      #
+      - name: Run configure
+        run: |
+          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./configure"
+
+      #
+      # Build
+      #
+      - name: Build
+        run: |
+          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} make"
+
+      #
+      # Test
+      #
+      - name: Test
+        run: |
+          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} make test"
+
+      #
+      # Packaging
+      #
+      - name: Create packages
+        run: |
+          if [ "${{ env.PACKAGE_TYPE_RPM }}" -eq 1 ]; then
+              /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/rpm_build.sh -y"
+          else
+              if [ "${{ matrix.php }}" = "PHP81" ]; then
+                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/debian_build.sh -y -ccp"
+              else
+                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/debian_build.sh -y"
+              fi
+          fi
+
+      #
+      # Publish packages
+      #
+      # [NOTE]
+      # The following two environment variables are set in install_packages.sh.
+      #    DIST_TAG                   : distribution tag (ex. "ubuntu/focal")
+      #    PKG_EXT                    : package file extension (ex. "deb")
+      #
+      # The following environment variables are the repository information for packagecloud.io.
+      # If not set, the default value will be used.
+      #    PACKAGECLOUD_OWNER         : owner name as a pat of path to packagcloud.io (default. "antpickax")
+      #    PACKAGECLOUD_PUBLISH_REPO  : repo name as a pat of path to packagcloud.io (default. "current")
+      # 
+      # The following environment variables are tokens for uploading packages to packagecloud.io.
+      # Be sure to set it to Secret on Github.
+      #    PACKAGECLOUD_TOKEN         : The token for publishing to packagcloud.io
+      # 
+      # If you want to "forcibly" publish the package, set "true" in the following environment variables.
+      #    FORCE_PUBLISH              : true means force to publish packages
+      #
+      # The RUBY_SCL_ENV_FILE environment variable, if any, is used internally in publish_packages.sh.
+      #
+      - name: Publish packages
+        env:
+          TMP_CI_PACKAGECLOUD_OWNER:        ${{ secrets.PACKAGECLOUD_OWNER }}
+          TMP_CI_PACKAGECLOUD_PUBLISH_REPO: ${{ secrets.PACKAGECLOUD_PUBLISH_REPO }}
+          TMP_CI_PACKAGECLOUD_TOKEN:        ${{ secrets.PACKAGECLOUD_TOKEN }}
+          TMP_CI_FORCE_PUBLISH:             ${{ secrets.FORCE_PUBLISH }}
+        run: |
+          if [ -n "${TMP_CI_PACKAGECLOUD_OWNER}" ]; then         OPT_CI_PACKAGECLOUD_OWNER="-pcowner ${TMP_CI_PACKAGECLOUD_OWNER}";               else OPT_CI_PACKAGECLOUD_OWNER="-pcowner antpickax";      fi
+          if [ -n "${TMP_CI_PACKAGECLOUD_PUBLISH_REPO}" ]; then  OPT_CI_PACKAGECLOUD_PUBLISH_REPO="-pcprepo ${TMP_CI_PACKAGECLOUD_PUBLISH_REPO}"; else OPT_CI_PACKAGECLOUD_PUBLISH_REPO="-pcprepo current"; fi
+          if [ -n "${TMP_CI_PACKAGECLOUD_TOKEN}" ]; then         OPT_CI_PACKAGECLOUD_TOKEN="-pctoken ${TMP_CI_PACKAGECLOUD_TOKEN}";               fi
+          if [ "X${TMP_CI_FORCE_PUBLISH}" = "Xtrue" ]; then      OPT_CI_FORCE_PUBLISH="-f";                                                       fi
+          /bin/sh -c ".github/workflows/publish_packages.sh -disttag ${DIST_TAG} -pkgext ${PKG_EXT} ${OPT_CI_PACKAGECLOUD_OWNER} ${OPT_CI_PACKAGECLOUD_PUBLISH_REPO} ${OPT_CI_PACKAGECLOUD_TOKEN} ${OPT_CI_FORCE_PUBLISH}"
+
+#
+# Local variables:
+# tab-width: 4
+# c-basic-offset: 4
+# End:
+# vim600: expandtab sw=4 ts=4 fdm=marker
+# vim<600: expandtab sw=4 ts=4
+#

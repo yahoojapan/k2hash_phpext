@@ -1,0 +1,62 @@
+Source: @K2H_EXT_PKGNAME@
+Section: php
+Priority: optional
+Maintainer: @DEV_NAME@ <@DEV_EMAIL@>
+Uploaders:  @DEV_NAME@ <@DEV_EMAIL@>
+Build-Depends: debhelper (>= 10~), debhelper-compat (= 11), dh-php (>= 4~),
+               k2hash-dev, php-all-dev
+Standards-Version: 4.5.1
+Homepage: @HOME_PAGE@
+Vcs-Git: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@.git
+Vcs-Browser: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@
+
+Package: @K2H_EXT_PKGNAME@
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
+Provides: ${pecl:Provides}, ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Recommends: ${pecl:Recommends}
+Description: k2hash extension for PHP
+ This extension adds API for k2hash for PHP.
+
+Package: php7.4-@K2H_PECL_NAME@
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
+Provides: ${pecl:Provides}, ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Recommends: ${pecl:Recommends}
+Description: k2hash extension for PHP7.4
+ This extension adds API for k2hash for PHP7.4.
+ This package is a metapackage of @K2H_EXT_PKGNAME@.
+
+Package: php8.0-@K2H_PECL_NAME@
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
+Provides: ${pecl:Provides}, ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Recommends: ${pecl:Recommends}
+Description: k2hash extension for PHP8.0
+ This extension adds API for k2hash for PHP8.0.
+ This package is a metapackage of @K2H_EXT_PKGNAME@.
+
+Package: php8.1-@K2H_PECL_NAME@
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
+Provides: ${pecl:Provides}, ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Recommends: ${pecl:Recommends}
+Description: k2hash extension for PHP8.1
+ This extension adds API for k2hash for PHP8.1.
+ This package is a metapackage of @K2H_EXT_PKGNAME@.
