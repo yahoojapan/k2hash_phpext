@@ -17,9 +17,11 @@ next_string: k2hpx_put_archive
 ライブラリのバージョンなどを表示する
 
 ## 説明
+
 ```
 bool k2hpx_print_version ([ mixed $output ] )
 ```
+
 k2hashライブラリのバージョンおよびクレジットを表示します。
 
 ## パラメータ

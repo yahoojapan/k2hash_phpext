@@ -17,9 +17,11 @@ next_string: K2hQueue::count
 新しいK2hQueueオブジェクトを作成する
 
 ## 説明
+
 ```
 public K2hQueue::__construct ( mixed $handle_res [, bool $is_fifo [, string $prefix ]] )
 ```
+
 新しい[K2hQueue](k2hq_classja.html)オブジェクトを作成します。 
 
 ## パラメータ
@@ -32,6 +34,7 @@ FIFO(先入先出し)キューならtrue、そうでなければ、false
 
 ## 例
 - 例 1 - キューからデータを取り出す
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -45,13 +48,16 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 int(0)
 int(1)
 string(15) "test_queue_data"
 int(0)
 ```
+
 
 ## 参考
 - [K2hash::getQueue](k2h_getqueueja.html) - K2hQueueオブジェクトを取得する

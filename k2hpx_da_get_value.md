@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_write_offset
 Reads value using the offset
 
 ## Description
+
 ```
 string k2hpx_da_get_value ( mixed $dahandle_res [, int $offset ] )
 ```
+
 Reads value using the offset. 
 
 ### Note
@@ -36,6 +38,7 @@ Returns the data to be read.
 
 ## Examples
 - Example 1 - Reads value using the offset
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,10 +49,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 string(3) "lue"
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

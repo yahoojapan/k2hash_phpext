@@ -17,9 +17,11 @@ next_string: K2hash::addAttrCryptPass
 キーに属性を追加する
 
 ## 説明
+
 ```
 public bool K2hash::addAttr ( string $key , string $attrkey , string $attrval )
 ```
+
 キーに属性を追加します。属性とは、該当キーに対する設定（更新時刻保持の有無、暗号化の有無、履歴情報保持の有無など）です。 
 
 ## パラメータ
@@ -35,6 +37,7 @@ public bool K2hash::addAttr ( string $key , string $attrkey , string $attrval )
 
 ## 例
 - 例 1 - 属性を追加し、取得する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -46,10 +49,13 @@ var_dump($k2hash->getAttrValue("test", "testattr"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(13) "testattrvalue"
 ```
+
 
 ## 参考
 - [K2hash::addAttrCryptPass](k2h_addattrcryptpassja.html) - 値を暗号化するパスワード（暗号鍵）を追加する

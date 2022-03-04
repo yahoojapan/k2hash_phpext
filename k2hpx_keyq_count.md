@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_dump
 Counts elements in the K2hKeyQueue object
 
 ## Description
+
 ```
 int k2hpx_keyq_count ( mixed $keyqhandle_res )
 ```
+
 Counts elements in the [K2hKeyQueue](k2hkq_class.html) object. 
 
 ## Parameters

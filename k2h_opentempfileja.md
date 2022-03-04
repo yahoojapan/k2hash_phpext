@@ -17,9 +17,11 @@ next_string: K2hash::printState
 一時ファイルとしてk2hashファイルを編集する
 
 ## 説明
+
 ```
  public bool K2hash::openTempfile ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 一時ファイルとして、k2hashファイルを開きます。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_count
 キーの値を取得する
 
 ## 説明
+
 ```
 string k2hpx_get_value ( mixed $handle_res , string $key [, stringnull $subkey [, bool $attrcheck [, stringnull $pass ]]] )
 ```
+
 キーの値を取得します。キーと紐づけられたキー（サブキー）が指定された場合は、サブキーの値を取得します。 
 
 ## パラメータ

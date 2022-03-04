@@ -17,9 +17,11 @@ next_string: k2hpx_open_tempfile
 Opens the k2hash file with read and write access
 
 ## Description
+
 ```
 mixed k2hpx_open_rw ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 Opens the the k2hash (`.k2h`) file with read and write access. 
 
 ## Parameters

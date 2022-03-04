@@ -17,9 +17,11 @@ next_string: K2hIterator::valid
 Rewinds the internal array pointer of k2hash keys
 
 ## Description
+
 ```
  public void K2hIterator::rewind ( void )
 ```
+
 Rewinds the internal array pointer of k2hash keys. 
 
 ## Parameters
@@ -30,6 +32,7 @@ No value is returned.
 
 ## Examples
 - Example 1 - Rewinds the internal array pointer of k2hash keys
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -42,10 +45,13 @@ var_dump($k2hiter->key());
 unset($k2hiter);
 ?>
 ```
+
 The above example will output:
+
 ```
 string(5) "test1"
 ```
+
 
 ## See Also
 - [K2hIterator::current](k2hiter_current.html) - Gets value of the current K2hIterator item

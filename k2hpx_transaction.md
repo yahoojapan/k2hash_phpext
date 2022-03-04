@@ -17,9 +17,11 @@ next_string: k2hpx_unload_hash_library
 Changes transaction settings
 
 ## Description
+
 ```
 bool k2hpx_transaction ( mixed $handle_res , bool $enable [, stringnull $transfile [, stringnull $prefix [, stringnull $param [, int $expire ]]]] )
 ```
+
 Changes transaction settings. 
 
 ## Parameters
@@ -41,4 +43,3 @@ Returns true on success or false on failure..
 
 ## See Also
 - [K2hash::transaction](k2h_transaction.html) - Changes transaction settings
-s

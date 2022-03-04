@@ -18,6 +18,7 @@ K2hQueue represents a queue that holds values by using [K2HASH](https://k2hash.a
 Elements in K2hQueue are ordered in FIFO of LIFO manner. 
 
 ## Class overview
+
 ```
 K2hQueue {
     public intfalsecount ( void )
@@ -29,6 +30,7 @@ K2hQueue {
     public remove ( int $count [, string $pass ] ) : bool
 }
 ```
+
 
 ## Method list
 

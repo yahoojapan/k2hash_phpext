@@ -17,9 +17,11 @@ next_string: k2hpx_bump_debug_level
 Adds the subkeys to the key
 
 ## Description
+
 ```
 bool k2hpx_add_subkeys ( mixed $handle_res , string $key , array $subkeys )
 ```
+
 Associates the keys with the other key. The key that is added to the other key is called 'subkey'. The key that adds the other key to is 'parent key'. A parent key can associates many subkeys.
 
 ## Parameters

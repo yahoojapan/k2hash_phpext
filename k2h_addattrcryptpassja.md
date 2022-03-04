@@ -17,9 +17,11 @@ next_string: K2hash::addAttrPluginLib
 値を暗号化するパスワード（暗号鍵）を追加する
 
 ## 説明
+
 ```
 public bool K2hash::addAttrCryptPass ( string $encpass [, bool $is_default_encrypt ] )
 ```
+
 値を暗号化するパスワードを追加します。パスワードは、AES256共通鍵として使われます。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ public bool K2hash::addAttrCryptPass ( string $encpass [, bool $is_default_encry
 
 ## 例
 - 例 1 - 暗号化パスワードを追加する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -41,10 +44,13 @@ var_dump($k2hash->addAttrCryptPass("testkey", true));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

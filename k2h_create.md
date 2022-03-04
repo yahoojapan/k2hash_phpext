@@ -17,9 +17,11 @@ next_string: K2hash::disableTransaction
 Creates the k2hash file
 
 ## Description
+
 ```
  public static bool K2hash::create ( string $filepath [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 Creates the k2hash (.k2h) file.
 
 ## Parameters
@@ -39,12 +41,16 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Creates a k2hash file
+
 ```
 <?php
 var_dump(K2hash::create("/tmp/test_k2hash.k2h"));
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+

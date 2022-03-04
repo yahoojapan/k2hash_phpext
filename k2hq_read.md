@@ -17,9 +17,11 @@ next_string: K2hQueue::remove
 Returns a key/value pair from the K2hQueue
 
 ## Description
+
 ```
 public stringfalseK2hQueue::read ([ int $pos [, string $pass ]] )
 ```
+
 Returns a value from the [K2hQueue](k2hq_class.html). This operation will not remove the value from the [K2hQueue](k2hq_class.html). 
 
 ### Note
@@ -36,6 +38,7 @@ Returns a value.
 
 ## Examples
 - Example 1 - Gets a value from a [K2hQueue](k2hq_class.html) instnace
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,10 +49,13 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 string(16) "test_queue_value"
 ```
+
 
 ## See Also
 - [K2hQueue::pop](k2hq_pop.html) - Removes and returns the removed element from the K2hQueue

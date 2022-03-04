@@ -17,9 +17,11 @@ next_string: K2hash::create
 Closes the k2hash file
 
 ## Description
+
 ```
  public bool K2hash::close ([ int $waitms ] )
 ```
+
 Closes the k2hash (.k2h) file handle internally opened by K2hash::open and saves the data. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Closes a k2hash file
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -38,10 +41,13 @@ $k2hash->openMem();
 var_dump($k2hash->close());
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::open](k2h_open.html) - Opens the k2h file

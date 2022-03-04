@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_write_offset
 データを読み取る
 
 ## 説明
+
 ```
 string k2hpx_da_get_value ( mixed $dahandle_res [, int $offset ] )
 ```
+
 データを読み取ります。 
 
 ### ヒント
@@ -36,6 +38,7 @@ k2hash ダイレクトアクセスハンドル（[k2hpx_da_get_handle](k2hpx_da_
 
 ## 例
 - 例 1 - データを読みとる
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,10 +49,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(3) "lue"
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

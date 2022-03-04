@@ -17,9 +17,11 @@ next_string: K2hash::unsetTransactionThreadPool
 Changes transaction settings
 
 ## Description
+
 ```
  public bool K2hash::transaction ( bool $enable [, string $transfile [, string $prefix [, string $param [, int $expire ]]]] )
 ```
+
 Changes transaction settings. 
 
 ## Parameters
@@ -39,6 +41,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Starts transaction
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -47,10 +50,13 @@ var_dump($k2hash->transaction(true, "/tmp/test_k2h_trans", "trans_prefix_", "myp
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::disableTransaction](k2h_disabletransaction.html) - Stops a transaction

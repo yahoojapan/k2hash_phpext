@@ -17,9 +17,11 @@ next_string: k2hpx_add_attr
 Adds the user-defined library to handle attributes
 
 ## Description
+
 ```
 bool k2hpx_add_attr_plugin_library ( mixed $handle_res , string $libfile )
 ```
+
 Adds the user-defined library to handle attributes. k2hash supports for adding user-defined attributes to keys by using this method. 
 
 ## Parameters

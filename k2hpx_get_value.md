@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_count
 Gets the value of the key
 
 ## Description
+
 ```
 string k2hpx_get_value ( mixed $handle_res , string $key [, stringnull $subkey [, bool $attrcheck [, stringnull $pass ]]] )
 ```
+
 Gets the value of the key. Gets the keys linked with the key if the key is passed. 
 
 ## Parameters

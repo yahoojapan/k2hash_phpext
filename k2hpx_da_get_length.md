@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_offset
 Gets the data length
 
 ## Description
+
 ```
 int k2hpx_da_get_length ( mixed $dahandle_res )
 ```
+
 Gets the data length. 
 
 ### Note
@@ -34,6 +36,7 @@ Returns the data length.
 
 ## Examples
 - Example 1 - Gets the data length
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,10 +47,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 int(6)
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

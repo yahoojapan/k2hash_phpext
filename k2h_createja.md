@@ -17,9 +17,11 @@ next_string: K2hash::disableTransaction
 k2hashファイルを作成する
 
 ## 説明
+
 ```
  public static bool K2hash::create ( string $filepath [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 k2hashファイルを作成します。 
 
 ## パラメータ
@@ -39,12 +41,16 @@ CMASKビットカウント数。この値は、キーが衝突した際に、デ
 
 ## 例
 - 例 1 - k2hashファイルを作る
+
 ```
 <?php
 var_dump(K2hash::create("/tmp/test_k2hash.k2h"));
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+

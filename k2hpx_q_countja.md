@@ -17,9 +17,11 @@ next_string: k2hpx_q_dump
 K2hQueueキューにある要素の数を取得する
 
 ## 説明
+
 ```
 int k2hpx_q_count ( mixed $qhandle_res )
 ```
+
 [K2hQueue](k2hq_classja.html)キューにある要素の数を取得します。 
 
 ## パラメータ

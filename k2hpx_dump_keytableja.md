@@ -17,9 +17,11 @@ next_string: k2hpx_enable_transaction
 k2hashのハッシュテーブルを表示する
 
 ## 説明
+
 ```
 bool k2hpx_dump_keytable ( mixed $handle_res [, mixed $output ] )
 ```
+
 k2hashのハッシュテーブルなどを表示します。k2hashのヘッダ、ハッシュテーブルなども含まれます。 
 
 ## パラメータ

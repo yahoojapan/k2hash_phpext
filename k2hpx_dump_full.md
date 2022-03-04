@@ -17,9 +17,11 @@ next_string: k2hpx_dump_head
 Prints the k2hash's hash tables in details
 
 ## Description
+
 ```
 bool k2hpx_dump_full ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints the k2hash's hash tables in details including headers, hash tables and sub-hash tables. 
 
 ## Parameters

@@ -17,9 +17,11 @@ next_string: k2hpx_set_transaction_thread_pool
 ライブラリのログレベルをwarningにする
 
 ## 説明
+
 ```
 void k2hpx_set_debug_level_warning ( void )
 ```
+
 ライブラリのログレベルをwarningにします。
 
 ## パラメータ
@@ -30,16 +32,20 @@ void k2hpx_set_debug_level_warning ( void )
 
 ## 例
 - 例 1 - ライブラリのログレベルをwarningにする
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 k2hpx_set_debug_level_warning();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 NULL
 ```
+
 
 ## 参考
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_levelja.html) - ログレベルを変更する

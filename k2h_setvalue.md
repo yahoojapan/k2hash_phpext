@@ -17,9 +17,11 @@ next_string: K2hash::transaction
 Sets the value associated with the key
 
 ## Description
+
 ```
  public bool K2hash::setValue ( string $key , string $value [, string $subkey [, string $pass [, int $expire ]]] )
 ```
+
 Sets the value associated with the key. 
 
 ## Parameters
@@ -39,6 +41,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets a value to a key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -48,10 +51,13 @@ var_dump($k2hash->getValue("key1"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 string(6) "value1"
 ```
+
 
 ## See Also
 - [K2hash::getValue](k2h_getvalue.html) - Gets the value associated with the key

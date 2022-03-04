@@ -28,6 +28,7 @@ K2HASH PHP Extension のパッケージは、[AntPickax packagecloud.io](https:/
 
 
 DebianベースのLinuxユーザは、下の手順でインストールできます。
+
 ```
 $ sudo apt-get update -y
 
@@ -40,7 +41,9 @@ $ sudo update-alternatives --set php /usr/bin/php8.1
 $ sudo apt-get install -y k2hash php-pecl-k2hash
 ```
 
+
 Fedora派生のRPMベースのLinux(Fedora, CentOS, CentOS Stream, RHELなど)ユーザは、下の手順でインストールできます。
+
 
 ```
 $ sudo dnf update -y
@@ -54,8 +57,10 @@ $ sudo dnf module install php:remi-8.1
 $ sudo dnf install -y php-pecl-k2hash
 ```
 
+
 ## 2. 実行テスト
 以下のようなファイルを作成し、ファイル作成、キーと値の書き込み、読み出しができるか確認してみてください。  
+
 ```
 <?php
     $handle = k2hpx_open_mem();
@@ -73,6 +78,7 @@ $ sudo dnf install -y php-pecl-k2hash
 ?>
 ```
 
+
 ## 3. ロード・実行
 [PHP](https://www.php.net/) の説明に従って、K2HASH PHP Extensionをロードして使ってください。  
 パッケージでK2HASH PHP Extensionをインストールした場合、`k2hash.ini` が含まれており、すぐに利用できます。  
@@ -82,6 +88,7 @@ $ sudo dnf install -y php-pecl-k2hash
 一つ目の例では、値を持ったキーを保存し、それを取得しています。 二つ目の例では、子供のキーを持ったキーを保存し、それを取得しています。  
 
 ### 例 1 - K2hashサンプルコード
+
 ```
 <?php
     // k2hpx_set_debug_level_message();
@@ -97,12 +104,16 @@ $ sudo dnf install -y php-pecl-k2hash
 
 ?>
 ```
+
 上の例の出力は、 たとえば以下のようになります。
+
 ```
 string(5) "value"
 ```
 
+
 ### 例 2 - K2hashサンプルコード
+
 ```
 <?php
     // set subkeys & get subkeys
@@ -117,7 +128,9 @@ string(5) "value"
     k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は、 たとえば以下のようになります。
+
 ```
 array(3) {
   [0]=>
@@ -128,3 +141,4 @@ array(3) {
   string(7) "subkey3"
 }
 ```
+

@@ -17,9 +17,11 @@ next_string: K2hash::addSubkeys
 Associates the key with the other key
 
 ## Description
+
 ```
 public bool K2hash::addSubkey ( string $key , string $subkey )
 ```
+
 Associates the key with the other key. The key that is added to the other key is called 'subkey'. The key that adds the other key to is 'parent key'. A parent key can associates many subkeys.
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Adds the subkey to the key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,13 +45,16 @@ var_dump($k2hash->getSubkeys("test"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 array(1) {
   [0]=>
   string(3) "sub"
 }
 ```
+
 
 ## See Also
 - [K2hash::addSubkeys](k2h_addsubkeys.html) - Adds the subkeys to the key

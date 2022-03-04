@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_level_error
 ログ出力先ファイル名を指定する
 
 ## 説明
+
 ```
 bool k2hpx_set_debug_file ( string $filepath )
 ```
+
 ログ出力先ファイル名を指定します。 
 
 ## パラメータ
@@ -31,15 +33,19 @@ bool k2hpx_set_debug_file ( string $filepath )
 
 ## 例
 - 例 1 - ログファイル名を指定する
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 NULL
 ```
+
 
 ## 参考
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_levelja.html) - ログレベルを変更する

@@ -17,9 +17,11 @@ next_string: K2hash::removeAll
 Removes the key
 
 ## Description
+
 ```
  public bool K2hash::remove ( string $key [, string $subkey ] )
 ```
+
 Removes the key. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Removes the key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -46,13 +49,17 @@ var_dump($k2hash->getValue("test1"));
 var_dump($k2hash->getValue("sub1"));
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(false)
 string(9) "sub-value"
 ```
 
+
 - Example 2 - Remove the keys linked with a key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -65,11 +72,14 @@ var_dump($k2hash->getValue("test1"));
 var_dump($k2hash->getValue("sub1"));
 ?>
 ```
+
 The above example will output:
+
 ```
 string(5) "value"
 bool(false)
 ```
+
 
 ## See Also
 - [K2hash::removeAll](k2h_removeall.html) - Removes the key and the keys associated with the key

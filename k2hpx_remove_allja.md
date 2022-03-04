@@ -17,9 +17,11 @@ next_string: k2hpx_remove
 キーと、キーに紐づけられているキー（サブキー）を削除する
 
 ## 説明
+
 ```
 bool k2hpx_remove_all ( mixed $handle_res , string $key )
 ```
+
 キーと、キーに紐づけられているキー（サブキー）を削除します。 
 
 ## パラメータ

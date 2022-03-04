@@ -17,9 +17,11 @@ next_string: K2hash::setValue
 トランザクション処理用のスレッド数を設定する
 
 ## 説明
+
 ```
  public static bool K2hash::setTransactionThreadPool ( int $count )
 ```
+
 トランザクション処理用のスレッド数を設定します。 
 
 ## パラメータ
@@ -31,17 +33,21 @@ next_string: K2hash::setValue
 
 ## 例
 - 例 1 - トランザクション処理用のスレッド数を設定する
+
 ```
 <?php
 var_dump(K2hash::settransactionThreadPool(1));
 var_dump(K2hash::gettransactionThreadPool());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 int(1)
 ```
+
 
 ## 参考
 - [K2hash::getTransactionThreadPool](k2h_gettransactionthreadpoolja.html) - トランザクション処理用のスレッド数を取得する

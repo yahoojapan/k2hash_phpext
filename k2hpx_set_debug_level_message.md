@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_level_silent
 Sets log level to info
 
 ## Description
+
 ```
 void k2hpx_set_debug_level_message ( void )
 ```
+
 Sets log level to 'message' (info) level. 
 
 ## Parameters
@@ -30,16 +32,20 @@ No value is returned.
 
 ## Examples
 - Example 1 - Set log level to info
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 k2hpx_set_debug_level_message();
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_level.html) - Changes the log level

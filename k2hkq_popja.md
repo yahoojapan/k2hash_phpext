@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::push
 キューから要素（キーと値のセット）を取得する
 
 ## 説明
+
 ```
 public arrayfalseK2hKeyQueue::pop ([ string $pass ] )
 ```
+
 キューから要素（キーと値のセット）を取得します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ public arrayfalseK2hKeyQueue::pop ([ string $pass ] )
 
 ## 例
 - 例 1 - キューから要素を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -41,7 +44,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 array(2) {
   [0]=>
@@ -50,6 +55,7 @@ array(2) {
   string(16) "test_queue_value"
 }
 ```
+
 
 ## 参考
 - [K2hKeyQueue::push](k2hkq_pushja.html) - キューに要素（キーと値のセット）を追加する

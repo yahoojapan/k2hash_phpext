@@ -17,9 +17,11 @@ next_string: k2hpx_add_attr_plugin_library
 Adds the password to encrypt values
 
 ## Description
+
 ```
  bool k2hpx_add_attr_crypt_pass ( mixed $handle_res , string $encpass [, bool $is_default_encrypt ] )
 ```
+
 Adds the password to encrypt values. The encrption algorithm is AES256. 
 
 ## Parameters

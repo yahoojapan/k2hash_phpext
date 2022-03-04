@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_push
 K2hKeyQueueキューから要素（キーと値のセット）を取得する
 
 ## 説明
+
 ```
 array k2hpx_keyq_pop ( mixed $keyqhandle_res [, stringnull $pass ] )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html) キューから要素（キーと値のセット）を取得します。 
 
 ## パラメータ

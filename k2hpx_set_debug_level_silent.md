@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_level_warning
 Sets log level to silent
 
 ## Description
+
 ```
 void k2hpx_set_debug_level_silent ( void )
 ```
+
 Sets log level to silent.
 
 ## Parameters
@@ -30,16 +32,20 @@ No value is returned.
 
 ## Examples
 - Example 1 - Sets log level to silent
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 k2hpx_set_debug_level_silent();
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_level.html) - Changes the log level

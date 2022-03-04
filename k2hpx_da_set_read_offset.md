@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_value_from_file
 Sets the offset to read the data
 
 ## Description
+
 ```
 int k2hpx_da_set_read_offset ( mixed $dahandle_res , int $offset )
 ```
+
 Sets the offset to read the data. 
 
 ### Note
@@ -36,6 +38,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets the offset to read the data
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -48,7 +51,9 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 array(2) {
   [0]=>
@@ -64,6 +69,7 @@ array(2) {
   int(0)
 }
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

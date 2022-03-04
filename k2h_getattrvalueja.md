@@ -17,9 +17,11 @@ next_string: K2hash::getAttrVersionInfos
 キーに設定されている属性値を取得する
 
 ## 説明
+
 ```
 public stringfalseK2hash::getAttrValue ( string $key , string $attrkey )
 ```
+
 キーに設定されている属性値を取得します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ public stringfalseK2hash::getAttrValue ( string $key , string $attrkey )
 
 ## 例
 - 例 1 - 属性を追加し、取得する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -44,10 +47,13 @@ var_dump($k2hash->getAttrValue("test", "testattr"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(13) "testattrvalue"
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

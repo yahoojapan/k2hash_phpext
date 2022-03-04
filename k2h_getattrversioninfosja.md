@@ -17,9 +17,11 @@ next_string: K2hash::getIterator
 属性のライブラリバージョン情報を表示する
 
 ## 説明
+
 ```
  public bool K2hash::getAttrVersionInfos ([ mixed $output ] )
 ```
+
 属性のライブラリバージョン情報を表示します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ next_string: K2hash::getIterator
 
 ## 例
 - 例 1 -  属性のライブラリバージョン情報を表示する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -51,10 +54,13 @@ if ($fp) {
 }
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 K2HASH attribute libraries:  K2H ATTR BUILTIN
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

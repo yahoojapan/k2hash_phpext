@@ -17,9 +17,11 @@ next_string: k2hpx_load_debug_env
 ファイルからデータをロードする
 
 ## 説明
+
 ```
 bool k2hpx_load_archive ( mixed $handle_res , string $filepath [, bool $errskip ] )
 ```
+
 トランザクションファイルまたはアーカイブファイルからデータをロードします。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::read
 キューに要素（キーと値のセット）を追加する
 
 ## 説明
+
 ```
  public bool K2hKeyQueue::push ( string $key , string $value [, string $pass [, int $expire ]] )
 ```
+
 キューに要素（キーと値のセット）を追加します。 
 
 ## パラメータ
@@ -37,6 +39,7 @@ next_string: K2hKeyQueue::read
 
 ## 例
 - 例 1 - キューから要素を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -47,7 +50,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 array(2) {
@@ -57,6 +62,7 @@ array(2) {
   string(16) "test_queue_value"
 }
 ```
+
 
 ## 参考
 - [K2hKeyQueue::pop](k2hkq_popja.html) - キューから要素（キーと値のセット）を取得する

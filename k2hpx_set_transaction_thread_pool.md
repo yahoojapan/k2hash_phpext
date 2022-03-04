@@ -17,9 +17,11 @@ next_string: k2hpx_set_value
 Sets the number of transaction workers
 
 ## Description
+
 ```
 bool k2hpx_set_transaction_thread_pool ( int $count )
 ```
+
 Sets the number of transaction workers. 
 
 ## Parameters

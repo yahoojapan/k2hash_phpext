@@ -17,9 +17,11 @@ next_string: K2hash::loadArchive
 Gets the value associated with the key
 
 ## Description
+
 ```
 public stringfalseK2hash::getValue ( string $key [, string $subkey [, bool $attrcheck [, string $pass ]]] )
 ```
+
 Gets the value associated with the key. Gets the keys linked with the key if the key is passed. 
 
 ## Parameters
@@ -37,6 +39,7 @@ Returns the value of the key or the subkey, otherwise false.
 
 ## Examples
 - Example 1 - Get value associated with a key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -46,10 +49,13 @@ var_dump($k2hash->getValue("key1"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 string(6) "value1"
 ```
+
 
 ## See Also
 - [K2hash::setValue](k2h_setvalue.html) - Sets the value associated with the key

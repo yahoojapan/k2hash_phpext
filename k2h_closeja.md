@@ -17,9 +17,11 @@ next_string: K2hash::create
 k2hashファイルを閉じる
 
 ## 説明
+
 ```
  public bool K2hash::close ([ int $waitms ] )
 ```
+
 オープンされているk2hファイルを閉じて、変更内容を保存します。
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hファイルを閉じるまでの待ち時間（単位は1/1000秒）
 
 ## 例
 - 例 1 - k2hashファイルを閉じる
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -38,10 +41,13 @@ $k2hash->openMem();
 var_dump($k2hash->close());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::open](k2h_openja.html) - k2hファイルを開く

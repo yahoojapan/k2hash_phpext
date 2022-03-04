@@ -17,9 +17,11 @@ next_string: K2hash::rename
 Removes the key and the keys associated with the key
 
 ## Description
+
 ```
  public bool K2hash::removeAll ( string $key )
 ```
+
 Removes the key and the keys associated with the key. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Remove the key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -44,11 +47,14 @@ var_dump($k2hash->getValue("test1"));
 var_dump($k2hash->getValue("sub1"));
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(false)
 bool(false)
 ```
+
 
 ## See Also
 - [K2hash::remove](k2h_remove.html) - Removes the key

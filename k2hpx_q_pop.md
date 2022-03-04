@@ -17,9 +17,11 @@ next_string: k2hpx_q_push
 Removes and returns the removed element from the K2hQueue
 
 ## Description
+
 ```
 string 2hpx_q_pop ( mixed $qhandle_res [, stringnull $pass ] )
 ```
+
 Removes and gets the removed element from the [K2hQueue](k2hq_class.html). 
 
 ## Parameters

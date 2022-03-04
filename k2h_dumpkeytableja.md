@@ -17,9 +17,11 @@ next_string: K2hash::enableTransaction
 k2hashのハッシュテーブルを表示する
 
 ## 説明
+
 ```
  public bool K2hash::dumpKeytable ([ mixed $output ] )
 ```
+
 k2hashのハッシュテーブルなどを表示します。k2hashのヘッダ、ハッシュテーブルなども含まれます。
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hashのハッシュテーブルなどを表示します。k2hashのヘッダ�
 
 ## 例
 - 例 1 - ハッシュテーブルなどを出力する
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 ...
     Key Index Pointer[29] = Not Allocated
@@ -60,6 +65,7 @@ if ($fp) {
     Key Index Pointer[31] = Not Allocated
   }
 ```
+
 
 ## 参考
 - [K2hash::dumpElementtable](k2h_dumpelementtableja.html) - k2hashのハッシュテーブル内部の要素などを表示する

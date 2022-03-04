@@ -17,9 +17,11 @@ next_string: k2hpx_bump_debug_level
 複数のキーを紐づける
 
 ## 説明
+
 ``` 
 k2hpx_add_subkeys ( mixed $handle_res , string $key , array $subkeys ) : bool
 ```
+
 キーに複数のキーを紐付けます。紐づけるキーは、紐づけられるキーの「サブキー」と呼びます。 
 
 ## パラメータ

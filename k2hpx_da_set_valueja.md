@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_write_offset
 データを書きこむ位置を指定し、書き込む
 
 ## 説明
+
 ```
 bool k2hpx_da_set_value ( mixed $dahandle_res , string $value [, int $offset ] )
 ```
+
 データを書きこむ位置を指定し、書き込みます。 
 
 ### ヒント
@@ -38,6 +40,7 @@ k2hash ダイレクトアクセスハンドル（[k2hpx_da_get_handle](k2hpx_da_
 
 ## 例
 - 例 1 - 書き込み位置を指定してデータをセットする
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -49,11 +52,14 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 string(5) "value"
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する

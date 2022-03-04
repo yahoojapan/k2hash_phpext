@@ -17,9 +17,11 @@ next_string: k2hpx_dump_full_keytable
 Prints elements of the k2hash's hash table elements
 
 ## Description
+
 ```
 bool k2hpx_dump_elementtable ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints elements of the k2hash hashtable elements including headers, hash tables and sub-hash tables. 
 
 ## Parameters

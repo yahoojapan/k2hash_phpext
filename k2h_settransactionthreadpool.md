@@ -17,9 +17,11 @@ next_string: K2hash::setValue
 Sets the number of transaction workers
 
 ## Description
+
 ```
  public static bool K2hash::setTransactionThreadPool ( int $count )
 ```
+
 Sets the number of transaction workers.
 
 ## Parameters
@@ -31,17 +33,21 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Specifies the number of transaction workers
+
 ```
 <?php
 var_dump(K2hash::settransactionThreadPool(1));
 var_dump(K2hash::gettransactionThreadPool());
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 int(1)
 ```
+
 
 ## See Also
 - [K2hash::getTransactionThreadPool](k2h_gettransactionthreadpool.html) - Gets the number of transaction workers

@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_length
 Gets the k2hash direct access file handle
 
 ## Description
+
 ```
 mixed k2hpx_da_get_handle ( mixed $handle_res , string $key , int $mode )
 ```
+
 Gets the k2hash direct access file handle with arbitrary mode: 'K2H_DA_READ' (read-only), 'K2H_DA_RW' (read-write) or 'K2H_DA_WRITE' (write).
 
 ### Note
@@ -38,6 +40,7 @@ Returns the k2hash direct access file handle.
 
 ## Examples
 - Example 1 - Gets the k2hash direct access file handle
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -47,10 +50,13 @@ var_dump(k2hpx_da_free($dahandle));
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 resource(5) of type (k2hdahandle)
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

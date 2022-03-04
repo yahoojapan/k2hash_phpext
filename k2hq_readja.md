@@ -17,9 +17,11 @@ next_string: K2hQueue::remove
 キューの要素を表示する
 
 ## 説明
+
 ```
 public stringfalseK2hQueue::read ([ int $pos [, string $pass ]] )
 ```
+
 キューの要素を表示します。 
 
 ### 注意
@@ -36,6 +38,7 @@ public stringfalseK2hQueue::read ([ int $pos [, string $pass ]] )
 
 ## 例
 - 例 1 - キューの要素を表示する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,10 +49,13 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(16) "test_queue_value"
 ```
+
 
 ## 参考
 - [K2hQueue::pop](k2hq_popja.html) - キューから要素を取得する

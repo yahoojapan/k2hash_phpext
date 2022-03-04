@@ -17,9 +17,11 @@ next_string: k2hpx_add_subkeys
 キーを紐づける
 
 ## 説明
+
 ```
 bool k2hpx_add_subkey ( mixed $handle_res , string $key , string $subkey )
 ```
+
 キーに他のキーを紐付けます。紐づけるキーは、紐づけられるキーの「サブキー」と呼びます。 
 
 ## パラメータ

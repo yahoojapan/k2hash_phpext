@@ -17,9 +17,11 @@ next_string: k2hpx_rename
 キーを削除する
 
 ## 説明
+
 ```
 bool k2hpx_remove ( mixed $handle_res , string $key [, stringnull $subkey ] )
 ```
+
 キーを削除します。キーに紐づけられたキーをサブキーと呼びます。サブキーに紐づけられたキーを親キーと呼びます。  
 親キーのみを指定した場合は、サブキーは削除されません。  
 サブキーを指定した場合は、サブキーは削除され、親キーは削除されません。  

@@ -19,6 +19,7 @@ K2hKeyQueueクラスは、[K2HASH](https://k2hash.antpick.ax/indexja.html)を利
 データの取り出し方法は、先入先出し（FIFO）、後入れ先出し（LIFO）を指定できます。  
 
 ## Class 概要
+
 ```
 K2hKeyQueue {
     public count ( void ) : int
@@ -30,6 +31,7 @@ K2hKeyQueue {
     public remove ( int $count [, string $pass ] ) : bool
 }
 ```
+
 
 ## メソッド一覧
 

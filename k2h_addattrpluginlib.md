@@ -17,9 +17,11 @@ next_string: K2hash::addSubkey
 Adds the user-defined library to handle attributes
 
 ## Description
+
 ```
 public bool K2hash::addAttrPluginLib ( string $libfile )
 ```
+
 Adds the user-defined library to handle attributes. k2hash supports for adding user-defined attributes to keys by using this method. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Adds the user-defined library to handle attributes
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -39,10 +42,13 @@ var_dump($k2hash->addAttrPluginLib("/tmp/libk2htestattr.so"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

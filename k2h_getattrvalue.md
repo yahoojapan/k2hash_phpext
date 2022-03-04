@@ -17,9 +17,11 @@ next_string: K2hash::getAttrVersionInfos
 Gets an attribute value of the attribute key of the key
 
 ## Description
+
 ```
 public stringfalseK2hash::getAttrValue ( string $key , string $attrkey )
 ```
+
 Gets an attribute value of the attribute key of the key. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns the value of the attribute of the key, otherwise false.
 
 ## Examples
 - Example 1 - Adds an attribute to a key and get it
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -44,10 +47,13 @@ var_dump($k2hash->getAttrValue("test", "testattr"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 string(13) "testattrvalue"
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

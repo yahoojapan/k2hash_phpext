@@ -17,9 +17,11 @@ next_string: k2hpx_get_transaction_thread_pool
 Gets the array of the keys(subkeys) linked with the key
 
 ## Description
+
 ```
 array k2hpx_get_subkeys ( mixed $handle_res , string $key [, bool $attrcheck ] )
 ```
+
 Gets the array of the keys(subkeys) linked with the key. 
 
 ## Parameters

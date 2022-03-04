@@ -17,9 +17,11 @@ next_string:
 Removes a key/value pair from the K2hKeyQueue
 
 ## Description
+
 ```
  public bool K2hKeyQueue::remove ( int $count [, string $pass ] )
 ```
+
 Removes a key/value pair from the [K2hKeyQueue](k2hkq_class.html). 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Gets an element from a [K2hKeyQueue](k2hkq_class.html) instance 
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,12 +49,15 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 int(2)
 bool(true)
 int(1)
 ```
+
 
 ## See Also
 - [K2hKeyQueue::pop](k2hkq_pop.html) - Removes and returns the removed element from the K2hKeyQueue

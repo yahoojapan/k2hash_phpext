@@ -18,6 +18,7 @@ K2hKeyQueue represents a queue that holds key/value pairs by using [K2HASH](http
 Elements in K2hKeyQueue are ordered in FIFO of LIFO manner.  
 
 ## Class overview
+
 ```
 K2hKeyQueue {
     public count ( void ) : int
@@ -29,6 +30,7 @@ K2hKeyQueue {
     public remove ( int $count [, string $pass ] ) : bool
 }
 ```
+
 
 ## Method list
 

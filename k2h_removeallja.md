@@ -17,9 +17,11 @@ next_string: K2hash::rename
 キーと、キーに紐づけられているキー（サブキー）を削除する
 
 ## 説明
+
 ```
  public bool K2hash::removeAll ( string $key )
 ```
+
 キーと、キーに紐づけられているキー（サブキー）を削除します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ next_string: K2hash::rename
 
 ## 例
 - 例 1 - 親キーを削除する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -44,11 +47,14 @@ var_dump($k2hash->getValue("test1"));
 var_dump($k2hash->getValue("sub1"));
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(false)
 bool(false)
 ```
+
 
 ## 参考
 - [K2hash::remove](k2h_removeja.html) - キーを削除する

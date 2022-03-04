@@ -17,9 +17,11 @@ next_string: K2hash::setCommonAttribute
 Renames the key
 
 ## Description
+
 ```
  public bool K2hash::rename ( string $key , string $newkey )
 ```
+
 Renames the key
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Renames a key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,11 +45,14 @@ var_dump($k2hash->rename("test1", "test2"));
 var_dump($k2hash->getValue("test2"));
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 string(5) "value"
 ```
+
 
 ## See Also
 - [K2hash::getValue](k2h_getvalue.html) - Gets the value associated with the key

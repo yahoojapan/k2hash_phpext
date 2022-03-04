@@ -17,9 +17,11 @@ next_string: K2hash::loadArchive
 値を取得する
 
 ## 説明
+
 ```
 public stringfalseK2hash::getValue ( string $key [, string $subkey [, bool $attrcheck [, string $pass ]]] )
 ```
+
 キーの値を取得します。キーと紐づけられたキー（サブキー）が指定された場合は、サブキーの値を取得します。 
 
 ## パラメータ
@@ -37,6 +39,7 @@ public stringfalseK2hash::getValue ( string $key [, string $subkey [, bool $attr
 
 ## 例
 - 例 1 - 値を取得する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -46,10 +49,13 @@ var_dump($k2hash->getValue("key1"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(6) "value1"
 ```
+
 
 ## 参考
 - [K2hash::setValue](k2h_setvalueja.html) - キーに値を設定する

@@ -17,9 +17,11 @@ next_string: k2hpx_q_free
 Returns whether the K2hQueue is empty
 
 ## Description
+
 ```
 bool k2hpx_q_empty ( mixed $qhandle_res )
 ```
+
 Returns where the [K2hQueue](k2hq_class.html) is empty. 
 
 ## Parameters

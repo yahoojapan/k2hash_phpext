@@ -17,9 +17,11 @@ next_string: K2hash::dumpElementtable
 トランザクションを停止する
 
 ## 説明
+
 ```
  public bool K2hash::disableTransaction ( void )
 ```
+
 トランザクションを停止します。
 
 ## パラメータ
@@ -30,6 +32,7 @@ next_string: K2hash::dumpElementtable
 
 ## 例
 - 例 1 - トランザクションを停止する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -38,10 +41,13 @@ var_dump($k2hash->disableTransaction());
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::enableTransaction](k2h_enabletransactionja.html) - トランザクションを開始する

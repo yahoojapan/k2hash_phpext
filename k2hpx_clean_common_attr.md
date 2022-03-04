@@ -17,9 +17,11 @@ next_string: k2hpx_close
 Initializes the common attributes
 
 ## Description
+
 ```
 bool k2hpx_clean_common_attr ( mixed $handle_res )
 ```
+
 Initializes the common attributes.
 
 Common attributes are :

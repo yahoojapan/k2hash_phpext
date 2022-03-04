@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_file
 Sets the common attributes
 
 ## Description
+
 ```
 bool k2hpx_set_common_attr ( mixed $handle_res [, int $is_mtime [, int $is_history [, int $is_encrypt [, stringnull $passfile [, int $is_expire [, int $expire ]]]]]] )
 ```
+
 Sets the common attributes. 
 
 ## Parameters

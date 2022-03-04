@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_free
 K2hKeyQueueキューが空かどうかを判定する
 
 ## 説明
+
 ```
 bool k2hpx_keyq_empty ( mixed $keyqhandle_res )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html) キューが空かどうかを判定します。 
 
 ## パラメータ

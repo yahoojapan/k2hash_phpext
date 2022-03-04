@@ -17,9 +17,11 @@ next_string: k2hpx_print_attr_information
 k2hashファイルを開く
 
 ## 説明
+
 ```
 mixed k2hpx_open ( string $filepath , bool $readonly [, bool $removefile [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]]] )
 ```
+
 k2hashファイルを開きます。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_read_offset
 Gets the k2hash direct access file offset with read-write access mode
 
 ## Description
+
 ```
 array k2hpx_da_get_offset ( mixed $dahandle_res )
 ```
+
 Gets the k2hash direct access file offset with read-write access mode. 
 
 ### Note
@@ -34,6 +36,7 @@ Returns the k2hash direct access file offset with read-write access mode.
 
 ## Examples
 - Example 1 - Get the k2hash direct access file offset with read-write access mode
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,7 +47,9 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 array(2) {
   [0]=>
@@ -53,6 +58,7 @@ array(2) {
   int(0)
 }
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

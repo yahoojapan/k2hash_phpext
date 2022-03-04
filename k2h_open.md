@@ -17,9 +17,11 @@ next_string: K2hash::openMem
 Opens the k2h file
 
 ## Description
+
 ```
  public bool K2hash::open ( string $filepath , bool $readonly [, bool $removefile [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]]] )
 ```
+
 Opens the k2hash (`.k2h`) file with read and write access. 
 
 ## Parameters

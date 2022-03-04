@@ -17,9 +17,11 @@ next_string: k2hpx_add_attr_plugin_library
 値を暗号化するパスワード（暗号鍵）を追加する
 
 ## 説明
+
 ```
  bool k2hpx_add_attr_crypt_pass ( mixed $handle_res , string $encpass [, bool $is_default_encrypt ] )
 ```
+
 値を暗号化するパスワードを追加します。パスワードは、AES256共通鍵として使われます。 
 
 ## パラメータ

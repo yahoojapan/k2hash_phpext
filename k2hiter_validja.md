@@ -17,9 +17,11 @@ next_string:
 ポインタの有効性を調べる
 
 ## 説明
+
 ```
  public bool K2hIterator::valid ( void )
 ```
+
 k2hashのキー配列へのポインタが有効かどうかを調べます。ポインタが配列の要素を指している場合は、有効です。
 
 ## パラメータ
@@ -30,6 +32,7 @@ k2hashのキー配列のポインタが有効な場合にtrue、そうでない�
 
 ## 例
 - 例 1 - k2hashのキー配列のポインタが有効かどうかを調べる
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -39,7 +42,10 @@ var_dump($k2hiter->valid());
 unset($k2hiter);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+

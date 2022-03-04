@@ -17,9 +17,11 @@ next_string: k2hpx_remove_all
 Removes a value from the K2hQueue
 
 ## Description
+
 ```
 bool k2hpx_q_remove ( mixed $qhandle_res , int $count [, stringnull $pass ] )
 ```
+
 Removes a value from the [K2hQueue](k2hq_class.html). 
 
 ## Parameters

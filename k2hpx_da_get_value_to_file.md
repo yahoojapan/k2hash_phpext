@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_value
 Reads value using the offset and write it to the file
 
 ## Description
+
 ```
 bool k2hpx_da_get_value_to_file ( mixed $dahandle_res , string $filepath [, int $length [, int $offset ]] )
 ```
+
 Reads value using the offset and write it to the file. 
 
 ### Note
@@ -40,6 +42,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Reads data and write it to the file
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -50,10 +53,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

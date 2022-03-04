@@ -17,9 +17,11 @@ next_string: k2hpx_open_rw
 k2hashファイルを読み出し用にオープンする
 
 ## 説明
+
 ```
 mixed k2hpx_open_ro ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 読み取り専用でk2hashファイルを開きます。
 
 ## パラメータ

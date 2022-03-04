@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_value
 ファイルから書き込むデータを読み込み、直接データを書きこむ位置を指定し、書き込む
 
 ## 説明
+
 ```
 bool k2hpx_da_set_value_from_file ( mixed $dahandle_res , string $filepath [, int $length [, int $offset ]] )
 ```
+
 ファイルから書き込むデータを読み込み、直接データを書きこむ位置を指定し、書き込みます。 
 
 ### ヒント
@@ -40,6 +42,7 @@ k2hash ダイレクトアクセスハンドル（[k2hpx_da_get_handle](k2hpx_da_
 
 ## 例
 - 例 1 - ファイルから書き込むデータを読み込み、直接データを書きこむ位置を指定し、書き込む
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -51,10 +54,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する

@@ -17,9 +17,11 @@ next_string: k2hpx_load_transaction_library
 ハッシュ関数を有効にする
 
 ## 説明
+
 ```
 bool k2hpx_load_hash_library ( string $libpath )
 ```
+
 ハッシュ関数を有効にします。 
 
 ## パラメータ
@@ -31,15 +33,19 @@ bool k2hpx_load_hash_library ( string $libpath )
 
 ## 例
 - 例 1 - ハッシュ関数用ライブラリを読み込む
+
 ```
 <?php
 var_dump(k2hpx_load_hash_library("/usr/lib/libk2htest.so"));
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [k2hpx_unload_hash_library](k2hpx_unload_hash_libraryja.html) - ハッシュ関数ライブラリを取り外す

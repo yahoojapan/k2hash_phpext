@@ -17,9 +17,11 @@ next_string: k2hpx_q_remove
 K2hQueueキューの要素（値）を表示する
 
 ## 説明
+
 ```
 string k2hpx_q_read ( mixed $qhandle_res [, int $pos [, stringnull $pass ]] )
 ```
+
 [K2hQueue](k2hq_classja.html) キューの要素（値）を表示します。 
 
 ### 注意

@@ -17,9 +17,11 @@ next_string: K2hash::getIterator
 Prints the attribute library version
 
 ## Description
+
 ```
  public bool K2hash::getAttrVersionInfos ([ mixed $output ] )
 ```
+
 Prints the attribute library version. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Gets attribute version information
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -51,10 +54,13 @@ if ($fp) {
 }
 ?>
 ```
+
 The above example will output:
+
 ```
 K2HASH attribute libraries:  K2H ATTR BUILTIN
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

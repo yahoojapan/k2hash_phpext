@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_level_message
 Sets log level to error
 
 ## Description
+
 ```
 void k2hpx_set_debug_level_error ( void )
 ```
+
 Sets log level to 'error' level. 
 
 ## Parameters
@@ -30,16 +32,20 @@ No value is returned.
 
 ## Examples
 - Example 1 - Sets debug level to error
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 k2hpx_set_debug_level_error();
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_level.html) - Changes the log level

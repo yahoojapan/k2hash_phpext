@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::pop
 Returns whether the K2hKeyQueue is empty
 
 ## Description
+
 ```
  public bool K2hKeyQueue::isEmpty ( void )
 ```
+
 Returns where the [K2hKeyQueue](k2hkq_class.html) is empty. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Returns true if the [K2hKeyQueue](k2hkq_class.html) object is empty, otherwise f
 
 ## Examples
 - Example 1 - Get elements from [K2hKeyQueue](k2hkq_class.html)
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -43,7 +46,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 int(0)
 int(1)

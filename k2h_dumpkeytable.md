@@ -17,9 +17,11 @@ next_string: K2hash::enableTransaction
 Prints the k2hash's hash tables
 
 ## Description
+
 ```
  public bool K2hash::dumpKeytable ([ mixed $output ] )
 ```
+
 Prints the k2hash's hash tables including k2hash headers. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Prints the k2hash's hash tables
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 The above example will output:
+
 ```
 ...
     Key Index Pointer[29] = Not Allocated
@@ -60,6 +65,7 @@ The above example will output:
     Key Index Pointer[31] = Not Allocated
   }
 ```
+
 
 ## See Also
 - [K2hash::dumpElementtable](k2h_dumpelementtable.html) - Prints elements of the k2hash's hash table elements

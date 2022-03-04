@@ -17,9 +17,11 @@ next_string: k2hpx_q_push
 K2hQueueキューから要素を取得する
 
 ## 説明
+
 ```
 string k2hpx_q_pop ( mixed $qhandle_res [, stringnull $pass ] )
 ```
+
 [K2hQueue](k2hq_classja.html) キューから要素を取得します。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: k2hpx_find_free
 Gets the k2hash file handle to search for the key
 
 ## Description
+
 ```
 mixed k2hpx_find_first ( mixed $handle_res [, stringnull $key ] )
 ```
+
 Gets the k2hash file handle to searchf for the key. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns the k2hash file handle to search for the key.
 
 ## Examples
 - Example 1 - Gets the k2hash file handle to search for the key
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -43,10 +46,13 @@ k2hpx_find_free($findhandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 resource(5) of type (k2hfindhandle)
 ```
+
 
 ## See Also
 - [k2hpx_find_free](k2hpx_find_free.html) - Releases resources of the k2h file handle to search for keys

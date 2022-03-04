@@ -17,9 +17,11 @@ next_string: k2hpx_create
 Closes the k2hash file
 
 ## Description
+
 ```
 bool k2hpx_close ( mixed $handle_res [, int $waitms ] )
 ```
+
 Closes the k2hash (`.k2h`) file and saves the data. 
 
 ## Parameters

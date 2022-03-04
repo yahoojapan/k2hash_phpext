@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_value
 Sets value using the offset reading data from the file with length
 
 ## Description
+
 ```
 bool k2hpx_da_set_value_from_file ( mixed $dahandle_res , string $filepath [, int $length [, int $offset ]] )
 ```
+
 Sets value using the offset reading data from the file with length. 
 
 ### Note
@@ -40,6 +42,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets value using the offset reading data from the file with length
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -51,10 +54,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

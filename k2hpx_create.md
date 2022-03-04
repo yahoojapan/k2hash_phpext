@@ -17,9 +17,11 @@ next_string: k2hpx_da_free
 Creates the k2hash file
 
 ## Description
+
 ```
 bool k2hpx_create ( string $filepath [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 Creates the k2hash (`.k2h`) file. 
 
 ## Parameters

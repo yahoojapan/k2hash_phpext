@@ -17,9 +17,11 @@ next_string: k2hpx_dump_elementtable
 トランザクションを停止する
 
 ## 説明
+
 ```
 bool k2hpx_disable_transaction ( mixed $handle_res )
 ```
+
 トランザクションを停止します
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: K2hash::printVersion
 k2hashのデータの状態を表示する
 
 ## 説明
+
 ```
  public bool K2hash::printState ([ mixed $output ] )
 ```
+
 k2hashのデータの状態を表示します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hashのデータの状態を表示します。
 
 ## 例
 - 例 1 - k2hash データの状態を出力する
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 ...
 
@@ -62,3 +67,4 @@ Total real data size    = 133431296 byte
 real data ratio         = 98 %
 }
 ```
+

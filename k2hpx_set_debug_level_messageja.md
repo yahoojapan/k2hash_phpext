@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_level_silent
 ライブラリのログレベルをmessage(info相当）にする
 
 ## 説明
+
 ```
 void k2hpx_set_debug_level_message ( void )
 ```
+
 ライブラリのログレベルをmessage(info相当）にします。 
 
 ## パラメータ
@@ -30,16 +32,20 @@ void k2hpx_set_debug_level_message ( void )
 
 ## 例
 - 例 1 - ライブラリのログレベルをmessageにする
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 k2hpx_set_debug_level_message();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 NULL
 ```
+
 
 ## 参考
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_levelja.html) - ログレベルを変更する

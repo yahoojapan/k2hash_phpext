@@ -17,9 +17,11 @@ next_string: k2hpx_dump_keytable
 Prints the k2hash's headers
 
 ## Description
+
 ```
 bool k2hpx_dump_head ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints the k2hash's headers. 
 
 ## Parameters

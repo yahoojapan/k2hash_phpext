@@ -17,9 +17,11 @@ next_string: K2hash::getTransactionThreadPool
 Gets an array of keys associated with the key
 
 ## Description
+
 ```
 public arrayfalseK2hash::getSubkeys ( string $key [, bool $attrcheck ] )
 ```
+
 Gets an array of the keys associated with the key. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns an array of keys associated with the key.
 
 ## Examples
 - Example 1 - Gets an array of keys associated with a key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,7 +45,9 @@ var_dump($k2hash->getSubkeys("test"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 array(3) {
   [0]=>
@@ -53,6 +58,7 @@ array(3) {
   string(7) "subkey3"
 }
 ```
+
 
 ## See Also
 - [K2hash::addSubkey](k2h_addsubkey.html) - Associates the key with the other key

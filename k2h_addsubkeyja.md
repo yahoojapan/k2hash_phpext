@@ -17,9 +17,11 @@ next_string: K2hash::addSubkeys
 キーを紐づける
 
 ## 説明
+
 ```
 public bool K2hash::addSubkey ( string $key , string $subkey )
 ```
+
 キーに他のキーを紐付けます。紐づけるキーは、紐づけられるキーの「サブキー」と呼びます。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ public bool K2hash::addSubkey ( string $key , string $subkey )
 
 ## 例
 - 例 1 - サブキーを追加する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,13 +45,16 @@ var_dump($k2hash->getSubkeys("test"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 array(1) {
   [0]=>
   string(3) "sub"
 }
 ```
+
 
 ## 参考
 - [K2hash::addSubkeys](k2h_addsubkeysja.html) - 複数のキーを紐づける

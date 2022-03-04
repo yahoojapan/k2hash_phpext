@@ -17,9 +17,11 @@ next_string:
 Stops transaction workers
 
 ## Description
+
 ```
  public static bool K2hash::unsetTransactionThreadPool ( void )
 ```
+
 Stops transaction workers. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets the number of transaction workers
+
 ```
 <?php
 var_dump(K2hash::settransactionThreadPool(1));
@@ -37,12 +40,15 @@ var_dump(K2hash::gettransactionThreadPool());
 var_dump(K2hash::unsettransactionThreadPool());
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 int(1)
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::getTransactionThreadPool](k2h_gettransactionthreadpool.html) - Gets the number of transaction workers

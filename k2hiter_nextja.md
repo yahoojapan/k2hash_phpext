@@ -17,9 +17,11 @@ next_string: K2hIterator::rewind
 配列のポインタを一つ進める
 
 ## 説明
+
 ```
  public void K2hIterator::next ( void )
 ```
+
 k2hashのキー配列のポインタを一つ進めます。
 
 ## パラメータ
@@ -30,6 +32,7 @@ k2hashのキー配列のポインタを一つ進めます。
 
 ## 例
 - 例 1 - [K2hIterator](k2hiter_classja.html)オブジェクトからキーを取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -41,10 +44,13 @@ var_dump($k2hiter->key());
 unset($k2hiter);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(5) "test2"
 ```
+
 
 ## 参考
 - [K2hIterator::current](k2hiter_currentja.html) - 配列内の現在の要素を取得する

@@ -17,9 +17,11 @@ next_string: K2hQueue::isEmpty
 キューにある要素を表示する
 
 ## 説明
+
 ```
  public bool K2hQueue::dump ([ mixed $output ] )
 ```
+
 キューにある要素を表示します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ next_string: K2hQueue::isEmpty
 
 ## 例
 - 例 1 - キューを表示する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -53,7 +56,9 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 MARKER(test_queue_MARKER)= {
@@ -62,3 +67,4 @@ MARKER(test_queue_MARKER)= {
 }
 [0]                    = test_queue_000000000000758C_0000000061D9E5C9_0000000006108B76
 ```
+

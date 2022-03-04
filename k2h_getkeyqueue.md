@@ -17,9 +17,11 @@ next_string: K2hash::getQueue
 Gets a K2hKeyQueue object
 
 ## Description
+
 ```
  public mixed K2hash::getKeyQueue ([ bool $is_filo [, string $prefix ]] )
 ```
+
 Gets a [K2hKeyQueue](k2hkq_class.html) object. [K2hKeyQueue](k2hkq_class.html) is a class to handle [K2hKeyQueue](k2hkq_class.html) object that holds key/value pairs as elements
 
 ## Parameters

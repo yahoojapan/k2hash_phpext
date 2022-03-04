@@ -17,9 +17,11 @@ next_string: k2hpx_unset_debug_file
 Removes the user-defined transaction library
 
 ## Description
+
 ```
 bool k2hpx_unload_transaction_library ( void )
 ```
+
 Removes the user-defined transaction library that is added by [k2hpx_load_transaction_library](k2hpx_load_transaction_library.html). 
 
 ## Parameters
@@ -30,15 +32,19 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Removes the user-defined transaction library
+
 ```
 <?php
 var_dump(k2hpx_unload_transaction_library());
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [k2hpx_load_transaction_library](k2hpx_load_transaction_library.html) - Loads functions of k2hash transaction usage from the file

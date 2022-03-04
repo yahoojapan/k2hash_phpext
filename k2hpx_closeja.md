@@ -17,9 +17,11 @@ next_string: k2hpx_create
 k2hashファイルを閉じる
 
 ## 説明
+
 ```
 bool k2hpx_close ( mixed $handle_res [, int $waitms ] )
 ```
+
 オープンされているk2hashファイルを閉じて、変更内容を保存します。 
 
 ## パラメータ

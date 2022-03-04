@@ -17,9 +17,11 @@ next_string: k2hpx_print_attr_information
 Opens the k2hash file
 
 ## Description
+
 ```
 mixed k2hpx_open ( string $filepath , bool $readonly [, bool $removefile [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]]] )
 ```
+
 Opens the k2hash (`.k2h`) file.
 
 ## Parameters

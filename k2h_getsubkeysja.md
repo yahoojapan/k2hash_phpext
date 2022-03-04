@@ -17,9 +17,11 @@ next_string: K2hash::getTransactionThreadPool
 キーに紐づけられたキー（サブキー）の一覧を取得する
 
 ## 説明
+
 ```
 public arrayfalseK2hash::getSubkeys ( string $key [, bool $attrcheck ] )
 ```
+
 キーに紐づけられたキー（サブキー）の一覧を取得します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ public arrayfalseK2hash::getSubkeys ( string $key [, bool $attrcheck ] )
 
 ## 例
 - 例 1 - サブキーの一覧を取得する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,7 +45,9 @@ var_dump($k2hash->getSubkeys("test"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 array(3) {
   [0]=>
@@ -53,6 +58,7 @@ array(3) {
   string(7) "subkey3"
 }
 ```
+
 
 ## 参考
 - [K2hash::addSubkey](k2h_addsubkeyja.html) - キーを紐づける

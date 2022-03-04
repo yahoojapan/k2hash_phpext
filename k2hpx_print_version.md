@@ -17,9 +17,11 @@ next_string: k2hpx_put_archive
 Prints the library version
 
 ## Description
+
 ```
 bool k2hpx_print_version ([ mixed $output ] )
 ```
+
 Prints the library version. 
 
 ## Parameters

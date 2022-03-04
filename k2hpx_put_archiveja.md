@@ -17,9 +17,11 @@ next_string: k2hpx_q_count
 k2hashファイルをアーカイブファイルとして保存する
 
 ## 説明
+
 ```
 bool k2hpx_put_archive ( mixed $handle_res , string $filepath [, bool $errskip ] )
 ```
+
 k2hashファイルをアーカイブファイルとして保存します。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: k2hpx_add_subkey
 キーに属性を追加する
 
 ## 説明
+
 ```
  bool k2hpx_add_attr ( mixed $handle_res , string $key , string $attrkey , string $attrval )
 ```
+
 キーに属性を追加します。属性とは、該当キーに対する設定（更新時刻保持の有無、暗号化の有無、履歴情報保持の有無など）です。 
 
 ## パラメータ

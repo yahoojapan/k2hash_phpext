@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_value
 読み取った値をファイルに書き出す
 
 ## 説明
+
 ```
 bool k2hpx_da_get_value_to_file ( mixed $dahandle_res , string $filepath [, int $length [, int $offset ]] )
 ```
+
 読み取ったデータをファイルに書き出します。
 
 ### ヒント
@@ -40,6 +42,7 @@ k2hash ダイレクトアクセスハンドル（[k2hpx_da_get_handle](k2hpx_da_
 
 ## 例
 - 例 1 - 読み取ったデータをファイルに保存する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -50,10 +53,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する

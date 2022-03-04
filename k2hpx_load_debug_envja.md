@@ -17,9 +17,11 @@ next_string: k2hpx_load_hash_library
 環境変数を読み込む
 
 ## 説明
+
 ```
 bool k2hpx_load_debug_env ( void )
 ```
+
 環境変数を読み込みます。 
 
 ## パラメータ
@@ -30,12 +32,16 @@ bool k2hpx_load_debug_env ( void )
 
 ## 例
 - 例 1 - 環境変数を読み込む
+
 ```
 <?php
 var_dump(k2hpx_load_debug_env());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+

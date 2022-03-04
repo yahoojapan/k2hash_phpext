@@ -17,9 +17,11 @@ next_string: K2hash::addAttrPluginLib
 Adds the password to encrypt values
 
 ## Description
+
 ```
 public bool K2hash::addAttrCryptPass ( string $encpass [, bool $is_default_encrypt ] )
 ```
+
 Adds the password to encrypt values. The encrption algorithm is AES256. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Adds a password to encypt values
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -41,10 +44,13 @@ var_dump($k2hash->addAttrCryptPass("testkey", true));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

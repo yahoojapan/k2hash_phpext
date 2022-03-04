@@ -17,9 +17,11 @@ next_string: K2hash::getSubkeys
 Gets a k2hash file stream
 
 ## Description
+
 ```
  public mixed K2hash::getStream ( string $key , string $mode )
 ```
+
 Gets a k2hash file stream. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns a h2hash file stream.
 
 ## Examples
 - Example 1 - Gets value using the k2hash file stream
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -50,7 +53,10 @@ fclose($stream);
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 string(6) "value1"
 ```
+

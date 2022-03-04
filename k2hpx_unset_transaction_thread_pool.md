@@ -17,9 +17,11 @@ next_string:
 Stops transaction workers
 
 ## Description
+
 ```
 bool k2hpx_unset_transaction_thread_pool ( void )
 ```
+
 Stops transaction workers. 
 
 ## Parameters

@@ -17,9 +17,11 @@ next_string: K2hash::setTransactionThreadPool
 キーの基本属性を設定する
 
 ## 説明
+
 ```
  public bool K2hash::setCommonAttribute ([ int $is_mtime [, int $is_history [, int $is_encrypt [, string $passfile [, int $is_expire [, int $expire ]]]]]] )
 ```
+
 キーの基本属性を設定します。 
 
 ## パラメータ
@@ -41,6 +43,7 @@ next_string: K2hash::setTransactionThreadPool
 
 ## 例
 - 例 1 - 基本属性を設定する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -49,10 +52,13 @@ var_dump($k2hash->setCommonAttribute(K2H_ATTR_ENABLE, K2H_ATTR_ENABLE, K2H_ATTR_
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

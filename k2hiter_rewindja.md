@@ -17,9 +17,11 @@ next_string: K2hIterator::valid
 配列のポインタを巻き戻します。
 
 ## 説明
+
 ```
  public void K2hIterator::rewind ( void )
 ```
+
 k2hashのキー配列のポインタを巻き戻します。
 
 ## パラメータ
@@ -30,6 +32,7 @@ k2hashのキー配列のポインタを巻き戻します。
 
 ## 例
 - 例 1 - キー配列のポインタを巻き戻します。
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -42,10 +45,13 @@ var_dump($k2hiter->key());
 unset($k2hiter);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(5) "test1"
 ```
+
 
 ## 参考
 - [K2hIterator::current](k2hiter_currentja.html) - 配列内の現在の要素を取得する

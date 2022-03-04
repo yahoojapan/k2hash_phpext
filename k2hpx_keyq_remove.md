@@ -17,9 +17,11 @@ next_string: k2hpx_load_archive
 Removes a key/value pair from the K2hKeyQueue
 
 ## Description
+
 ```
 bool k2hpx_keyq_remove ( mixed $keyqhandle_res , int $count [, stringnull $pass ] )
 ```
+
 Removes a key/value pair from the [K2hKeyQueue](k2hkq_class.html). 
 
 ## Parameters

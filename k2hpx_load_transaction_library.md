@@ -17,9 +17,11 @@ next_string: k2hpx_open_mem
 Loads functions of k2hash transaction usage from the file
 
 ## Description
+
 ```
 bool k2hpx_load_transaction_library ( string $libpath )
 ```
+
 Loads functions of k2hash transaction usage from the file. 
 
 ## Parameters
@@ -31,15 +33,19 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Loads functions of k2hash transaction usage from the file
+
 ```
 <?php
 var_dump(k2hpx_load_transaction_library("/usr/lib/libk2htestlib.so"));
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [k2hpx_unload_transaction_library](k2hpx_unload_transaction_library.html) - Removes the user-defined transaction library

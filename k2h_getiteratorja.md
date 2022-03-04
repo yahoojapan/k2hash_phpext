@@ -17,9 +17,11 @@ next_string: K2hash::getKeyQueue
 K2hIteratorオブジェクトを取得する
 
 ## 説明
+
 ```
  public mixed K2hash::getIterator ( string $key )
 ```
+
 指定されたキーを先頭にした [K2hIterator](k2hiter_classja.html) オブジェクトを取得します。 [K2hIterator](k2hiter_classja.html) は、k2hashのキーの配列へのポインタを操作するクラスです。
 
 ## パラメータ
@@ -31,6 +33,7 @@ K2hIteratorオブジェクトを取得する
 
 ## 例
 - 例 1 - [K2hIterator](k2hiter_classja.html) オブジェクトを取得する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -46,10 +49,13 @@ foreach($iterator as $val){
 echo $count;
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 3
 ```
+
 
 ## 参考
 - [K2hIterator::__construct](k2hiter_constructja.html) - 新しい K2hIterator オブジェクトを作成する

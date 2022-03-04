@@ -17,9 +17,11 @@ next_string: k2hpx_get_subkeys
 Gets attributes of the key
 
 ## Description
+
 ```
 array k2hpx_get_attrs ( mixed $handle_res , string $key )
 ```
+
 Gets attributes of the key. 
 
 ## Parameters

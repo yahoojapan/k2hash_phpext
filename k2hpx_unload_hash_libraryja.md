@@ -17,9 +17,11 @@ next_string: k2hpx_unload_transaction_library
 ハッシュ関数ライブラリを取り外す
 
 ## 説明
+
 ```
 bool k2hpx_unload_hash_library ( void )
 ```
+
 k2hpx_load_hash_libraryでロードした共有ライブラリファイルを取り外します。 
 
 ## パラメータ
@@ -30,15 +32,19 @@ k2hpx_load_hash_libraryでロードした共有ライブラリファイルを取
 
 ## 例
 - 例 1 - ハッシュ関数用ライブラリを取り外す
+
 ```
 <?php
 var_dump(k2hpx_unload_hash_library());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [k2hpx_load_hash_library](k2hpx_load_hash_libraryja.html) - ハッシュ関数を有効にする

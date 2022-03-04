@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_read
 Adds a key/value pair to the K2hKeyQueue
 
 ## Description
+
 ```
 bool k2hpx_keyq_push ( mixed $keyqhandle_res , string $key , string $value [, stringnull $pass [, int $expire ]] )
 ```
+
 Adds a key/value pair to the [K2hKeyQueue](k2hkq_class.html). 
 
 ## Parameters

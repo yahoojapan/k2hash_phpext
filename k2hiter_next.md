@@ -17,9 +17,11 @@ next_string: K2hIterator::rewind
 Advances the internal array pointer of k2hash keys
 
 ## Description
+
 ```
  public void K2hIterator::next ( void )
 ```
+
 Advances the internal array pointer of k2hash keys. 
 
 ## Parameters
@@ -30,13 +32,17 @@ No value is returned.
 
 ## Examples
 - Example 1 - Get a key using [K2hIterator](k2hiter_class.html)
+
 ```
 
 ```
+
 The above example will output:
+
 ```
 string(5) "test2"
 ```
+
 
 ## See Also
 - [K2hIterator::current](k2hiter_current.html) - Gets value of the current K2hIterator item

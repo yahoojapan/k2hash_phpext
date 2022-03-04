@@ -17,9 +17,11 @@ next_string: k2hpx_q_handle
 K2hQueueキューハンドルを解放する
 
 ## 説明
+
 ```
 bool k2hpx_q_free ( mixed $qhandle_res )
 ```
+
 [K2hQueue](k2hq_classja.html)キューハンドルを解放します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ bool k2hpx_q_free ( mixed $qhandle_res )
 
 ## 例
 - 例 1 - [K2hQueue](k2hq_classja.html)ハンドルを解放する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -39,7 +42,10 @@ var_dump(k2hpx_q_free($qhandle));
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+

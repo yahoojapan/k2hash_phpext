@@ -17,9 +17,11 @@ next_string: K2hash::getAttrInfos
 Starts a transaction
 
 ## Description
+
 ```
  public bool K2hash::enableTransaction ([ string $transfile [, string $prefix [, string $param [, int $expire ]]]] )
 ```
+
 Starts a transaction. 
 
 ## Parameters
@@ -37,6 +39,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Starts a transaction
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -45,10 +48,13 @@ var_dump($k2hash->enabletransaction("/tmp/test_k2h_trans", "trans_prefix_", "myp
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::disableTransaction](k2h_disabletransaction.html) - Stops a transaction

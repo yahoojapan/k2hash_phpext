@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_file
 キーの基本属性を設定する
 
 ## 説明
+
 ```
 bool k2hpx_set_common_attr ( mixed $handle_res [, int $is_mtime [, int $is_history [, int $is_encrypt [, stringnull $passfile [, int $is_expire [, int $expire ]]]]]] )
 ```
+
 キーの基本属性を設定します。 
 
 ## パラメータ

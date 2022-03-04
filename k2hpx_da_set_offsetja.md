@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_read_offset
 データを読み込むまたは書き込む位置を指定する
 
 ## 説明
+
 ```
 int k2hpx_da_set_offset ( mixed $dahandle_res , array $offsets )
 ```
+
 データを読み込むまたは書き込む位置を指定します。
 
 ### ヒント
@@ -36,6 +38,7 @@ k2hash ダイレクトアクセスハンドル（[k2hpx_da_get_handle](k2hpx_da_
 
 ## 例
 - 例 1 - データを読み書き開始する位置を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -49,7 +52,9 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 array(2) {
   [0]=>
@@ -65,6 +70,7 @@ array(2) {
   int(20)
 }
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する
