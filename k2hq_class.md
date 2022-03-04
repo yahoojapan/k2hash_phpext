@@ -37,7 +37,7 @@ K2hQueue {
 - [K2hQueue::__construct](k2hq_construct.html) - Creates a K2hQueue instance
 - [K2hQueue::count](k2hq_count.html) - Counts elements in the K2hQueue object
 - [K2hQueue::dump](k2hq_dump.html) - Prints the elements in the K2hQueue object
-- [K2hQueue::isEmpty](k2hq_isEmpty.html) - Returns whether the K2hQueue is empty
+- [K2hQueue::isEmpty](k2hq_isempty.html) - Returns whether the K2hQueue is empty
 - [K2hQueue::pop](k2hq_pop.html) - Removes and returns the removed element from the K2hQueue
 - [K2hQueue::push](k2hq_push.html) - Adds a value to the K2hQueue
 - [K2hQueue::read](k2hq_read.html) - Returns a key/value pair from the K2hQueue

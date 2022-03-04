@@ -34,4 +34,4 @@ Specifies the prefix of the [K2hKeyQueue](k2hkq_class.html).
 Gets a K2hKeyQueue object. 
 
 ## See Also
-- [K2hKeyQueue::__construct](k2hkq_constructja.html) - Creates a K2hKeyQueue instance
+- [K2hKeyQueue::__construct](k2hkq_construct.html) - Creates a K2hKeyQueue instance

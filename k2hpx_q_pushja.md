@@ -38,4 +38,4 @@ bool k2hpx_q_push ( mixed $qhandle_res , string $datavalue [, stringnull $pass [
 成功時は、true。それ以外の場合は、false
 
 ## 参考
-- [K2hQueue::push](k2hq_push.html) - Adds a value to the K2hQueue
+- [K2hQueue::push](k2hq_pushja.html) - キューに要素を追加する

@@ -34,4 +34,4 @@ FIFO(先入先出し)キューならtrue、そうでなければ、false
 [K2hKeyQueue](k2hkq_classja.html)オブジェクト 
 
 ## 参考
-- [K2hKeyQueue::__construct](k2hkq_construct.html) - 新しいK2hKeyQueueオブジェクトを作成する
+- [K2hKeyQueue::__construct](k2hkq_constructja.html) - 新しいK2hKeyQueueオブジェクトを作成する

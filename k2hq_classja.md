@@ -34,11 +34,10 @@ K2hQueue {
 
 
 ## メソッド一覧
-
 - [K2hQueue::__construct](k2hq_constructja.html) - 新しいK2hQueueオブジェクトを作成する
 - [K2hQueue::count](k2hq_countja.html) - キューにある要素の数を取得する
 - [K2hQueue::dump](k2hq_dumpja.html) - キューにある要素を表示する
-- [K2hQueue::isEmpty](k2hq_isEmptyja.html) - キューが空かどうかを判定する
+- [K2hQueue::isEmpty](k2hq_isemptyja.html) - キューが空かどうかを判定する
 - [K2hQueue::pop](k2hq_popja.html) - キューから要素を取得する
 - [K2hQueue::push](k2hq_pushja.html) - キューに要素を追加する
 - [K2hQueue::read](k2hq_readja.html) - キューの要素を表示する

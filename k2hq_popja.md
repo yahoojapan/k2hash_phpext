@@ -56,6 +56,6 @@ array(2) {
 
 
 ## 参考
-- [K2hQueue::push](k2hq_push.html) - Adds a value to the K2hQueue
-- [K2hQueue::read](k2hq_read.html) - Returns a key/value pair from the K2hQueue
-- [K2hQueue::remove](k2hq_remove.html) - Removes a value from the K2hQueue
+- [K2hQueue::push](k2hq_pushja.html) - キューに要素を追加する
+- [K2hQueue::read](k2hq_readja.html) - キューの要素を表示する
+- [K2hQueue::remove](k2hq_removeja.html) - キューから要素を削除する

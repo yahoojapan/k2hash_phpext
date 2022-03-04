@@ -74,7 +74,7 @@ K2hQueueクラスの説明は、[こちら](k2hq_classja.html)を参照してく
 - [K2hQueue::__construct](k2hq_constructja.html) - 新しいK2hQueueオブジェクトを作成する
 - [K2hQueue::count](k2hq_countja.html) - キューにある要素の数を取得する
 - [K2hQueue::dump](k2hq_dumpja.html) - キューにある要素を表示する
-- [K2hQueue::isEmpty](k2hq_isEmptyja.html) - キューが空かどうかを判定する
+- [K2hQueue::isEmpty](k2hq_isemptyja.html) - キューが空かどうかを判定する
 - [K2hQueue::pop](k2hq_popja.html) - キューから要素を取得する
 - [K2hQueue::push](k2hq_pushja.html) - キューに要素を追加する
 - [K2hQueue::read](k2hq_readja.html) - キューの要素を表示する
@@ -87,7 +87,7 @@ K2hKeyQueueクラスの説明は、[こちら](k2hkq_classja.html)を参照し�
 - [K2hKeyQueue::__construct](k2hkq_constructja.html) - 新しいK2hKeyQueueオブジェクトを作成する
 - [K2hKeyQueue::count](k2hkq_countja.html) - キューにある要素の数を取得する
 - [K2hKeyQueue::dump](k2hkq_dumpja.html) - キューにある要素を表示する
-- [K2hKeyQueue::isEmpty](k2hkq_isEmptyja.html) - キューが空かどうかを判定する
+- [K2hKeyQueue::isEmpty](k2hkq_isemptyja.html) - キューが空かどうかを判定する
 - [K2hKeyQueue::pop](k2hkq_popja.html) - キューから要素（キーと値のセット）を取得する
 - [K2hKeyQueue::push](k2hkq_pushja.html) - キューに要素（キーと値のセット）を追加する
 - [K2hKeyQueue::read](k2hkq_readja.html) - キューの要素（キーと値のセット）を表示する
