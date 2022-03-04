@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_length
 ファイル操作方法を指定して、ダイレクトアクセスハンドルを取得する
 
 ## 説明
+
 ```
 mixed k2hpx_da_get_handle ( mixed $handle_res , string $key , int $mode )
 ```
+
 ファイル操作方法を指定して、ダイレクトアクセスハンドルを取得します。  
 ファイル操作方法は、次の通りです。  
 - K2H_DA_READ  
@@ -45,6 +47,7 @@ k2hash (`.k2h`) ファイルハンドル。 k2hpx_open 関数の戻り値。
 
 ## 例
 - 例 1 - ダイレクトアクセスハンドルを取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -54,10 +57,13 @@ var_dump(k2hpx_da_free($dahandle));
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 resource(5) of type (k2hdahandle)
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する

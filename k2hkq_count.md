@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::dump
 Counts elements in the K2hKeyQueue object
 
 ## Description
+
 ```
  public int K2hKeyQueue::count ( void )
 ```
+
 Counts the number of elements in the [K2hKeyQueue](k2hkq_class.html) object. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Returns the number of elements in the [K2hKeyQueue](k2hkq_class.html).
 
 ## Examples
 - Example 1 - Counts elements from [K2hKeyQueue](k2hkq_class.html)
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -43,7 +46,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 int(0)
 int(1)
@@ -55,3 +60,4 @@ array(2) {
 }
 int(0)
 ```
+

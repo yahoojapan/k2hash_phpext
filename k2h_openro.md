@@ -17,9 +17,11 @@ next_string: K2hash::openRW
 Read the k2hash file
 
 ## Description
+
 ```
  public bool K2hash::openRO ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 Opens the the k2hash (.k2h) file with read only access. 
 
 ## Parameters

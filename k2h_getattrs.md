@@ -17,9 +17,11 @@ next_string: K2hash::getAttrValue
 Gets attributes of the key
 
 ## Description
+
 ```
 public arrayfalseK2hash::getAttrs ( string $key )
 ```
+
 Gets attributes of the key. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns attributes of the key, otherwise false.
 
 ## Examples
 - Example 1 - Get attributes of a key
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,13 +45,16 @@ var_dump($k2hash->getAttrs("test"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 array(1) {
   [0]=>
   string(8) "testattr"
 }
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

@@ -17,9 +17,11 @@ next_string:
 トランザクション処理用のスレッドを利用しない
 
 ## 説明
+
 ```
  public static bool K2hash::unsetTransactionThreadPool ( void )
 ```
+
 トランザクション処理用のスレッドを利用しません。 
 
 ## パラメータ
@@ -30,6 +32,7 @@ next_string:
 
 ## 例
 - 例 1 - トランザクション処理用のスレッド数を設定する
+
 ```
 <?php
 var_dump(K2hash::settransactionThreadPool(1));
@@ -37,12 +40,15 @@ var_dump(K2hash::gettransactionThreadPool());
 var_dump(K2hash::unsettransactionThreadPool());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 int(1)
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::getTransactionThreadPool](k2h_gettransactionthreadpoolja.html) - トランザクション処理用のスレッド数を取得する

@@ -17,9 +17,11 @@ next_string: K2hash::printVersion
 Prints k2hash data statistics
 
 ## Description
+
 ```
  public bool K2hash::printState ([ mixed $output ] )
 ```
+
 Prints k2hash data statistics. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Prints k2hash data statistics
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 The above example will output:
+
 ```
 ...
 
@@ -62,3 +67,4 @@ Total real data size    = 133431296 byte
 real data ratio         = 98 %
 }
 ```
+

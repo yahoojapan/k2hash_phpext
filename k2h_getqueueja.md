@@ -17,9 +17,11 @@ next_string: K2hash::getStream
 K2hQueueオブジェクトを取得する
 
 ## 説明
+
 ```
  public mixed K2hash::getQueue ([ bool $is_filo [, string $prefix ]] )
 ```
+
 [K2hQueue](k2hq_classja.html)オブジェクトを取得します。[K2hQueue](k2hq_classja.html)は、k2hashを利用したキューを操作するクラスです。キューには、値を一つの要素として格納します。 
 
 ## パラメータ

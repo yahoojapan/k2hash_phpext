@@ -17,9 +17,11 @@ next_string: K2hash::getAttrInfos
 トランザクションを開始する
 
 ## 説明
+
 ```
  public bool K2hash::enableTransaction ([ string $transfile [, string $prefix [, string $param [, int $expire ]]]] )
 ```
+
 トランザクションを開始します。
 
 ## パラメータ
@@ -37,6 +39,7 @@ next_string: K2hash::getAttrInfos
 
 ## 例
 - 例 1 - トランザクションを開始する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -45,10 +48,13 @@ var_dump($k2hash->enabletransaction("/tmp/test_k2h_trans", "trans_prefix_", "myp
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::disableTransaction](k2h_disabletransactionja.html) - トランザクションを停止する

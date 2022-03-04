@@ -17,9 +17,11 @@ next_string:
 Removes a value from the K2hQueue
 
 ## Description
+
 ```
  public bool K2hQueue::remove ( int $count [, string $pass ] )
 ```
+
 Removes a value from the [K2hQueue](k2hq_class.html). 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Remove value from queue
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,12 +49,15 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 int(2)
 bool(true)
 int(1)
 ```
+
 
 ## See Also
 - [K2hQueue::pop](k2hq_pop.html) - Removes and returns the removed element from the K2hQueue

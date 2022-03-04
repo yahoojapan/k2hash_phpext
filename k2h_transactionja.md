@@ -17,9 +17,11 @@ next_string: K2hash::unsetTransactionThreadPool
 トランザクションを有効また無効にする
 
 ## 説明
+
 ```
  public bool K2hash::transaction ( bool $enable [, string $transfile [, string $prefix [, string $param [, int $expire ]]]] )
 ```
+
 トランザクションを有効または無効にします。 
 
 ## パラメータ
@@ -39,6 +41,7 @@ next_string: K2hash::unsetTransactionThreadPool
 
 ## 例
 - 例 1 - トランザクションを開始する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -47,10 +50,13 @@ var_dump($k2hash->transaction(true, "/tmp/test_k2h_trans", "trans_prefix_", "myp
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::disableTransaction](k2h_disabletransactionja.html) - トランザクションを停止する

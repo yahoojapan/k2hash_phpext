@@ -17,9 +17,11 @@ next_string: k2hpx_clean_common_attr
 Changes the log level
 
 ## Description
+
 ```
 void k2hpx_bump_debug_level ( void )
 ```
+
 Changes the log level by each call. The order is 'error' , 'warning' , 'message' (info), 'dump' (debug), 'silent' (no logging). The log level turns 'error' when calling the function in the 'silent' level. 
 
 ## Parameters
@@ -30,15 +32,19 @@ No value is returned.
 
 ## Examples
 - Example 1 - Changes the log level
+
 ```
 <?php
 var_dump(k2hpx_bump_debug_level());
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_set_debug_file](k2hpx_set_debug_file.html) - Writes log to the file

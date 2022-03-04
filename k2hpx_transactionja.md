@@ -17,9 +17,11 @@ next_string: k2hpx_unload_hash_library
 トランザクションを有効また無効にする
 
 ## 説明
+
 ```
 bool k2hpx_transaction ( mixed $handle_res , bool $enable [, stringnull $transfile [, stringnull $prefix [, stringnull $param [, int $expire ]]]] )
 ```
+
 トランザクションを有効また無効にする。 
 
 ## パラメータ
@@ -41,4 +43,3 @@ k2hash (`.k2h`) ファイルハンドル。 [k2hpx_open](k2hpx_openja.html) 関�
 
 ## 参考
 - [K2hash::transaction](k2h_transactionja.html) - トランザクションを有効また無効にする
-s

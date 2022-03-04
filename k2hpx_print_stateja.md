@@ -17,9 +17,11 @@ next_string: k2hpx_print_version
 k2hashのデータの状態を表示する
 
 ## 説明
+
 ```
 bool k2hpx_print_state ( mixed $handle_res [, mixed $output ] )
 ```
+
 k2hashのデータの状態を表示します。 
 
 ## パラメータ

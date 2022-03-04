@@ -17,9 +17,11 @@ next_string: K2hash::openRO
 Open k2hash as volatile(on memory).
 
 ## Description
+
 ```
  public bool K2hash::openMem ([ int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 Open k2hash as volatile(on memory).
 
 ## Parameters

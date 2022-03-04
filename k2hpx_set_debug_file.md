@@ -17,9 +17,11 @@ next_string: k2hpx_set_debug_level_error
 Writes log to the file
 
 ## Description
+
 ```
 bool k2hpx_set_debug_file ( string $filepath )
 ```
+
 Writes log to the file. 
 
 ## Parameters
@@ -31,15 +33,19 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Write log to a file
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_level.html) - Changes the log level

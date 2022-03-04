@@ -17,9 +17,11 @@ next_string: k2hpx_open_ro
 Opens k2hash as volatile(on memory).
 
 ## Description
+
 ```
 mixed k2hpx_open_mem ([ int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 Opens k2hash as volatile(on memory).
 
 ## Parameters

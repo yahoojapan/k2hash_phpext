@@ -17,9 +17,11 @@ next_string: k2hpx_open_ro
 揮発性（メモリ）としてk2hashをオープンします。
 
 ## 説明
+
 ```
 mixed k2hpx_open_mem ([ int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 揮発性（メモリ）としてk2hashをオープンします。
 
 ## パラメータ

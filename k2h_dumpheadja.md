@@ -17,9 +17,11 @@ next_string: K2hash::dumpKeytable
 k2hashのヘッダを表示する
 
 ## 説明
+
 ```
  public bool K2hash::dumpHead ([ mixed $output ] )
 ```
+
 k2hashのヘッダを表示します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hashのヘッダを表示します。
 
 ## 例
 - 例 1 - ヘッダを出力する
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 ...
   Last area update {
@@ -61,6 +66,7 @@ if ($fp) {
     usec                    = 787684
   }
 ```
+
 
 ## 参考
 - [K2hash::dumpElementtable](k2h_dumpelementtableja.html) - k2hashのハッシュテーブル内部の要素などを表示する

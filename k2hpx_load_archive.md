@@ -17,9 +17,11 @@ next_string: k2hpx_load_debug_env
 Loads data from the file
 
 ## Description
+
 ```
 bool k2hpx_load_archive ( mixed $handle_res , string $filepath [, bool $errskip ] )
 ```
+
 Loads data from the file. The file should be either a transaction file or an archive file.
 
 ## Parameters

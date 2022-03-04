@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_offset
 データ長を取得する
 
 ## 説明
+
 ```
 int k2hpx_da_get_length ( mixed $dahandle_res )
 ```
+
 値のデータ長を取得します。 
 
 ### ヒント
@@ -34,6 +36,7 @@ k2hash ダイレクトアクセスハンドル（[k2hpx_da_get_handle](k2hpx_da_
 
 ## 例
 - 例 1 - データ長を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,10 +47,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 int(6)
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する

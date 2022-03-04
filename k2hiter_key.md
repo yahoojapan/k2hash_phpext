@@ -17,9 +17,11 @@ next_string: K2hIterator::next
 Gets key of the current K2hIterator item
 
 ## Description
+
 ```
 public stringfalseK2hIterator::key ( void )
 ```
+
 Gets the key in an array of k2hash keys. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Returns the key.
 
 ## Examples
 - Example 1 - Gets a key using [K2hIterator](k2hiter_class.html)
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -40,10 +43,13 @@ var_dump($k2hiter->key());
 unset($k2hiter);
 ?>
 ```
+
 The above example will output:
+
 ```
 string(5) "test2"
 ```
+
 
 ## See Also
 - [K2hIterator::current](k2hiter_current.html) - Gets value of the current K2hIterator item

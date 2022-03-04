@@ -17,9 +17,11 @@ next_string: K2hash::setTransactionThreadPool
 Sets the common attributes
 
 ## Description
+
 ```
  public bool K2hash::setCommonAttribute ([ int $is_mtime [, int $is_history [, int $is_encrypt [, string $passfile [, int $is_expire [, int $expire ]]]]]] )
 ```
+
 Sets the common attributes. See the attributes in the parameters section. 
 
 ## Parameters
@@ -41,6 +43,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets the common attributes
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -49,10 +52,13 @@ var_dump($k2hash->setCommonAttribute(K2H_ATTR_ENABLE, K2H_ATTR_ENABLE, K2H_ATTR_
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

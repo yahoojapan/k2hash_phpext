@@ -17,9 +17,11 @@ next_string:
 トランザクション処理用のスレッドを利用しない
 
 ## 説明
+
 ```
 bool k2hpx_unset_transaction_thread_pool ( void )
 ```
+
 トランザクション処理用のスレッドを利用しません。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: K2hash::printState
 Edit the k2hash file on temporary file system
 
 ## Description
+
 ```
  public bool K2hash::openTempfile ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 Opens the the k2hash (`.k2h`) file with read and write access on a temporary file system. 
 
 ## Parameters

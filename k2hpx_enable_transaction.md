@@ -17,9 +17,11 @@ next_string: k2hpx_find_first
 Starts a transaction
 
 ## Description
+
 ```
 bool k2hpx_enable_transaction ( mixed $handle_res [, stringnull $transfile [, stringnull $prefix [, stringnull $param [, int $expire ]]]] )
 ```
+
 Starts a transaction. 
 
 ## Parameters

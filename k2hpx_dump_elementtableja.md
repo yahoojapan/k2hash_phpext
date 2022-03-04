@@ -17,9 +17,11 @@ next_string: k2hpx_dump_full_keytable
 k2hashのハッシュテーブル内部の要素などを表示する
 
 ## 説明
+
 ```
 bool k2hpx_dump_elementtable ( mixed $handle_res [, mixed $output ] )
 ```
+
 k2hashのハッシュテーブル内部の要素などを表示します。k2hashのヘッダ、ハッシュテーブル、サブハッシュテーブルなども含まれます。 
 
 ## パラメータ

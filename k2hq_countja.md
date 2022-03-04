@@ -17,9 +17,11 @@ next_string: K2hQueue::dump
 キューにある要素の数を取得する
 
 ## 説明
+
 ```
 public intfalseK2hQueue::count ( void )
 ```
+
 キューにある要素の数を取得します。 
 
 ## パラメータ
@@ -30,6 +32,7 @@ public intfalseK2hQueue::count ( void )
 
 ## 例
 - 例 1 - キューからデータを取り出す
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -43,13 +46,16 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 int(0)
 int(1)
 string(15) "test_queue_data"
 int(0)
 ```
+
 
 ## 参考
 - [K2hQueue::pop](k2hq_popja.html) - キューから要素を取得する

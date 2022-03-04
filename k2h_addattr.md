@@ -17,9 +17,11 @@ next_string: K2hash::addAttrCryptPass
 Adds the attribute to the key
 
 ## Description
+
 ```
 public bool K2hash::addAttr ( string $key , string $attrkey , string $attrval )
 ```
+
 Adds the attribute to the key. Attributes represent configurations to keep timestamps of data modification, data encryptions or histories. 
 
 ## Parameters
@@ -35,6 +37,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Adds an attribute and get it
+
 ```
 <?php
 
@@ -47,10 +50,13 @@ var_dump($k2hash->getAttrValue("test", "testattr"));
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 string(13) "testattrvalue"
 ```
+
 
 ## See Also
 - [K2hash::addAttrCryptPass](k2h_addattrcryptpass.html) - Adds the password to encrypt values

@@ -17,6 +17,7 @@ next_string: k2hash Functions
 K2hIterator represents a pointer of an array of [K2HASH](https://k2hash.antpick.ax/) keys.  
 
 ## Class overview
+
 ```
 K2hIterator implements Iterator {
     public stringfalsecurrent ( void )
@@ -26,6 +27,7 @@ K2hIterator implements Iterator {
     public valid ( void ) : bool
 }
 ```
+
 
 ## Method list
 

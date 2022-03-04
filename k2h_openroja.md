@@ -17,9 +17,11 @@ next_string: K2hash::openRW
 k2hashファイルを 読み込む
 
 ## 説明
+
 ```
  public bool K2hash::openRO ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 読み取り専用でk2hファイルを開きます。 
 
 ## パラメータ

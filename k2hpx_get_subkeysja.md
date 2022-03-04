@@ -17,9 +17,11 @@ next_string: k2hpx_get_transaction_thread_pool
 キーに紐づけられたキー（サブキー）の一覧を取得する
 
 ## 説明
+
 ```
 array k2hpx_get_subkeys ( mixed $handle_res , string $key [, bool $attrcheck ] )
 ```
+
 キーに紐づけられたキー（サブキー）の一覧を取得します。 
 
 ## パラメータ

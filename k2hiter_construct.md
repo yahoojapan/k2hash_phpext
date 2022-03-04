@@ -17,9 +17,11 @@ next_string: K2hIterator::current
 Creates a K2hIterator instance
 
 ## Description
+
 ```
 public K2hIterator::__construct ( mixed $handle_res [, string $key ] )
 ```
+
 Creates a [K2hIterator](k2hiter_class.html) instance. [K2hIterator](k2hiter_class.html) represents a pointer of an array of k2hash keys. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Specifies the key to search for.
 
 ## Examples
 - Example 1 - Gets a [K2hIterator](k2hiter_class.html) instance
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,11 +47,14 @@ var_dump($k2hiter->key());
 unset($k2hiter);
 ?>
 ```
+
 The above example will output:
+
 ```
 string(5) "test1"
 string(3) "sub"
 ```
+
 
 ## See Also
 - [K2hash::getIterator](k2h_getiterator.html) - Gets a K2hIterator object

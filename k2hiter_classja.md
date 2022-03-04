@@ -17,6 +17,7 @@ next_string: k2hash Functions
 K2hIteratorは、[K2HASH](https://k2hash.antpick.ax/indexja.html)のキーの配列へのポインタを操作するクラスです。   
 
 ## Class 概要
+
 ```
 K2hIterator implements Iterator {
     public stringfalsecurrent ( void )
@@ -26,6 +27,7 @@ K2hIterator implements Iterator {
     public valid ( void ) : bool
 }
 ```
+
 
 ## メソッド一覧
 

@@ -17,9 +17,11 @@ next_string: K2hash::addSubkey
 ユーザ定義の動的ライブラリを追加する
 
 ## 説明
+
 ```
 public bool K2hash::addAttrPluginLib ( string $libfile )
 ```
+
 ユーザ定義の動的ライブラリを追加します。k2hashは、キーに対して任意の属性を付与できます。本メソッドは、ユーザ定義の動的ライブラリを追加し、キーに属性を追加します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ public bool K2hash::addAttrPluginLib ( string $libfile )
 
 ## 例
 - 例 1 - ユーザ定義の動的ライブラリを追加する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -39,10 +42,13 @@ var_dump($k2hash->addAttrPluginLib("/tmp/libk2htestattr.so"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

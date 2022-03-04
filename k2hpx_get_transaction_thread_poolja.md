@@ -17,9 +17,11 @@ next_string: k2hpx_get_value
 トランザクション処理用のスレッド数を取得する
 
 ## 説明
+
 ```
 int k2hpx_get_transaction_thread_pool ( void )
 ```
+
 トランザクション処理用のスレッド数を取得します。 
 
 ## パラメータ

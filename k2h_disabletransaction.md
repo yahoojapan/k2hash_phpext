@@ -17,9 +17,11 @@ next_string: K2hash::dumpElementtable
 Stops a transaction
 
 ## Description
+
 ```
  public bool K2hash::disableTransaction ( void )
 ```
+
 Stops a transaction. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Stops a transaction
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -38,10 +41,13 @@ var_dump($k2hash->disableTransaction());
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::enableTransaction](k2h_enabletransaction.html) - Starts a transaction

@@ -17,9 +17,11 @@ next_string: k2hpx_q_dump
 Counts elements in the K2hQueue object
 
 ## Description
+
 ```
 int k2hpx_q_count ( mixed $qhandle_res )
 ```
+
 Counts elements in the [K2hQueue](k2hq_class.html) object. 
 
 ## Parameters

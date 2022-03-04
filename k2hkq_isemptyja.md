@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::pop
 キューが空かどうかを判定する
 
 ## 説明
+
 ```
  public bool K2hKeyQueue::isEmpty ( void )
 ```
+
 キューが空かどうかを判定します。 
 
 ## パラメータ
@@ -30,6 +32,7 @@ next_string: K2hKeyQueue::pop
 
 ## 例
 - 例 1 - キューからデータを取り出す
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -43,7 +46,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 int(0)
 int(1)
@@ -55,3 +60,4 @@ array(2) {
 }
 int(0)
 ```
+

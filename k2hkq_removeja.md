@@ -17,9 +17,11 @@ next_string:
 キューから要素（キーと値のセット）を削除する
 
 ## 説明
+
 ```
  public bool K2hKeyQueue::remove ( int $count [, string $pass ] )
 ```
+
 キューから要素（キーと値のセット）を削除します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ next_string:
 
 ## 例
 - 例 1 - キューから要素を削除する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,12 +49,15 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 int(2)
 bool(true)
 int(1)
 ```
+
 
 ## 参考
 - [K2hKeyQueue::pop](k2hkq_popja.html) - キューから要素（キーと値のセット）を取得する

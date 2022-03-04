@@ -17,9 +17,11 @@ next_string: k2hpx_open_tempfile
 k2hashファイルを編集用にオープンする
 
 ## 説明
+
 ```
 mixed k2hpx_open_rw ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 編集可能な状態でk2hashファイルを開きます。 
 
 ## パラメータ

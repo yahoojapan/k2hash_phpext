@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_remove
 K2hKeyQueueキューの要素（キーと値のセット）を表示する
 
 ## 説明
+
 ```
 array k2hpx_keyq_read ( mixed $keyqhandle_res [, int $pos [, stringnull $pass ]] )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html) キューの要素（キーと値のセット）を表示します。キューから要素は削除されません。 
 
 ### 注意

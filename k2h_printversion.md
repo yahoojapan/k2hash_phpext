@@ -17,9 +17,11 @@ next_string: K2hash::putArchive
 Prints the k2hash library version
 
 ## Description
+
 ```
  public static bool K2hash::printVersion ([ mixed $output ] )
 ```
+
 Prints the k2hash library version. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure
 
 ## Examples
 - Example 1 - Prints the library version
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -49,7 +52,9 @@ if ($fp) {
 }
 ?>
 ```
+
 The above example will output:
+
 ```
 K2HASH library Version 1.0.83 (commit: 143975d) with NSS
 
@@ -69,3 +74,4 @@ Copyright(C) 2015 Yahoo Japan Corporation.
 FULLOCK is fast locking library on user level by Yahoo! JAPAN.
 FULLOCK is following specifications.
 ```
+

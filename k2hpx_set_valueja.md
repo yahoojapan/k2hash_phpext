@@ -17,9 +17,11 @@ next_string: k2hpx_transaction
 キーに値を設定する
 
 ## 説明
+
 ```
 bool k2hpx_set_value ( mixed $handle_res , string $key , string $value [, stringnull $subkey [, stringnull $pass [, int $expire ]]] )
 ```
+
 キーに値を設定します。 
 
 ## パラメータ

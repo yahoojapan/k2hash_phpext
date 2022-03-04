@@ -17,9 +17,11 @@ next_string: k2hpx_open_mem
 トランザクション用ライブラリを読み込む
 
 ## 説明
+
 ```
 bool k2hpx_load_transaction_library ( string $libpath )
 ```
+
 
 
 ## パラメータ
@@ -31,15 +33,19 @@ bool k2hpx_load_transaction_library ( string $libpath )
 
 ## 例
 - 例 1 - トランザクション用ライブラリを読み込む
+
 ```
 <?php
 var_dump(k2hpx_load_transaction_library("/usr/lib/libk2htestlib.so"));
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [k2hpx_unload_transaction_library](k2hpx_unload_transaction_libraryja.html) - トランザクション用ライブラリを無効にする

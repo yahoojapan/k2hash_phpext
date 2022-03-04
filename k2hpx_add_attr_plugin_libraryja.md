@@ -17,9 +17,11 @@ next_string: k2hpx_add_attr
 ユーザ定義の動的ライブラリを追加する
 
 ## 説明
+
 ```
 bool k2hpx_add_attr_plugin_library ( mixed $handle_res , string $libfile )
 ```
+
 ユーザ定義の動的ライブラリを追加します。k2hashは、キーに対して任意の属性を付与できます。本メソッドは、ユーザ定義の動的ライブラリを追加し、キーに属性を追加します。 
 
 ## パラメータ

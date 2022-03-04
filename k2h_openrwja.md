@@ -17,9 +17,11 @@ next_string: K2hash::openTempfile
 k2hashファイルを編集するためにオープンする
 
 ## 説明
+
 ```
  public bool K2hash::openRW ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 編集可能な状態でk2hashファイルを開きます。 
 
 ## パラメータ

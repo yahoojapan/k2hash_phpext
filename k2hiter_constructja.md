@@ -17,9 +17,11 @@ next_string: K2hIterator::current
 新しい K2hIterator オブジェクトを作成する
 
 ## 説明
+
 ```
 public K2hIterator::__construct ( mixed $handle_res [, string $key ] )
 ```
+
 新しい [K2hIterator](k2hiter_classja.html) オブジェクトを作成します。このオブジェクトは、k2hashのキーの配列へのポインタです。 
 
 ## パラメータ
@@ -30,6 +32,7 @@ k2hファイルハンドル
 
 ## 例
 - 例 1 - [K2hIterator](k2hiter_classja.html)を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,11 +47,14 @@ var_dump($k2hiter->key());
 unset($k2hiter);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(5) "test1"
 string(3) "sub"
 ```
+
 
 ## 参考
 - [K2hash::getIterator](k2h_getiteratorja.html) - K2hIteratorオブジェクトを取得する

@@ -18,6 +18,7 @@ K2hashクラスは、[K2HASH](https://k2hash.antpick.ax/indexja.html)を操作�
 使い方は、各メソッドの説明ページを参照してください。
 
 ## Class 概要
+
 ```
 K2hash {
     public addAttr ( string $key , string $attrkey , string $attrval ) : bool
@@ -65,6 +66,7 @@ K2hash {
     public static unsetTransactionThreadPool ( void ) : bool
 }
 ```
+
 
 ## メソッド一覧
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

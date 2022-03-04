@@ -17,9 +17,11 @@ next_string: k2hpx_print_attr_version
 Prints the attribute information
 
 ## Description
+
 ```
 bool k2hpx_print_attr_information ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints the attribute information. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Prints the attribute information
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -42,7 +45,10 @@ fclose($fp);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 K2HASH attribute libraries:  K2H ATTR BUILTIN
 ```
+

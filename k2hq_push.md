@@ -17,9 +17,11 @@ next_string: K2hQueue::read
 Adds a value to the K2hQueue
 
 ## Description
+
 ```
  public bool K2hQueue::push ( string $datavalue [, string $pass [, int $expire ]] )
 ```
+
 Adds a value to the [K2hQueue](k2hq_class.html). 
 
 ## Parameters
@@ -35,6 +37,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Adds a value to a [K2hQueue](k2hq_class.html) instance
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -45,11 +48,14 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 string(16) "test_queue_value"
 ```
+
 
 ## See Also
 - [K2hQueue::pop](k2hq_pop.html) - Removes and returns the removed element from the K2hQueue

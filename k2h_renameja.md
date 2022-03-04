@@ -17,9 +17,11 @@ next_string: K2hash::setCommonAttribute
 キー名を変更する
 
 ## 説明
+
 ```
  public bool K2hash::rename ( string $key , string $newkey )
 ```
+
 キー名を変更します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ next_string: K2hash::setCommonAttribute
 
 ## 例
 - 例 1 - キー名を変更する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -42,11 +45,14 @@ var_dump($k2hash->rename("test1", "test2"));
 var_dump($k2hash->getValue("test2"));
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 string(5) "value"
 ```
+
 
 ## 参考
 - [K2hash::getValue](k2h_getvalueja.html) - 値を取得する

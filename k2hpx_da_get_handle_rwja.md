@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_handle_write
 ダイレクトアクセスハンドル(データ編集用)を取得する
 
 ## 説明
+
 ```
 mixed k2hpx_da_get_handle_rw ( mixed $handle_res , string $key )
 ```
+
 ダイレクトアクセスハンドル(データ編集用)を取得します。 
 
 ### ヒント
@@ -36,6 +38,7 @@ k2hash (`.k2h`) ファイルハンドル。 k2hpx_open 関数の戻り値。
 
 ## 例
 - 例 1 - ダイレクトアクセスハンドル(データ編集用)を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -46,10 +49,13 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 resource(5) of type (k2hdahandle)
 ```
+
 
 ## 参考
 - [k2hpx_da_free](k2hpx_da_freeja.html) - データアクセスハンドルを解放する

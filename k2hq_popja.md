@@ -17,9 +17,11 @@ next_string: K2hQueue::push
 キューから要素を取得する
 
 ## 説明
+
 ```
 public stringfalseK2hQueue::pop ([ string $pass ] )
 ```
+
 キューから要素を取得します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ public stringfalseK2hQueue::pop ([ string $pass ] )
 
 ## 例
 - 例 1 - キューから要素を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -41,7 +44,9 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 array(2) {
   [0]=>
@@ -49,7 +54,8 @@ array(2) {
 }
 ```
 
+
 ## 参考
-- [K2hQueue::push](k2hq_push.html) - Adds a value to the K2hQueue
-- [K2hQueue::read](k2hq_read.html) - Returns a key/value pair from the K2hQueue
-- [K2hQueue::remove](k2hq_remove.html) - Removes a value from the K2hQueue
+- [K2hQueue::push](k2hq_pushja.html) - キューに要素を追加する
+- [K2hQueue::read](k2hq_readja.html) - キューの要素を表示する
+- [K2hQueue::remove](k2hq_removeja.html) - キューから要素を削除する

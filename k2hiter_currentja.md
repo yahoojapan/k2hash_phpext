@@ -17,9 +17,11 @@ next_string: K2hIterator::key
 配列内の現在の要素を取得する
 
 ## 説明
+
 ```
 public stringfalseK2hIterator::current ( void )
 ```
+
 k2hashのキー配列内の現在の要素の値を取得します。 
 
 ## パラメータ
@@ -30,6 +32,7 @@ k2hashのキー配列内の現在の要素の値を取得します。
 
 ## 例
 - 例 1 - k2hashのキー配列内の現在の要素の値を取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -43,7 +46,9 @@ var_dump($k2hiter->current());
 var_dump($k2hiter->key());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(6) "value1"
 string(5) "test1"
@@ -51,6 +56,7 @@ NULL
 string(6) "value2"
 string(5) "test2"
 ```
+
 
 ## 参考
 - [K2hIterator::key](k2hiter_keyja.html) - 配列からキーを取得する

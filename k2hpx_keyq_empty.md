@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_free
 Returns whether the K2hKeyQueue is empty
 
 ## Description
+
 ```
 bool k2hpx_keyq_empty ( mixed $keyqhandle_res )
 ```
+
 Returns where the [K2hKeyQueue](k2hkq_class.html) is empty. 
 
 ## Parameters
@@ -30,4 +32,4 @@ Specifies the [K2hKeyQueue](k2hkq_class.html) file handle that [k2hpx_keyq_handl
 Returns true if the [K2hKeyQueue](k2hkq_class.html) object is empty, otherwise false.
 
 ## See Also
-- [K2hQueue::isEmpty](k2hq_isEmpty.html) - Returns whether the K2hQueue is empty
+- [K2hQueue::isEmpty](k2hq_isempty.html) - Returns whether the K2hQueue is empty

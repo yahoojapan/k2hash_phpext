@@ -17,9 +17,11 @@ next_string: k2hpx_print_attr_version
 属性情報を表示する
 
 ## 説明
+
 ```
 bool k2hpx_print_attr_information ( mixed $handle_res [, mixed $output ] )
 ```
+
 属性情報を表示します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ k2hash (`.k2h`) ファイルハンドル。 [k2hpx_open](k2hpx_openja.html) 関�
 
 ## 例
 - 例 1 - 属性情報を表示する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -42,7 +45,10 @@ fclose($fp);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 K2HASH attribute libraries:  K2H ATTR BUILTIN
 ```
+

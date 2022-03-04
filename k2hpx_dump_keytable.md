@@ -17,9 +17,11 @@ next_string: k2hpx_enable_transaction
 Prints the k2hash's hash tables
 
 ## Description
+
 ```
 bool k2hpx_dump_keytable ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints the k2hash's hash tables including k2hash headers. 
 
 ## Parameters

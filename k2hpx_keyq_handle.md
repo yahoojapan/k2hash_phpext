@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_pop
 Gets the K2hKeyQueue file handle
 
 ## Description
+
 ```
 mixed k2hpx_keyq_handle ( mixed $handle_res [, bool $is_filo [, stringnull $prefix ]] )
 ```
+
 Gets the [K2hKeyQueue](k2hkq_class.html) handle. 
 
 ## Parameters
@@ -35,6 +37,7 @@ Returns the [K2hKeyQueue](k2hkq_class.html) file handle.
 
 ## Examples
 - Example 1 - Gets the [K2hKeyQueue](k2hkq_class.html) file handle
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,10 +47,13 @@ k2hpx_keyq_free($keyqhandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 resource(5) of type (k2hkeyqhandle)
 ```
+
 
 ## See Also
 - [K2hQueue::__construct](k2hq_construct.html) - Creates a K2hQueue instance

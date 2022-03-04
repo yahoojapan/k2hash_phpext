@@ -17,9 +17,11 @@ next_string: k2hpx_remove
 Removes the key and the keys linked with the key
 
 ## Description
+
 ```
 bool k2hpx_remove_all ( mixed $handle_res , string $key )
 ```
+
 Removes the key and the keys linked with the key. 
 
 ## Parameters

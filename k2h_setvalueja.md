@@ -17,9 +17,11 @@ next_string: K2hash::transaction
 キーに値を設定する
 
 ## 説明
+
 ```
  public bool K2hash::setValue ( string $key , string $value [, string $subkey [, string $pass [, int $expire ]]] )
 ```
+
 キーに値を設定します。
 
 ## パラメータ
@@ -39,6 +41,7 @@ next_string: K2hash::transaction
 
 ## 例
 - 例 1 - キーに値を設定する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -48,10 +51,13 @@ var_dump($k2hash->getValue("key1"));
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(6) "value1"
 ```
+
 
 ## 参考
 - [K2hash::getValue](k2h_getvalueja.html) - 値を取得する

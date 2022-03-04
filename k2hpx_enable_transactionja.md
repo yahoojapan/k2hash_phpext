@@ -17,9 +17,11 @@ next_string: k2hpx_find_first
 トランザクションを開始する
 
 ## 説明
+
 ```
 bool k2hpx_enable_transaction ( mixed $handle_res [, stringnull $transfile [, stringnull $prefix [, stringnull $param [, int $expire ]]]] )
 ```
+
 トランザクションを開始します。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_handle_read
 データアクセスハンドルを解放する
 
 ## 説明
+
 ```
 bool k2hpx_da_free ( mixed $dahandle_res )
 ```
+
 ダイレクトアクセスハンドルを解放します。
 
 ### ヒント

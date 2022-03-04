@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_read
 K2hKeyQueueキューに要素（キーと値のセット）を追加する
 
 ## 説明
+
 ```
 bool k2hpx_keyq_push ( mixed $keyqhandle_res , string $key , string $value [, stringnull $pass [, int $expire ]] )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html) キューに要素（キーと値のセット）を追加します。
 
 ## パラメータ

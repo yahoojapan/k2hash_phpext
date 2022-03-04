@@ -17,9 +17,11 @@ next_string: k2hpx_rename
 Removes the key
 
 ## Description
+
 ```
 bool k2hpx_remove ( mixed $handle_res , string $key [, stringnull $subkey ] )
 ```
+
 Removes the key. 
 
 ## Parameters

@@ -17,9 +17,11 @@ next_string: k2hpx_da_free
 k2hashファイルを作成する
 
 ## 説明
+
 ```
 bool k2hpx_create ( string $filepath [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 k2hashファイルを作成します。 
 
 ## パラメータ

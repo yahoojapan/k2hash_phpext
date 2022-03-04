@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_read_offset
 Sets the offset to modify the data
 
 ## Description
+
 ```
 int 2hpx_da_set_offset ( mixed $dahandle_res , array $offsets )
 ```
+
 
 ### Note
 The [k2hash direct access](https://pages.ghe.corp.yahoo.co.jp/yjcore/k2hash_phpext/en/function.k2hpx-da-free.html) handle is a handler to provide quick access to the specific part of large data using offset. 
@@ -35,6 +37,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets the offset to modify the data
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -48,7 +51,9 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 array(2) {
   [0]=>
@@ -64,6 +69,7 @@ array(2) {
   int(20)
 }
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

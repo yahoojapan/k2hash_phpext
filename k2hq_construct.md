@@ -17,9 +17,11 @@ next_string: K2hQueue::count
 Creates a K2hQueue instance
 
 ## Description
+
 ```
 public K2hQueue::__construct ( mixed $handle_res [, bool $is_fifo [, string $prefix ]] )
 ```
+
 Creates a [K2hQueue](k2hq_class.html) instance. 
 
 ## Parameters
@@ -32,6 +34,7 @@ Specifies the prefix of the [K2hQueue](k2hq_class.html).
 
 ## Examples
 - Example 1 - Creates a [K2hQueue](k2hq_class.html) instance
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -45,13 +48,16 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 int(0)
 int(1)
 string(15) "test_queue_data"
 int(0)
 ```
+
 
 ## See Also
 - [K2hash::getQueue](k2h_getqueue.html) - Gets a K2hQueue object

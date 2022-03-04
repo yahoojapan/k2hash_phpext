@@ -17,9 +17,11 @@ next_string: K2hash::remove
 k2hashファイルをアーカイブファイルとして保存する
 
 ## 説明
+
 ```
  public bool K2hash::putArchive ( string $filepath [, bool $errskip ] )
 ```
+
 k2hashファイルをアーカイブファイルとして保存します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ k2hashファイルをアーカイブファイルとして保存します。
 
 ## 例
 - 例 1 - アーカイブファイルの作成とロード
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -48,11 +51,14 @@ var_dump($k2hash2->getValue("key1"));
 $k2hash2->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 string(6) "value1"
 ```
+
 
 ## 参考
 - [K2hash::loadArchive](k2h_loadarchiveja.html) - ファイルからデータをロードする

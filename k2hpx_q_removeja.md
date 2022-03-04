@@ -17,9 +17,11 @@ next_string: k2hpx_remove_all
 K2hQueueキューから要素を削除する
 
 ## 説明
+
 ```
 bool k2hpx_q_remove ( mixed $qhandle_res , int $count [, stringnull $pass ] )
 ```
+
 [K2hQueue](k2hq_classja.html) キューから要素（値）を削除します。 
 
 ## パラメータ

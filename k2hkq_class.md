@@ -18,6 +18,7 @@ K2hKeyQueue represents a queue that holds key/value pairs by using [K2HASH](http
 Elements in K2hKeyQueue are ordered in FIFO of LIFO manner.  
 
 ## Class overview
+
 ```
 K2hKeyQueue {
     public count ( void ) : int
@@ -30,13 +31,14 @@ K2hKeyQueue {
 }
 ```
 
+
 ## Method list
 
-- [K2hKeyQueue::__construct](k2hkq_constructja.html) - Creates a K2hKeyQueue instance
-- [K2hKeyQueue::count](k2hkq_countja.html) - Counts elements in the K2hKeyQueue object
-- [K2hKeyQueue::dump](k2hkq_dumpja.html) - Prints the elements in the K2hKeyQueue object
-- [K2hKeyQueue::isEmpty](k2hkq_isEmptyja.html) - Returns whether the K2hKeyQueue is empty
-- [K2hKeyQueue::pop](k2hkq_popja.html) - Removes and returns the removed element from the K2hKeyQueue
-- [K2hKeyQueue::push](k2hkq_pushja.html) - Adds a key/value pair to the K2hKeyQueue
-- [K2hKeyQueue::read](k2hkq_readja.html) - Returns a key/value pair from the K2hKeyQueue
-- [K2hKeyQueue::remove](k2hkq_removeja.html) - Removes a key/value pair from the K2hKeyQueue
+- [K2hKeyQueue::__construct](k2hkq_construct.html) - Creates a K2hKeyQueue instance
+- [K2hKeyQueue::count](k2hkq_count.html) - Counts elements in the K2hKeyQueue object
+- [K2hKeyQueue::dump](k2hkq_dump.html) - Prints the elements in the K2hKeyQueue object
+- [K2hKeyQueue::isEmpty](k2hkq_isempty.html) - Returns whether the K2hKeyQueue is empty
+- [K2hKeyQueue::pop](k2hkq_pop.html) - Removes and returns the removed element from the K2hKeyQueue
+- [K2hKeyQueue::push](k2hkq_push.html) - Adds a key/value pair to the K2hKeyQueue
+- [K2hKeyQueue::read](k2hkq_read.html) - Returns a key/value pair from the K2hKeyQueue
+- [K2hKeyQueue::remove](k2hkq_remove.html) - Removes a key/value pair from the K2hKeyQueue

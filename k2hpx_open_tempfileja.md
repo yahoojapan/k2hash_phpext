@@ -17,9 +17,11 @@ next_string: k2hpx_open
 一時ファイルとしてk2hashファイルをオープンする
 
 ## 説明
+
 ```
 mixed k2hpx_open_tempfile ( string $filepath [, bool $fullmap [, int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]]] )
 ```
+
 一時ファイルとして、k2hashファイルを開きます。 
 
 ## パラメータ

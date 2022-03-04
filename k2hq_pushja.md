@@ -17,9 +17,11 @@ next_string: K2hQueue::read
 キューに要素を追加する
 
 ## 説明
+
 ```
  public bool K2hQueue::push ( string $datavalue [, string $pass [, int $expire ]] )
 ```
+
 キューに要素を追加します。
 
 ## パラメータ
@@ -35,6 +37,7 @@ next_string: K2hQueue::read
 
 ## 例
 - 例 1 - キューの要素を表示する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -45,13 +48,16 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 string(16) "test_queue_value"
 ```
 
+
 ## 参考
-- [K2hQueue::pop](k2hq_pop.html) - Removes and returns the removed element from the K2hQueue
-- [K2hQueue::read](k2hq_read.html) - Returns a key/value pair from the K2hQueue
-- [K2hQueue::remove](k2hq_remove.html) - Removes a value from the K2hQueue
+- [K2hQueue::pop](k2hq_popja.html) - キューから要素を取得する
+- [K2hQueue::read](k2hq_readja.html) - キューの要素を表示する
+- [K2hQueue::remove](k2hq_removeja.html) - キューから要素を削除する

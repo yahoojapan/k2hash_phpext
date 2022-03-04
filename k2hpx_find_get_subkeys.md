@@ -17,9 +17,11 @@ next_string: k2hpx_find_get_value
 Gets keys using the k2hash file handle to search for keys with linked with each key
 
 ## Description
+
 ```
 array k2hpx_find_get_subkeys ( mixed $findhandle_res )
 ```
+
 Gets keys using the k2hash file handle to search for keys with linked with each key. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns an array of keys that is lnked with each keys.
 
 ## Examples
 - Example 1 - Gets keys using the k2hash file handle to search for keys with linked with each key
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,7 +47,9 @@ k2hpx_find_free($findhandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 resource(5) of type (k2hfindhandle)
 array(1) {
@@ -52,6 +57,7 @@ array(1) {
   string(7) "subkey1"
 }
 ```
+
 
 ## See Also
 - [k2hpx_find_first](k2hpx_find_first.html) - Gets the k2h file handle to search for the key

@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_handle
 Frees resources of the K2hKeyQueue handle
 
 ## Description
+
 ```
 bool k2hpx_keyq_free ( mixed $keyqhandle_res )
 ```
+
 Frees resources of the [K2hKeyQueue](k2hkq_class.html) file handle. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Frees resource of the [K2hKeyQueue](k2hkq_class.html) file handle
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -39,7 +42,10 @@ var_dump(k2hpx_keyq_free($keyqhandle));
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+

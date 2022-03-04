@@ -17,9 +17,11 @@ next_string: k2hpx_unload_transaction_library
 Removes the user-defined hash library
 
 ## Description
+
 ```
 bool k2hpx_unload_hash_library ( void )
 ```
+
 Removes the user-defined hash library that is added by k2hpx_load_hash_library. 
 
 ## Parameters
@@ -30,15 +32,19 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Removes the user-defined hash library
+
 ```
 <?php
 var_dump(k2hpx_unload_hash_library());
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [k2hpx_load_hash_library](k2hpx_load_hash_library.html) - Loads hash functions from the file

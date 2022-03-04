@@ -17,9 +17,11 @@ next_string: K2hash::getValue
 トランザクション処理用のスレッド数を取得する
 
 ## 説明
+
 ```
  public static int K2hash::getTransactionThreadPool ( void )
 ```
+
 トランザクション処理用のスレッド数を取得します。 
 
 ## パラメータ
@@ -30,15 +32,19 @@ next_string: K2hash::getValue
 
 ## 例
 - 例 1 - トランザクション処理用スレッド数を取得する
+
 ```
 <?php
 var_dump(K2hash::gettransactionThreadPool());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 int(0)
 ```
+
 
 ## 参考
 - [K2hash::setTransactionThreadPool](k2h_settransactionthreadpoolja.html) - トランザクション処理用のスレッド数を設定する

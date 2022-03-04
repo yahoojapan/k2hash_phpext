@@ -17,9 +17,11 @@ next_string: k2hpx_print_state
 Prints the attribute library version
 
 ## Description
+
 ```
 bool k2hpx_print_attr_version ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints the attribute library version. 
 
 ## Parameters

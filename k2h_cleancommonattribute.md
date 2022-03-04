@@ -17,9 +17,11 @@ next_string: K2hash::close
 Initializes the common attributes
 
 ## Description
+
 ```
 public bool K2hash::cleanCommonAttribute ( void )
 ```
+
 Initializes the common attributes.
 Common attributes are:
 - mtime  
@@ -39,6 +41,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Initializes the common attribute
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -47,10 +50,13 @@ var_dump($k2hash->cleanCommonAttribute());
 $k2hash->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+
 
 ## See Also
 - [K2hash::addAttr](k2h_addattr.html) - Adds the attribute to the key

@@ -74,7 +74,7 @@ The [K2hQueue](k2hq_class.html) class provides the methods shown below.
 - [K2hQueue::__construct](k2hq_construct.html) - Creates a K2hQueue instance
 - [K2hQueue::count](k2hq_count.html) - Counts elements in the K2hQueue object
 - [K2hQueue::dump](k2hq_dump.html) - Prints the elements in the K2hQueue object
-- [K2hQueue::isEmpty](k2hq_isEmpty.html) - Returns whether the K2hQueue is empty
+- [K2hQueue::isEmpty](k2hq_isempty.html) - Returns whether the K2hQueue is empty
 - [K2hQueue::pop](k2hq_pop.html) - Removes and returns the removed element from the K2hQueue
 - [K2hQueue::push](k2hq_push.html) - Adds a value to the K2hQueue
 - [K2hQueue::read](k2hq_read.html) - Returns a key/value pair from the K2hQueue
@@ -87,7 +87,7 @@ The [K2hKeyQueue](k2hkq_class.html) class provides the methods shown below.
 - [K2hKeyQueue::__construct](k2hkq_construct.html) - Creates a K2hKeyQueue instance
 - [K2hKeyQueue::count](k2hkq_count.html) - Counts elements in the K2hKeyQueue object
 - [K2hKeyQueue::dump](k2hkq_dump.html) - Prints the elements in the K2hKeyQueue object
-- [K2hKeyQueue::isEmpty](k2hkq_isEmpty.html) - Returns whether the K2hKeyQueue is empty
+- [K2hKeyQueue::isEmpty](k2hkq_isempty.html) - Returns whether the K2hKeyQueue is empty
 - [K2hKeyQueue::pop](k2hkq_pop.html) - Removes and returns the removed element from the K2hKeyQueue
 - [K2hKeyQueue::push](k2hkq_push.html) - Adds a key/value pair to the K2hKeyQueue
 - [K2hKeyQueue::read](k2hkq_read.html) - Returns a key/value pair from the K2hKeyQueue

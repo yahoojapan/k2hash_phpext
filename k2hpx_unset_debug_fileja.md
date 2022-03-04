@@ -17,9 +17,11 @@ next_string: k2hpx_unset_transaction_thread_pool
 ログ出力先を標準エラーに指定する
 
 ## 説明
+
 ```
 void k2hpx_unset_debug_file ( void )
 ```
+
 ログ出力先を標準エラーに指定します。 
 
 ## パラメータ
@@ -27,16 +29,20 @@ void k2hpx_unset_debug_file ( void )
 
 ## 例
 - 例 1 - ログ出力先を標準エラーにする
+
 ```
 <?php
 var_dump(k2hpx_unset_debug_file());
 ?>
 
 ```
+
 上の例の出力は以下となります。
+
 ```
 NULL
 ```
+
 
 ## 参考
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_levelja.html) - ログレベルを変更する

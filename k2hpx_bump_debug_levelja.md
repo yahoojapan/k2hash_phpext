@@ -17,9 +17,11 @@ next_string: k2hpx_clean_common_attr
 ログレベルを変更する
 
 ## 説明
+
 ```
 void k2hpx_bump_debug_level ( void )
 ```
+
 ログレベルを変更します。ログレベルは、関数が呼ばれるごとに変わります。順番は、error -> warning -> message(info) -> dump(debug) -> silent(出力しない) の順番です。silentの状態で呼ばれると、errorになります。PHPのログレベルにあたる、emergency, alert, noticeは未定義です。 
 
 ## パラメータ
@@ -30,15 +32,19 @@ void k2hpx_bump_debug_level ( void )
 
 ## 例
 - 例 1 - ログレベルを変更する
+
 ```
 <?php
 var_dump(k2hpx_bump_debug_level());
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 NULL
 ```
+
 
 ## 参考
 - [k2hpx_set_common_attr](k2hpx_set_common_attrja.html) - キーの基本属性を設定する

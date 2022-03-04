@@ -17,9 +17,11 @@ next_string: K2hash::getKeyQueue
 Gets a K2hIterator object
 
 ## Description
+
 ```
  public mixed K2hash::getIterator ( string $key )
 ```
+
 Gets a [K2hIterator](k2hiter_class.html) object that points to the first element of keys. [K2hIterator](k2hiter_class.html) is a class to handle the array of k2hash keys. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns a [K2hIterator](k2hiter_class.html) object.
 
 ## Examples
 - Example 1 - Gets a [K2hIterator](k2hiter_class.html) object
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -46,10 +49,13 @@ foreach($iterator as $val){
 echo $count;
 ?>
 ```
+
 The above example will output:
+
 ```
 3
 ```
+
 
 ## See Also
 - [K2hIterator::__construct](k2hiter_construct.html) - Creates a K2hIterator instance

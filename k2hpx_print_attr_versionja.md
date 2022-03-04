@@ -17,9 +17,11 @@ next_string: k2hpx_print_state
 属性のライブラリバージョン情報を表示する
 
 ## 説明
+
 ```
 bool k2hpx_print_attr_version ( mixed $handle_res [, mixed $output ] )
 ```
+
 属性のライブラリバージョン情報を表示します。 
 
 ## パラメータ

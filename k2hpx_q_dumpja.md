@@ -17,9 +17,11 @@ next_string: k2hpx_q_empty
 K2hQueueキューにある要素を表示する
 
 ## 説明
+
 ```
 bool k2hpx_q_dump ( mixed $qhandle_res [, mixed $output ] )
 ```
+
 [K2hQueue](k2hq_classja.html)キューにある要素を表示します。 
 
 ## パラメータ

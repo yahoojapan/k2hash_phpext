@@ -17,9 +17,11 @@ next_string: k2hpx_set_value
 トランザクション処理用のスレッド数を設定する
 
 ## 説明
+
 ```
 bool k2hpx_set_transaction_thread_pool ( int $count )
 ```
+
 トランザクション処理用のスレッド数を設定します。 
 
 ## パラメータ

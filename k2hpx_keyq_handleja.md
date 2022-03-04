@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_pop
 K2hKeyQueueハンドルを取得する
 
 ## 説明
+
 ```
 mixed k2hpx_keyq_handle ( mixed $handle_res [, bool $is_filo [, stringnull $prefix ]] )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html) ハンドルを取得します。
 
 ## パラメータ
@@ -35,6 +37,7 @@ k2hash (`.k2h`) ファイルハンドル。 [k2hpx_open](k2hpx_openja.html) 関�
 
 ## 例
 - 例 1 - [K2hKeyQueue](k2hkq_classja.html)ハンドルを取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -44,10 +47,13 @@ k2hpx_keyq_free($keyqhandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 resource(5) of type (k2hkeyqhandle)
 ```
+
 
 ## 参考
 - [K2hKeyQueue::__construct](k2hkq_constructja.html) - 新しいK2hKeyQueueオブジェクトを作成する

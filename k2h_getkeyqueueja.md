@@ -17,9 +17,11 @@ next_string: K2hash::getQueue
 K2hKeyQueueオブジェクトを取得する
 
 ## 説明
+
 ```
  public mixed K2hash::getKeyQueue ([ bool $is_filo [, string $prefix ]] )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html)オブジェクトを取得します。[K2hKeyQueue](k2hkq_classja.html)は、k2hashを利用したキューを操作するクラスです。キューには、キーと値を一つの要素として格納します。 
 
 ## パラメータ
@@ -32,4 +34,4 @@ FIFO(先入先出し)キューならtrue、そうでなければ、false
 [K2hKeyQueue](k2hkq_classja.html)オブジェクト 
 
 ## 参考
-- [K2hKeyQueue::__construct](k2hkq_construct.html) - 新しいK2hKeyQueueオブジェクトを作成する
+- [K2hKeyQueue::__construct](k2hkq_constructja.html) - 新しいK2hKeyQueueオブジェクトを作成する

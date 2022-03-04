@@ -17,9 +17,11 @@ next_string: k2hpx_load_hash_library
 Loads environment variables
 
 ## Description
+
 ```
 bool k2hpx_load_debug_env ( void )
 ```
+
 Loads environment variables.
 
 ## Parameters
@@ -30,12 +32,16 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Loads environment variables
+
 ```
 <?php
 var_dump(k2hpx_load_debug_env());
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+

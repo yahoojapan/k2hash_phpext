@@ -17,9 +17,11 @@ next_string: k2hpx_get_value
 Gets the number of transaction workers
 
 ## Description
+
 ```
 int k2hpx_get_transaction_thread_pool ( void )
 ```
+
 Gets the number of transaction workers. 
 
 ## Parameters

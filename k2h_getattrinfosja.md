@@ -17,9 +17,11 @@ next_string: K2hash::getAttrs
 属性を取得する
 
 ## 説明
+
 ```
  public bool K2hash::getAttrInfos ([ mixed $output ] )
 ```
+
 属性を取得します。属性とは、キーに対する設定（更新時刻保持の有無、暗号化の有無、履歴情報保持の有無など）です。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ next_string: K2hash::getAttrs
 
 ## 例
 - 例 1 - 属性を追加し、取得する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -51,10 +54,13 @@ if ($fp) {
 }
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 K2HASH attribute libraries:  K2H ATTR BUILTIN
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

@@ -17,9 +17,11 @@ next_string: k2hpx_print_version
 Prints k2hash data statistics
 
 ## Description
+
 ```
 bool k2hpx_print_state ( mixed $handle_res [, mixed $output ] )
 ```
+
 Prints k2hash data statistics. 
 
 ## Parameters

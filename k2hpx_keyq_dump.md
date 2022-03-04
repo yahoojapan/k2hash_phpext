@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_empty
 Gets the elements in the K2hKeyQueue object
 
 ## Description
+
 ```
 bool k2hpx_keyq_dump ( mixed $keyqhandle_res [, mixed $output ] )
 ```
+
 Gets the elements in the [K2hKeyQueue](k2hkq_class.html) object. 
 
 ## Parameters

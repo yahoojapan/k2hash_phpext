@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::isEmpty
 Prints the elements in the K2hKeyQueue object
 
 ## Description
+
 ```
  public bool K2hKeyQueue::dump ([ mixed $output ] )
 ```
+
 Gets the elements in the [K2hKeyQueue](k2hkq_class.html) object. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Gets the elements in the [K2hKeyQueue](k2hkq_class.html) object
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -53,7 +56,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 MARKER(test_queue_MARKER)= {
@@ -62,3 +67,4 @@ MARKER(test_queue_MARKER)= {
 }
 [0]                    = test_queue_00000000000071EC_0000000061D9D54D_0000000031DD32D2
 ```
+

@@ -17,9 +17,11 @@ next_string: k2hpx_add_subkey
 Adds the attribute to the key
 
 ## Description
+
 ```
  bool k2hpx_add_attr ( mixed $handle_res , string $key , string $attrkey , string $attrval )
 ```
+
 Adds the attribute to the key. Attributes represent configurations to keep timestamps of data modification, data encryptions or histories. 
 
 ## Parameters

@@ -17,9 +17,11 @@ next_string: k2hpx_q_free
 K2hQueueキューが空かどうかを判定する
 
 ## 説明
+
 ```
 bool k2hpx_q_empty ( mixed $qhandle_res )
 ```
+
 [K2hQueue](k2hq_classja.html) キューが空かどうかを判定します。 
 
 ## パラメータ
@@ -30,4 +32,4 @@ bool k2hpx_q_empty ( mixed $qhandle_res )
 [K2hQueue](k2hq_classja.html) キューが空の場合は、true。そうでなければ、false 
 
 ## 参考
-- [K2hQueue::isEmpty](k2hq_isEmptyja.html) - キューが空かどうかを判定する
+- [K2hQueue::isEmpty](k2hq_isemptyja.html) - キューが空かどうかを判定する

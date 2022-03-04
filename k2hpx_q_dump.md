@@ -17,9 +17,11 @@ next_string: k2hpx_q_empty
 Prints the elements in the K2hQueue object
 
 ## Description
+
 ```
 bool k2hpx_q_dump ( mixed $qhandle_res [, mixed $output ] )
 ```
+
 Prints the elements in the [K2hQueue](k2hq_class.html) object. 
 
 ## Parameters

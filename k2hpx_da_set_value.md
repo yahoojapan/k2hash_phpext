@@ -17,9 +17,11 @@ next_string: k2hpx_da_set_write_offset
 Sets value
 
 ## Description
+
 ```
 bool k2hpx_da_set_value ( mixed $dahandle_res , string $value [, int $offset ] )
 ```
+
 Sets value using the offset. 
 
 ### Note
@@ -38,6 +40,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Sets value using the offset
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -49,11 +52,14 @@ k2hpx_da_free($dahandle);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 string(5) "value"
 ```
+
 
 ## See Also
 - [k2hpx_da_free](k2hpx_da_free.html) - Frees resources of k2hash direct access handle

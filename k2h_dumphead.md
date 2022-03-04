@@ -17,9 +17,11 @@ next_string: K2hash::dumpKeytable
 Prints the k2hash's headers
 
 ## Description
+
 ```
  public bool K2hash::dumpHead ([ mixed $output ] )
 ```
+
  Prints the k2hash's headers. 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Prints k2hash headers
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 The above example will output:
+
 ```
 ...
   Last area update {
@@ -61,6 +66,7 @@ The above example will output:
     usec                    = 787684
   }
 ```
+
 
 ## See Also
 - [K2hash::dumpElementtable](k2h_dumpelementtable.html) - Prints elements of the k2hash's hash table elements

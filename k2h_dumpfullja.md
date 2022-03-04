@@ -17,9 +17,11 @@ next_string: K2hash::dumpFullKeytable
 k2hashのハッシュテーブル内部のデータなどを表示する
 
 ## 説明
+
 ```
  public bool K2hash::dumpFull ([ mixed $output ] )
 ```
+
 k2hashのハッシュテーブル内部のデータなどを表示します。k2hashのヘッダ、ハッシュテーブル、サブハッシュテーブル、テーブル内部の要素なども含まれます。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hashのハッシュテーブル内部のデータなどを表示します。k2
 
 ## 例
 - 例 1 - ハッシュテーブルのデータなどを出力する
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -52,7 +55,9 @@ if ($fp) {
 }
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 ...
     Key Index Pointer[29] = Not Allocated
@@ -60,6 +65,7 @@ if ($fp) {
     Key Index Pointer[31] = Not Allocated
   }
 ```
+
 
 ## 参考
 - [K2hash::dumpElementtable](k2h_dumpelementtableja.html) - k2hashのハッシュテーブル内部の要素などを表示する

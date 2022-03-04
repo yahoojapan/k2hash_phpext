@@ -17,9 +17,11 @@ next_string: k2hpx_dump_keytable
 k2hashのヘッダを表示する
 
 ## 説明
+
 ```
 bool k2hpx_dump_head ( mixed $handle_res [, mixed $output ] )
 ```
+
 k2hashのヘッダを表示します。 
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: K2hash::close
 キーの基本属性を初期化する
 
 ## 説明
+
 ```
 public bool K2hash::cleanCommonAttribute ( void )
 ```
+
 キーの基本属性を初期化します。  
 
 基本属性は次のとおりです。  
@@ -40,6 +42,7 @@ public bool K2hash::cleanCommonAttribute ( void )
 
 ## 例
 - 例 1 - 基本属性を初期化する
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -48,10 +51,13 @@ var_dump($k2hash->cleanCommonAttribute());
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 bool(true)
 ```
+
 
 ## 参考
 - [K2hash::addAttr](k2h_addattrja.html) - キーに属性を追加する

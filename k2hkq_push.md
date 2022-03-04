@@ -17,9 +17,11 @@ next_string: K2hKeyQueue::read
 Adds a key/value pair to the K2hKeyQueue
 
 ## Description
+
 ```
  public bool K2hKeyQueue::push ( string $key , string $value [, string $pass [, int $expire ]] )
 ```
+
 Adds a key/value pair to the [K2hKeyQueue](k2hkq_class.html). 
 
 ## Parameters
@@ -37,6 +39,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Gets an element from a [K2hKeyQueue](k2hkq_class.html) instance
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -47,7 +50,9 @@ unset($k2hkeyqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 array(2) {
@@ -57,6 +62,7 @@ array(2) {
   string(16) "test_queue_value"
 }
 ```
+
 
 ## See Also
 - [K2hKeyQueue::pop](k2hkq_pop.html) - Removes and returns the removed element from the K2hKeyQueue

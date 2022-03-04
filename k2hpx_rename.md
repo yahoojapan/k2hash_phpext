@@ -17,9 +17,11 @@ next_string: k2hpx_set_common_attr
 Renames the key
 
 ## Description
+
 ```
 bool k2hpx_rename ( mixed $handle_res , string $key , string $newkey )
 ```
+
 Renames the key. 
 
 ## Parameters

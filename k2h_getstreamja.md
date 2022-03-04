@@ -17,9 +17,11 @@ next_string: K2hash::getSubkeys
 k2hashファイルストリームを取得する
 
 ## 説明
+
 ```
  public mixed K2hash::getStream ( string $key , string $mode )
 ```
+
 指定されたキーを先頭にしたk2hashファイルストリームを取得します。 
 
 ## パラメータ
@@ -33,6 +35,7 @@ k2hashファイルストリーム
 
 ## 例
 - 例 1 - キーへのストリームを操作する
+
 ```
 <?php
 K2hash::create("/tmp/test_k2hash.k2h");
@@ -50,7 +53,10 @@ fclose($stream);
 $k2hash->close();
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 string(6) "value1"
 ```
+

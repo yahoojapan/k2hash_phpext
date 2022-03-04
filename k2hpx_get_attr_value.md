@@ -17,9 +17,11 @@ next_string: k2hpx_get_attrs
 Gets an attribute value of the key
 
 ## Description
+
 ```
 string k2hpx_get_attr_value ( mixed $handle_res , string $key , string $attrkey )
 ```
+
 Gets an attribute value of the key. 
 
 ## Parameters

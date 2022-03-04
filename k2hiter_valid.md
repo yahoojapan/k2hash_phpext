@@ -17,9 +17,11 @@ next_string:
 Returns whether the current K2hIterator item is valid
 
 ## Description
+
 ```
  public bool K2hIterator::valid ( void )
 ```
+
 Returns whether the current pointer to an element of k2hash keys is valid. 
 
 ## Parameters
@@ -30,6 +32,7 @@ Returns true if the current pointer to an element of k2hash keys is valid, other
 
 ## Examples
 - Example 1 - Returns whether the current pointer to an element of k2hash keys is valid
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -39,7 +42,10 @@ var_dump($k2hiter->valid());
 unset($k2hiter);
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 ```
+

@@ -17,9 +17,11 @@ next_string: K2hash::open
 Loads data from the file
 
 ## Description
+
 ```
  public bool K2hash::loadArchive ( string $filepath [, bool $errskip ] )
 ```
+
 Loads data from the file. The file should be either a transaction file or an archive file. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Creates an archive file and loads it
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -48,11 +51,14 @@ var_dump($k2hash2->getValue("key1"));
 $k2hash2->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 string(6) "value1"
 ```
+
 
 ## See Also
 - [K2hash::enableTransaction](k2h_enabletransaction.html) - Starts a transaction

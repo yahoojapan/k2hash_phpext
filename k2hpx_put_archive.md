@@ -17,9 +17,11 @@ next_string: k2hpx_q_count
 Saves a k2hash file as an archive file
 
 ## Description
+
 ```
 bool k2hpx_put_archive ( mixed $handle_res , string $filepath [, bool $errskip ] )
 ```
+
 Saves the k2hash (`.k2h`) file as an archive file. 
 
 ## Parameters

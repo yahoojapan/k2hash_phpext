@@ -17,9 +17,11 @@ next_string: k2hpx_set_transaction_thread_pool
 Sets log level to warning
 
 ## Description
+
 ```
 void k2hpx_set_debug_level_warning ( void )
 ```
+
 Sets log level to 'warning level. 
 
 ## Parameters
@@ -30,16 +32,20 @@ No value is returned.
 
 ## Examples
 - Example 1 - Sets log level to warning
+
 ```
 <?php
 var_dump(k2hpx_set_debug_file("/tmp/k2h.log"));
 k2hpx_set_debug_level_warning();
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_level.html) - Changes the log level

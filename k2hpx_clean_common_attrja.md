@@ -17,9 +17,11 @@ next_string: k2hpx_close
 キーの基本属性を初期化する
 
 ## 説明
+
 ```
 bool k2hpx_clean_common_attr ( mixed $handle_res )
 ```
+
 キーの基本属性を初期化します。
 
 基本属性は次のとおりです。

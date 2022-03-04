@@ -17,9 +17,11 @@ next_string: k2hpx_keyq_push
 Removes and returns the removed element from the K2hKeyQueue
 
 ## Description
+
 ```
 array k2hpx_keyq_pop ( mixed $keyqhandle_res [, stringnull $pass ] )
 ```
+
 Removes and gets the removed element from the [K2hKeyQueue](k2hkq_class.html). 
 
 ## Parameters

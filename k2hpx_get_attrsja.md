@@ -17,9 +17,11 @@ next_string: k2hpx_get_subkeys
 キーに設定されている属性を取得する
 
 ## 説明
+
 ```
 array k2hpx_get_attrs ( mixed $handle_res , string $key )
 ```
+
 キーに設定されている属性を取得します。 
 
 ## パラメータ

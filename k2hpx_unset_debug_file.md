@@ -17,9 +17,11 @@ next_string: k2hpx_unset_transaction_thread_pool
 Set log output  to stderr
 
 ## Description
+
 ```
 void k2hpx_unset_debug_file ( void )
 ```
+
 Set log output  to stderr.
 
 ## Parameters
@@ -27,15 +29,19 @@ This function has no parameters.
 
 ## Examples
 - Example 1 - Set log output  to stderr
+
 ```
 <?php
 var_dump(k2hpx_unset_debug_file());
 ?>
 ```
+
 The above example will output:
+
 ```
 NULL
 ```
+
 
 ## See Also
 - [k2hpx_bump_debug_level](k2hpx_bump_debug_level.html) - Changes the log level

@@ -17,9 +17,11 @@ next_string: k2hpx_q_remove
 Returns a key/value pair from the K2hQueue
 
 ## Description
+
 ```
 string k2hpx_q_read ( mixed $qhandle_res [, int $pos [, stringnull $pass ]] )
 ```
+
 Returns a value from the [K2hQueue](k2hq_class.html). This operation will not remove the value from the [K2hQueue](k2hq_class.html). 
 
 ### Note

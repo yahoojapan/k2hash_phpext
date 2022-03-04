@@ -17,9 +17,11 @@ next_string: K2hash::openRO
 揮発性（メモリ）としてk2hashをオープンします。
 
 ## 説明
+
 ```
  public bool K2hash::openMem ([ int $maskbitcnt [, int $cmaskbitcnt [, int $maxelementcnt [, int $pagesize ]]]] )
 ```
+
 揮発性（メモリ）としてk2hashをオープンします。
 
 ## パラメータ

@@ -17,9 +17,11 @@ next_string: k2hpx_da_get_handle_read
 Frees resources of k2hash direct access handle
 
 ## Description
+
 ```
 bool k2hpx_da_free ( mixed $dahandle_res )
 ```
+
 Releases resources of the [k2hash direct access](https://pages.ghe.corp.yahoo.co.jp/yjcore/k2hash_phpext/en/function.k2hpx-da-free.html) handle. 
 
 ### Note

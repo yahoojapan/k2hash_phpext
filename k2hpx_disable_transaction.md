@@ -17,9 +17,11 @@ next_string: k2hpx_dump_elementtable
 Stops a transaction
 
 ## Description
+
 ```
 bool k2hpx_disable_transaction ( mixed $handle_res )
 ```
+
 Stops a transaction. 
 
 ## Parameters

@@ -17,9 +17,11 @@ next_string: k2hpx_get_attr_value
 キー探索用ハンドルを次のキーに移動する
 
 ## 説明
+
 ```
 mixed k2hpx_find_next ( mixed $findhandle_res )
 ```
+
 キー探索用ハンドルを次のキーに移動します。
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hash キー探索用ハンドル（ [k2hpx_find_first](k2hpx_find_firstja.html
 
 ## 例
 - 例 1 - キー探索用ファイルハンドルを取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -45,13 +48,16 @@ k2hpx_find_free($findhandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 resource(5) of type (k2hfindhandle)
 string(5) "test1"
 resource(6) of type (k2hfindhandle)
 string(5) "test2"
 ```
+
 
 ## 参考
 - [k2hpx_find_first](k2hpx_find_firstja.html) - キー探索用ハンドルを取得する

@@ -17,9 +17,11 @@ next_string: k2hpx_load_archive
 K2hKeyQueueキューから要素（キーと値のセット）を削除する
 
 ## 説明
+
 ```
 bool k2hpx_keyq_remove ( mixed $keyqhandle_res , int $count [, stringnull $pass ] )
 ```
+
 [K2hKeyQueue](k2hkq_classja.html) キューから要素（キーと値のセット）を削除します。 
 
 ## パラメータ

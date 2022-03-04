@@ -17,9 +17,11 @@ next_string: K2hash::remove
 Saves data as the archive file
 
 ## Description
+
 ```
  public bool K2hash::putArchive ( string $filepath [, bool $errskip ] )
 ```
+
 Saves the k2hash (`.k2h`) file as an archive file. 
 
 ## Parameters
@@ -33,6 +35,7 @@ Returns true on success or false on failure.
 
 ## Examples
 - Example 1 - Saves data as the archive file
+
 ```
 <?php
 $k2hash = new K2hash();
@@ -48,11 +51,14 @@ var_dump($k2hash2->getValue("key1"));
 $k2hash2->close();
 ?>
 ```
+
 The above example will output:
+
 ```
 bool(true)
 string(6) "value1"
 ```
+
 
 ## See Also
 - [K2hash::loadArchive](k2h_loadarchive.html) - Loads data from the file

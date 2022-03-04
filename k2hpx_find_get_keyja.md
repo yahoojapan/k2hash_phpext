@@ -17,9 +17,11 @@ next_string: k2hpx_find_get_subkeys
 キーを探索する
 
 ## 説明
+
 ```
 string k2hpx_find_get_key ( mixed $findhandle_res )
 ```
+
 キーを探索します。 
 
 ## パラメータ
@@ -31,6 +33,7 @@ k2hash キー探索用ハンドル（ [k2hpx_find_first](k2hpx_find_firstja.html
 
 ## 例
 - 例 1 - キー探索用ファイルハンドルを取得する
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -42,11 +45,14 @@ k2hpx_find_free($findhandle);
 k2hpx_close($handle);
 ?>
 ```
+
 上の例の出力は以下となります。
+
 ```
 resource(5) of type (k2hfindhandle)
 string(5) "test1"
 ```
+
 
 ## 参考
 - [k2hpx_find_first](k2hpx_find_firstja.html) - キー探索用ハンドルを取得する

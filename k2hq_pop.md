@@ -17,9 +17,11 @@ next_string: K2hQueue::push
 Removes and returns the removed element from the K2hQueue
 
 ## Description
+
 ```
  public stringfalseK2hQueue::pop ([ string $pass ] )
 ```
+
 Removes and gets the removed element from the [K2hQueue](k2hq_class.html). 
 
 ## Parameters
@@ -31,6 +33,7 @@ Returns a value.
 
 ## Examples
 - Example 1 - Gets a value from a [K2hQueue](k2hq_class.html) instance
+
 ```
 <?php
 $handle = k2hpx_open_mem();
@@ -41,13 +44,16 @@ unset($k2hqueue);
 k2hpx_close($handle);
 ?>
 ```
+
 The above example will output:
+
 ```
 array(2) {
   [0]=>
   string(16) "test_queue_value"
 }
 ```
+
 
 ## See Also
 - [K2hQueue::push](k2hq_push.html) - Adds a value to the K2hQueue
