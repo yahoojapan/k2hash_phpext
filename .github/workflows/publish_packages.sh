@@ -81,6 +81,11 @@ prn_success()
 	echo "${CBLD}${CGRN}${CREV}[SUCCESS]${CDEF} $*"
 	echo ""
 }
+prn_message()
+{
+	echo "${CBLD}${CREV}[MESSAGE]${CDEF} $*"
+	echo ""
+}
 prn_fauilure()
 {
 	echo "${CBLD}${CRED}${CREV}[FAILURE]${CDEF} ${CRED}$*${CDEF}"
@@ -187,8 +192,7 @@ if [ -z "${PKG_EXT}" ]; then
 	exit 1
 fi
 if [ -z "${PC_TOKEN}" ]; then
-	prn_fauilure "\"--packagecloudio-token(-pctoken)\" option is not specified."
-	exit 1
+	prn_message "\"--packagecloudio-token(-pctoken)\" option is not specified, so do not publish a package."
 fi
 if [ -z "${PC_OWNER}" ]; then
 	PC_OWNER="antpickax"
