@@ -1,3 +1,10 @@
+php-pecl-k2hash (1.1.4-1) focal; urgency=low
+
+  * Version control in the build process is centralized by ChangeLog - #3
+  * Fixed building and packaging script, etc for Ubuntu - #2
+
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Mon, 25 Apr 2022 16:37:06 +0900
+
 php-pecl-k2hash (1.1.3-1) focal; urgency=low
 
   * Initial Commit and publishing
