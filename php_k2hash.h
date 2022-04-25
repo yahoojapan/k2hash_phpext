@@ -23,11 +23,9 @@
 
 #include <k2hash.h>
 #include <fcntl.h>
+#include "config.h"
 
 extern zend_module_entry k2hash_module_entry;
-# define k2hash_ptr &k2hash_module_entry
-
-# define PHP_K2HASH_VERSION "1.1.3"
 
 /* {{{ k2hash object */
 typedef struct php_k2hash_object_ {
