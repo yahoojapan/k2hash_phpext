@@ -174,6 +174,13 @@ cd "${SRCTOP}" || exit 1
 # Check untracked files
 #----------------------------------------------------------
 prn_title "Check untracked files"
+
+# [NOTE]
+# When using actions/checkout@v1, suppress the following errors.
+# "Error: fatal: unsafe repository ('...' is owned by someone else)"
+#
+git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+
 if [ -n "$(git status --untracked-files=no --porcelain 2>&1)" ]; then
 	prn_fauilure "Some files are untracked."
 	exit 1
