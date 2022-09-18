@@ -161,12 +161,13 @@ fi
 # OS_TYPE		ex. "cesntos"         "cesntos"        "ubuntu"       "ubuntu"
 # OS_VER		ex. "7"               "8"              "18.04"        "20.04"
 #
+# shellcheck disable=SC1009
 if [ -z "${OS_NAME}" ]; then
 	if [ ! -f /etc/os-release ]; then
 		prn_fauilure "The OS name is unknown."
 		exit 1
 	fi
-	# shellcheck source=/dev/null
+	# shellcheck disable=SC1091
 	. /etc/os-release
 
 	OS_NAMEVER="${ID}:${VERSION_ID}"
@@ -515,7 +516,7 @@ if [ "${SKIP_PACKAGECLOUD_TOOL}" -eq 0 ]; then
 	if [ -n "${PKGS_INSTALL_PKGCLOUD}" ]; then
 		if [ -n "${RUBY_SCL_ENV_FILE}" ]; then
 			echo "\"RUBY_SCL_ENV_FILE\" environment is found, do set it before run gem install."
-			# shellcheck source=/dev/null
+			#shellcheck disable=SC1090
 			. "${RUBY_SCL_ENV_FILE}"
 		fi
 

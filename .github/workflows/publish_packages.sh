@@ -281,7 +281,7 @@ PC_PUBLISH_PATH="${PC_OWNER}/${PC_PREPO}/${DIST_TAG}"
 
 if [ -n "${RUBY_SCL_ENV_FILE}" ]; then
 	echo "\"RUBY_SCL_ENV_FILE\" environment is found, do set it before run package_cloud command."
-	# shellcheck source=/dev/null
+	#shellcheck disable=SC1090
 	. "${RUBY_SCL_ENV_FILE}"
 fi
 

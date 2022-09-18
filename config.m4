@@ -34,7 +34,7 @@ AC_SUBST([K2H_PECL_NAME], "pecl-k2hash")
 AC_SUBST([GIT_DOMAIN], "github.com")
 AC_SUBST([GIT_ORG],    "yahoojapan")
 AC_SUBST([GIT_REPO],   "k2hash_phpext")
-AC_SUBST([DEV_EMAIL],  [$(echo ${DEBEMAIL:-antpickax@mail.yahoo.co.jp})])
+AC_SUBST([DEV_EMAIL],  [$(echo ${DEBEMAIL:-antpickax-support@mail.yahoo.co.jp})])
 AC_SUBST([DEV_NAME],   [$(echo ${DEBFULLNAME:-K2HASH_DEVELOPER})])
 
 AC_SUBST([HOME_PAGE],  "https://php.k2hash.antpick.ax/")
