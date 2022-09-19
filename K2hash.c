@@ -775,8 +775,10 @@ PHP_METHOD(K2hash, getValue)
 			}
 		}
 	} else {
-		int		subkey_count;
+		// cppcheck-suppress unmatchedSuppression
+		// cppcheck-suppress nullPointerRedundantCheck
 		char**	pskeyarray = NULL;
+		int		subkey_count;
 		bool	isFound = false;
 		if(attrcheck) {
 			subkey_count = k2h_get_str_subkeys(*res_k2hhandle, key, &pskeyarray);

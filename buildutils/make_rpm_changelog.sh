@@ -122,7 +122,7 @@ done < "${CHANGELOG_FILE}"
 #
 # print changelog
 #
-# shellcheck disable=SC2039
+# shellcheck disable=SC2039,SC3037
 echo -e "${ALLLINES}"
 
 exit 0

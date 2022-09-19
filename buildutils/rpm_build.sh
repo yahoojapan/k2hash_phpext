@@ -280,7 +280,8 @@ ls -la "${RPM_TOPDIR}"/RPMS/*/*.rpm "${RPM_TOPDIR}"/SRPMS/*.rpm
 echo ""
 
 # shellcheck disable=SC2012
-if [ "$(ls -1 "${RPM_TOPDIR}"/RPMS/*/*.rpm "${RPM_TOPDIR}"/SRPMS/*.rpm 2>/dev/null | wc -l)" -ne 3 ]; then
+_rpm_package_count="$(ls -1 "${RPM_TOPDIR}"/RPMS/*/*.rpm "${RPM_TOPDIR}"/SRPMS/*.rpm 2>/dev/null | wc -l)"
+if [ "${_rpm_package_count}" -ne 3 ] && [ "${_rpm_package_count}" -ne 4 ]; then
 	prn_fauilure "There are too or few created RPM packages(*.rpm)."
 	exit 1
 fi

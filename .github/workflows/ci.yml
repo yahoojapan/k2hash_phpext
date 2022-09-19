@@ -121,7 +121,7 @@ jobs:
       - name: ShellCheck
         run: |
           if command -v shellcheck >/dev/null 2>&1; then
-              LC_ALL=C.UTF-8 shellcheck --shell=sh $(grep '#![[:space:]]*/bin/sh' $(find . -type f -name \*.sh) | sed -e 's|^\(.*\):#\!.*$|\1|g')
+              LC_ALL=C.UTF-8 shellcheck --shell=sh $(grep '#![[:space:]]*/bin/sh' $(find . -type f -name \*.sh | grep -v './autom4te.cache/' | grep -v './build/' | grep -v './include/' | grep -v './modules/') | sed -e 's|^\(.*\):#\!.*$|\1|g')
           else
               echo "ShellCheck is not installed, skip checking by ShellCheck."
           fi
