@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Utility tools for building configure/packages by AntPickax
+# Utility tools for building PHP packages by AntPickax
 #
 # Copyright 2022 Yahoo Japan Corporation.
 #
@@ -29,6 +29,7 @@ PRGNAME=$(basename "$0")
 SCRIPTDIR=$(dirname "$0")
 SCRIPTDIR=$(cd "${SCRIPTDIR}" || exit 1; pwd)
 SRCTOP=$(cd "${SCRIPTDIR}"/.. || exit 1; pwd)
+
 DEB_TOPDIR="${SRCTOP}/debian_build"
 PKG_TOPDIR="${SRCTOP}/packages"
 
@@ -38,11 +39,11 @@ PKG_TOPDIR="${SRCTOP}/packages"
 func_usage()
 {
 	echo ""
-	echo "Usage:  $1 [--yes(-y)] [--clean(-c)] [--help(-h)] [--copy-common-package(-ccp)]"
+	echo "Usage:  $1 [--help(-h)] [--yes(-y)] [--clean(-c)] [--copy-common-package(-ccp)]"
+	echo "        --help(-h)                    print help"
 	echo "        --yes(-y)                     runs no interactive mode."
 	echo "        --clean(-c)                   only clean work directory."
 	echo "        --copy-common-package(-ccp)   copy common package to packages directory."
-	echo "        --help(-h)                    print help"
 	echo ""
 	echo "Note:  Only if \"--copy-common-package(-ccp)\" is specified, the following"
 	echo "       packages will be copied to the packages directory."
@@ -61,7 +62,7 @@ if [ -t 1 ] || [ "X${CI}" = "Xtrue" ]; then
 	CBLD=$(printf '\033[1m')
 	CREV=$(printf '\033[7m')
 	CRED=$(printf '\033[31m')
-	#CYEL=$(printf '\033[33m')
+	CYEL=$(printf '\033[33m')
 	CGRN=$(printf '\033[32m')
 	CDEF=$(printf '\033[0m')
 else
@@ -69,7 +70,7 @@ else
 	CBLD=""
 	CREV=""
 	CRED=""
-	#CYEL=""
+	CYEL=""
 	CGRN=""
 	CDEF=""
 fi
@@ -95,6 +96,11 @@ prn_fauilure()
 	echo "${CBLD}${CRED}${CREV}[FAILURE]${CDEF} ${CRED}$*${CDEF}"
 	echo ""
 }
+prn_warning()
+{
+	echo "${CBLD}${CYEL}${CREV}[WARNING]${CDEF} ${CYEL}$*${CDEF}"
+	echo ""
+}
 prn_groupend()
 {
 	if [ -n "${GHAGRP_END}" ]; then
@@ -109,17 +115,22 @@ IS_CLEAN=0
 IS_INTERACTIVE=1
 IS_COPY_COMMON_PKGS=0
 while [ $# -ne 0 ]; do
-	if [ "X$1" = "X" ]; then
+	if [ -z "$1" ]; then
 		break
-	elif [ "X$1" = "X-h" ] || [ "X$1" = "X-H" ] || [ "X$1" = "X--help" ] || [ "X$1" = "X--HELP" ]; then
+
+	elif [ "$1" = "-h" ] || [ "$1" = "-H" ] || [ "$1" = "--help" ] || [ "$1" = "--HELP" ]; then
 		func_usage "${PRGNAME}"
 		exit 0
-	elif [ "X$1" = "X-c" ] || [ "X$1" = "X-C" ] || [ "X$1" = "X--clean" ] || [ "X$1" = "X--CLEAN" ]; then
+
+	elif [ "$1" = "-c" ] || [ "$1" = "-C" ] || [ "$1" = "--clean" ] || [ "$1" = "--CLEAN" ]; then
 		IS_CLEAN=1
-	elif [ "X$1" = "X-y" ] || [ "X$1" = "X-Y" ] || [ "X$1" = "X--yes" ] || [ "X$1" = "X--YES" ]; then
+
+	elif [ "$1" = "-y" ] || [ "$1" = "-Y" ] || [ "$1" = "--yes" ] || [ "$1" = "--YES" ]; then
 		IS_INTERACTIVE=0
-	elif [ "X$1" = "X-ccp" ] || [ "X$1" = "X-CCP" ] || [ "X$1" = "X--copy-common-package" ] || [ "X$1" = "X--COPY-COMMON-PACKAGE" ]; then
+
+	elif [ "$1" = "-ccp" ] || [ "$1" = "-CCP" ] || [ "$1" = "--copy-common-package" ] || [ "$1" = "--COPY-COMMON-PACKAGE" ]; then
 		IS_COPY_COMMON_PKGS=1
+
 	else
 		prn_fauilure "Unknown option - $1."
 		exit 1
@@ -133,18 +144,19 @@ done
 if [ "${IS_INTERACTIVE}" -eq 1 ] && [ "${IS_CLEAN}" -ne 1 ]; then
 	echo "---------------------------------------------------------------"
 	echo " Do you change these file and commit to github?"
-	echo " - ChangeLog              modify / add changes like dch tool format"
-	echo " - Git TAG                stamp git tag for release"
+	echo " - ChangeLog     modify / add changes like dch tool format"
+	echo " - Git TAG       stamp git tag for release"
 	echo "---------------------------------------------------------------"
-	while true; do
-		printf "Confirm: [y/n] "
+	IS_CONFIRMED=0
+	while [ "${IS_CONFIRMED}" -eq 0 ]; do
+		printf '[INPUT] Confirm (y/n) : '
 		read -r CONFIRM
 
-		if [ "X${CONFIRM}" = "XY" ] || [ "X${CONFIRM}" = "Xy" ]; then
-			break;
-		elif [ "X${CONFIRM}" = "XN" ] || [ "X${CONFIRM}" = "Xn" ]; then
-			echo "Bye..."
-			exit 1
+		if [ "${CONFIRM}" = "y" ] || [ "${CONFIRM}" = "Y" ] || [ "${CONFIRM}" = "yes" ] || [ "${CONFIRM}" = "YES" ]; then
+			IS_CONFIRMED=1
+		elif [ "${CONFIRM}" = "n" ] || [ "${CONFIRM}" = "N" ] || [ "${CONFIRM}" = "no" ] || [ "${CONFIRM}" = "NO" ]; then
+			echo "Interrupt this processing, bye..."
+			exit 0
 		fi
 	done
 	echo ""
@@ -154,6 +166,7 @@ fi
 # Remove directory for clenup
 #----------------------------------------------------------
 prn_title "Remove old work directory for packaging"
+
 rm -rf "${DEB_TOPDIR}"
 prn_success "Removed ${DEB_TOPDIR}"
 prn_groupend
@@ -182,16 +195,17 @@ prn_title "Check untracked files"
 git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 
 if [ -n "$(git status --untracked-files=no --porcelain 2>&1)" ]; then
-	prn_fauilure "Some files are untracked."
-	exit 1
+	prn_warning "Some files are in untracked state. Packages are created for testing, but must not be published."
+else
+	prn_success "No untracked files"
 fi
-prn_success "No untracked files"
 prn_groupend
 
 #----------------------------------------------------------
 # Run phpize and configure
 #----------------------------------------------------------
 prn_title "Run phpize"
+
 if ! phpize; then
 	prn_fauilure "Failed to run phpize."
 	exit 1
@@ -200,6 +214,7 @@ prn_success "phpize done"
 prn_groupend
 
 prn_title "Run configure"
+
 if ! ./configure; then
 	prn_fauilure "Failed to run configure."
 	exit 1
@@ -211,10 +226,12 @@ prn_groupend
 # Create package top directory
 #----------------------------------------------------------
 prn_title "Create work directory for packaging"
+
 if ! mkdir "${DEB_TOPDIR}"; then
 	prn_fauilure "Could not create ${DEB_TOPDIR} dicretory."
 	exit 1
 fi
+
 prn_success "Created ${DEB_TOPDIR}"
 prn_groupend
 
@@ -242,6 +259,7 @@ prn_groupend
 # Make source tar.gz from git by archive
 #----------------------------------------------------------
 prn_title "Create base tar ball of source files"
+
 if ! git archive HEAD --prefix="${PACKAGE_NAME}-${PACKAGE_VERSION}"/ --output="${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz; then
 	prn_fauilure "Could not make source tar ball(${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz) from github repository."
 	exit 1
@@ -253,6 +271,7 @@ prn_groupend
 # Expand tar ball
 #----------------------------------------------------------
 prn_title "Expand base tar ball in work directory"
+
 if ! tar xvfz "${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz -C "${DEB_TOPDIR}"/; then
 	prn_fauilure "Could not expand tar ball(${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz)."
 	exit 1
@@ -264,6 +283,7 @@ prn_groupend
 # Delete unnecessary files and directories
 #----------------------------------------------------------
 prn_title "Remove unnecessary files and directories"
+
 rm -rf "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/.github
 rm -rf "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/buildutils
 rm -f  "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/.gitignore
@@ -274,6 +294,7 @@ prn_groupend
 # Setup debian directory
 #----------------------------------------------------------
 prn_title "Setup debian directories"
+
 if ! mkdir "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian; then
 	prn_fauilure "Could not create ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian dicretory."
 	exit 1
@@ -290,6 +311,7 @@ prn_success "Created ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian"
 prn_groupend
 
 prn_title "Copy files under debian directory"
+
 if [ "$(cp ChangeLog                        "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/changelog            >/dev/null 2>&1; echo $?)" -ne 0 ] ||
    [ "$(cp buildutils/copyright             "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/copyright            >/dev/null 2>&1; echo $?)" -ne 0 ] ||
    [ "$(cp buildutils/k2hash.ini            "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/k2hash.ini           >/dev/null 2>&1; echo $?)" -ne 0 ] ||
@@ -314,6 +336,7 @@ prn_groupend
 # (But after running dpkg-buildpackage, the control file will be updated again)
 #
 prn_title "Pre-run gen-control"
+
 cd "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}" || exit 1
 if ! /usr/share/dh-php/gen-control; then
 	prn_fauilure "Failed to run gen-control for initializing control file."
@@ -326,6 +349,7 @@ prn_groupend
 # Create "orig" tar ball
 #----------------------------------------------------------
 prn_title "Create tar ball of original source file"
+
 cd "${DEB_TOPDIR}" || exit 1
 if ! tar cvfz "${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz" "${PACKAGE_NAME}-${PACKAGE_VERSION}"; then
 	prn_fauilure "Failed to craete original source tar ball(${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz)."
@@ -338,6 +362,7 @@ prn_groupend
 # Build packages
 #----------------------------------------------------------
 prn_title "Run dpkg-buildpackage for creating packages"
+
 cd "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}" || exit 1
 if ! dpkg-buildpackage -us -uc; then
 	prn_fauilure "Failed to create packages."
@@ -350,9 +375,11 @@ prn_groupend
 # Check packages
 #----------------------------------------------------------
 prn_title "Check created debian packages"
+
 cd "${SRCTOP}" || exit 1
 echo ""
-ls -la "${DEB_TOPDIR}"/*.deb
+# shellcheck disable=SC2012
+ls -la "${DEB_TOPDIR}"/*.deb | sed -e 's/^/    /g'
 echo ""
 
 # shellcheck disable=SC2012
@@ -381,25 +408,25 @@ DEBIAN_PACKAGE_ALL=$(ls -1 "${DEB_TOPDIR}/${PACKAGE_NAME}-all-dev_${PACKAGE_VERS
 echo "-----------------------------------------------------------"
 echo "Package: ${DEBIAN_PACKAGE_PHP}"
 echo "-----------------------------------------------------------"
-dpkg -c "${DEBIAN_PACKAGE_PHP}" | sed -e 's/^/  /g'
+dpkg -c "${DEBIAN_PACKAGE_PHP}" | sed -e 's/^/    /g'
 echo ""
-dpkg -I "${DEBIAN_PACKAGE_PHP}" | sed -e 's/^/  /g'
+dpkg -I "${DEBIAN_PACKAGE_PHP}" | sed -e 's/^/    /g'
 echo ""
 
 echo "-----------------------------------------------------------"
 echo "Package: ${DEBIAN_PACKAGE_NORM}"
 echo "-----------------------------------------------------------"
-dpkg -c "${DEBIAN_PACKAGE_NORM}" | sed -e 's/^/  /g'
+dpkg -c "${DEBIAN_PACKAGE_NORM}" | sed -e 's/^/    /g'
 echo ""
-dpkg -I "${DEBIAN_PACKAGE_NORM}" | sed -e 's/^/  /g'
+dpkg -I "${DEBIAN_PACKAGE_NORM}" | sed -e 's/^/    /g'
 echo ""
 
 echo "-----------------------------------------------------------"
 echo "Package: ${DEBIAN_PACKAGE_ALL}"
 echo "-----------------------------------------------------------"
-dpkg -c "${DEBIAN_PACKAGE_ALL}" | sed -e 's/^/  /g'
+dpkg -c "${DEBIAN_PACKAGE_ALL}" | sed -e 's/^/    /g'
 echo ""
-dpkg -I "${DEBIAN_PACKAGE_ALL}" | sed -e 's/^/  /g'
+dpkg -I "${DEBIAN_PACKAGE_ALL}" | sed -e 's/^/    /g'
 echo ""
 
 prn_success "Checked package files"
@@ -410,6 +437,7 @@ prn_groupend
 #----------------------------------------------------------
 if [ ! -d "${PKG_TOPDIR}" ]; then
 	prn_title "Create ${PKG_TOPDIR} directory"
+
 	if ! mkdir -p "${PKG_TOPDIR}"; then
 		prn_fauilure "Failed to create ${PKG_TOPDIR} directory"
 		exit 1
@@ -419,6 +447,7 @@ if [ ! -d "${PKG_TOPDIR}" ]; then
 fi
 
 prn_title "Copy created debian packages to packages directory"
+
 if ! cp -p "${DEBIAN_PACKAGE_PHP}" "${PKG_TOPDIR}"; then
 	prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_PHP} packages to ${PKG_TOPDIR}"
 	exit 1
@@ -451,6 +480,7 @@ prn_groupend
 # finish
 #----------------------------------------------------------
 prn_title "Install Summary"
+
 prn_success "All processing is succeed"
 echo "You can find ${PACKAGE_NAME} ${PACKAGE_VERSION}-${PACKAGE_RELEASE} version debian package in ${PKG_TOPDIR} directory."
 echo ""
