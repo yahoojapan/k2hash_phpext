@@ -30,8 +30,19 @@ SCRIPTDIR=$(dirname "$0")
 SCRIPTDIR=$(cd "${SCRIPTDIR}" || exit 1; pwd)
 SRCTOP=$(cd "${SCRIPTDIR}"/.. || exit 1; pwd)
 
-DEB_TOPDIR="${SRCTOP}/debian_build"
-PKG_TOPDIR="${SRCTOP}/packages"
+BUILDDEBDIR="${SRCTOP}/debian_build"
+DEBPKGDIR="${SRCTOP}/packages"
+
+PRGNAME_NOEXT=$(echo "${PRGNAME}" | sed -e 's/[\.].*$//g' | tr -d '\n')
+EXTRA_COPY_FILES_CONF="${SCRIPTDIR}/${PRGNAME_NOEXT}_copy.conf"
+
+#
+# Variables
+#
+BUILD_NUMBER=0
+IS_CLEAN=0
+NO_INTERACTIVE=0
+IS_COPY_COMMON_PKGS=0
 
 #----------------------------------------------------------
 # Utility: Usage
@@ -39,11 +50,12 @@ PKG_TOPDIR="${SRCTOP}/packages"
 func_usage()
 {
 	echo ""
-	echo "Usage:  $1 [--help(-h)] [--yes(-y)] [--clean(-c)] [--copy-common-package(-ccp)]"
-	echo "        --help(-h)                    print help"
-	echo "        --yes(-y)                     runs no interactive mode."
-	echo "        --clean(-c)                   only clean work directory."
-	echo "        --copy-common-package(-ccp)   copy common package to packages directory."
+	echo "Usage:  $1 [--help(-h)] [--clean(-c)] [--copy-common-package(-ccp)] [--buildnum(-b) <build number>] [--yes(-y)]"
+	echo "        --help(-h)                     print help"
+	echo "        --clean(-c)                    only clean work directory."
+	echo "        --copy-common-package(-ccp)    copy common package to packages directory."
+	echo "        --buildnum(-b) <build number>  specify build number for packaging(default 1)"
+	echo "        --yes(-y)                      runs no interactive mode."
 	echo ""
 	echo "Note:  Only if \"--copy-common-package(-ccp)\" is specified, the following"
 	echo "       packages will be copied to the packages directory."
@@ -111,9 +123,6 @@ prn_groupend()
 #----------------------------------------------------------
 # Parse options
 #----------------------------------------------------------
-IS_CLEAN=0
-IS_INTERACTIVE=1
-IS_COPY_COMMON_PKGS=0
 while [ $# -ne 0 ]; do
 	if [ -z "$1" ]; then
 		break
@@ -123,13 +132,45 @@ while [ $# -ne 0 ]; do
 		exit 0
 
 	elif [ "$1" = "-c" ] || [ "$1" = "-C" ] || [ "$1" = "--clean" ] || [ "$1" = "--CLEAN" ]; then
+		if [ "${IS_CLEAN}" -ne 0 ]; then
+			prn_fauilure "Already --clean(-c) option is specified."
+			exit 1
+		fi
 		IS_CLEAN=1
 
-	elif [ "$1" = "-y" ] || [ "$1" = "-Y" ] || [ "$1" = "--yes" ] || [ "$1" = "--YES" ]; then
-		IS_INTERACTIVE=0
+	elif [ "$1" = "-b" ] || [ "$1" = "-B" ] || [ "$1" = "--buildnum" ] || [ "$1" = "--BUILDNUM" ]; then
+		if [ "${BUILD_NUMBER}" -ne 0 ]; then
+			prn_fauilure "Already --buildnum(-b) option is specified(${BUILD_NUMBER})."
+			exit 1
+		fi
+		shift
+		if [ -z "$1" ]; then
+			prn_fauilure "--buildnum(-b) option need parameter."
+			exit 1
+		fi
+		if echo "$1" | grep -q "[^0-9]"; then
+			prn_fauilure "--buildnum(-b) option parameter must be number(and not equal zero)."
+			exit 1
+		fi
+		if [ "$1" -eq 0 ]; then
+			prn_fauilure "--buildnum(-b) option parameter must be number(and not equal zero)."
+			exit 1
+		fi
+		BUILD_NUMBER="$1"
 
 	elif [ "$1" = "-ccp" ] || [ "$1" = "-CCP" ] || [ "$1" = "--copy-common-package" ] || [ "$1" = "--COPY-COMMON-PACKAGE" ]; then
+		if [ "${IS_COPY_COMMON_PKGS}" -ne 0 ]; then
+			prn_fauilure "Already --copy-common-package(-ccp) option is specified."
+			exit 1
+		fi
 		IS_COPY_COMMON_PKGS=1
+
+	elif [ "$1" = "-y" ] || [ "$1" = "-Y" ] || [ "$1" = "--yes" ] || [ "$1" = "--YES" ]; then
+		if [ "${NO_INTERACTIVE}" -ne 0 ]; then
+			prn_fauilure "Already --yes(-y) option is specified."
+			exit 1
+		fi
+		NO_INTERACTIVE=1
 
 	else
 		prn_fauilure "Unknown option - $1."
@@ -138,10 +179,17 @@ while [ $# -ne 0 ]; do
 	shift
 done
 
+#
+# Check parameters
+#
+if [ "${BUILD_NUMBER}" -eq 0 ]; then
+	BUILD_NUMBER=1
+fi
+
 #----------------------------------------------------------
 # Welcome message and confirming for interactive mode
 #----------------------------------------------------------
-if [ "${IS_INTERACTIVE}" -eq 1 ] && [ "${IS_CLEAN}" -ne 1 ]; then
+if [ "${NO_INTERACTIVE}" -eq 0 ] && [ "${IS_CLEAN}" -ne 1 ]; then
 	echo "---------------------------------------------------------------"
 	echo " Do you change these file and commit to github?"
 	echo " - ChangeLog     modify / add changes like dch tool format"
@@ -167,8 +215,8 @@ fi
 #----------------------------------------------------------
 prn_title "Remove old work directory for packaging"
 
-rm -rf "${DEB_TOPDIR}"
-prn_success "Removed ${DEB_TOPDIR}"
+rm -rf "${BUILDDEBDIR}"
+prn_success "Removed ${BUILDDEBDIR}"
 prn_groupend
 
 #
@@ -227,12 +275,12 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Create work directory for packaging"
 
-if ! mkdir "${DEB_TOPDIR}"; then
-	prn_fauilure "Could not create ${DEB_TOPDIR} dicretory."
+if ! mkdir "${BUILDDEBDIR}"; then
+	prn_fauilure "Could not create ${BUILDDEBDIR} dicretory."
 	exit 1
 fi
 
-prn_success "Created ${DEB_TOPDIR}"
+prn_success "Created ${BUILDDEBDIR}"
 prn_groupend
 
 #----------------------------------------------------------
@@ -240,31 +288,32 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Get package information"
 
-PACKAGE_NAME=$(head -n 1 ./ChangeLog | awk '{print $1}')
-PACKAGE_VERSION=$(head -n 1 ./ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g')
-PACKAGE_RELEASE=$(head -n 1 ./ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/^.*-//g')
+PACKAGE_NAME=$(head -n 1 ./ChangeLog | awk '{print $1}' | tr -d '\n')
+PACKAGE_VERSION=$(head -n 1 ./ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g' | tr -d '\n')
 PACKAGE_PHPVERSION=$(php -r 'echo "".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')
 PACKAGE_PHPVER_NAME=$(echo "${PACKAGE_NAME}" | sed -s "s/php/php${PACKAGE_PHPVERSION}/g")
 
 echo "-----------------------------------------------------------"
 echo " Package name     : ${PACKAGE_NAME} / ${PACKAGE_PHPVER_NAME}"
 echo " Package version  : ${PACKAGE_VERSION}"
-echo " Package release  : ${PACKAGE_RELEASE}"
+echo " Build number     : ${BUILD_NUMBER}"
 echo " PHP version      : ${PACKAGE_PHPVERSION}"
 echo "-----------------------------------------------------------"
 prn_success "done"
 prn_groupend
+
+EXPANDDIR="${BUILDDEBDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"
 
 #----------------------------------------------------------
 # Make source tar.gz from git by archive
 #----------------------------------------------------------
 prn_title "Create base tar ball of source files"
 
-if ! git archive HEAD --prefix="${PACKAGE_NAME}-${PACKAGE_VERSION}"/ --output="${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz; then
-	prn_fauilure "Could not make source tar ball(${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz) from github repository."
+if ! git archive HEAD --prefix="${PACKAGE_NAME}-${PACKAGE_VERSION}"/ --output="${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz; then
+	prn_fauilure "Could not make source tar ball(${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz) from github repository."
 	exit 1
 fi
-prn_success "Created ${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz"
+prn_success "Created ${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz"
 prn_groupend
 
 #----------------------------------------------------------
@@ -272,11 +321,11 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Expand base tar ball in work directory"
 
-if ! tar xvfz "${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz -C "${DEB_TOPDIR}"/; then
-	prn_fauilure "Could not expand tar ball(${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz)."
+if ! tar xvfz "${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz -C "${BUILDDEBDIR}"/; then
+	prn_fauilure "Could not expand tar ball(${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz)."
 	exit 1
 fi
-prn_success "Expanded to ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"
+prn_success "Expanded to ${EXPANDDIR}"
 prn_groupend
 
 #----------------------------------------------------------
@@ -284,9 +333,9 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Remove unnecessary files and directories"
 
-rm -rf "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/.github
-rm -rf "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/buildutils
-rm -f  "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/.gitignore
+rm -rf "${EXPANDDIR}/.github"
+rm -rf "${EXPANDDIR}/buildutils"
+rm -f  "${EXPANDDIR}/.gitignore"
 prn_success "Removed .github, .gitignore, buildutils/"
 prn_groupend
 
@@ -295,38 +344,101 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Setup debian directories"
 
-if ! mkdir "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian; then
-	prn_fauilure "Could not create ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian dicretory."
+if ! mkdir -p "${EXPANDDIR}/debian"; then
+	prn_fauilure "Could not create ${EXPANDDIR}/debian dicretory."
 	exit 1
 fi
-if ! mkdir "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/source; then
-	prn_fauilure "Could not create ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian/source dicretory."
+if ! mkdir -p "${EXPANDDIR}/debian/source"; then
+	prn_fauilure "Could not create ${EXPANDDIR}/debian/source dicretory."
 	exit 1
 fi
-if ! mkdir "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/upstream; then
-	prn_fauilure "Could not create ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian/upstream dicretory."
+if ! mkdir -p "${EXPANDDIR}/debian/upstream"; then
+	prn_fauilure "Could not create ${EXPANDDIR}/debian/upstream dicretory."
 	exit 1
 fi
-prn_success "Created ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian"
+prn_success "Created ${EXPANDDIR}/debian"
 prn_groupend
 
 prn_title "Copy files under debian directory"
 
-if [ "$(cp ChangeLog                        "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/changelog            >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/copyright             "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/copyright            >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/k2hash.ini            "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/k2hash.ini           >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/"${PACKAGE_NAME}".php "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian/${PACKAGE_NAME}".php  >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/rules                 "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/rules                >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/watch                 "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/watch                >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/control.in            "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/control.in           >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/source/format         "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/source/format        >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/source/local-options  "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/source/local-options >/dev/null 2>&1; echo $?)" -ne 0 ] ||
-   [ "$(cp buildutils/upstream/metadata     "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"/debian/upstream/metadata    >/dev/null 2>&1; echo $?)" -ne 0 ]; then
+#
+# copy extra file from php_debian_build_copy.conf
+#
+# [NOTE]
+# If you have files to copy under "<package build to pdirectory>/debian" directory
+# (includes in your package), you can prepare "buildutils/php_debian_build_copy.conf"
+# file and lists target files int it.
+# The file names in this configuration file list with relative paths from the source
+# top directory.
+#	ex)	src/myfile
+#		lib/mylib
+#
+if [ -f "${EXTRA_COPY_FILES_CONF}" ]; then
+	EXTRA_COPY_FILES=$(sed -e 's/#.*$//g' -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' -e '/^$/d' "${EXTRA_COPY_FILES_CONF}")
+	for _extra_file in ${EXTRA_COPY_FILES}; do
+		if [ ! -f "${SRCTOP}/${_extra_file}" ]; then
+			prn_fauilure "${SRCTOP}/${_extra_file} file is not found."
+			exit 1
+		fi
+		if ! cp -p "${SRCTOP}/${_extra_file}" "${EXPANDDIR}/debian"; then
+			prn_fauilure "Could not copy ${SRCTOP}/${_extra_file} to ${EXPANDDIR}/debian dicretories."
+			exit 1
+		fi
+	done
+	EXTRA_COPY_FILES=" , $(echo "${EXTRA_COPY_FILES}" | sed -e 's/[[:space:]]\+/, /g')"
+else
+	EXTRA_COPY_FILES=""
+fi
 
-	prn_fauilure "Failed to copy files to ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian dicretories."
+#
+# convert and copy changelog
+#
+if ! OS_VERSION_NAME=$(grep '^[[:space:]]*VERSION_CODENAME[[:space:]]*=' /etc/os-release | sed -e 's/^[[:space:]]*VERSION_CODENAME[[:space:]]*=//g' -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' | tr -d '\n'); then
+	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-relase."
 	exit 1
 fi
-prn_success "Copied changelog, copyright, k2hash.ini, php-pecl-k2hash.php, rules, watch, control.in, source/format, source/local-options, upstream/metadata"
+if ! sed -e "s/[\(]${PACKAGE_VERSION}[\)]/\(${PACKAGE_VERSION}-${BUILD_NUMBER}\)/g" -e "s/[\)] unstable; /\) ${OS_VERSION_NAME}; /g" ChangeLog > "${EXPANDDIR}/debian/changelog"; then
+	prn_fauilure "Could not convert and copy ChangeLog to ${EXPANDDIR}/debian dicretories."
+	exit 1
+fi
+
+#
+# create files under source directory
+#
+if ! printf '3.0 (quilt)\n' > "${EXPANDDIR}/debian/source/format"; then
+	prn_fauilure "Could not create ${EXPANDDIR}/debian/source/format file."
+	exit 1
+fi
+if ! printf '#abort-on-upstream-changes\n#unapply-patches\n' > "${EXPANDDIR}/debian/source/local-options"; then
+	prn_fauilure "Could not create ${EXPANDDIR}/debian/source/local-options file."
+	exit 1
+fi
+
+#
+# copy other files
+#
+if ! cp buildutils/copyright "${EXPANDDIR}/debian/copyright"; then
+	prn_fauilure "Could not copy buildutils/copyright to ${EXPANDDIR}/debian dicretories."
+	exit 1
+fi
+if ! cp buildutils/rules "${EXPANDDIR}/debian/rules"; then
+	prn_fauilure "Could not copy buildutils/rules to ${EXPANDDIR}/debian dicretories."
+	exit 1
+fi
+if ! cp buildutils/watch "${EXPANDDIR}/debian/watch"; then
+	prn_fauilure "Could not copy buildutils/watch to ${EXPANDDIR}/debian dicretories."
+	exit 1
+fi
+if ! cp buildutils/control.in "${EXPANDDIR}/debian/control.in"; then
+	prn_fauilure "Could not copy buildutils/control.in to ${EXPANDDIR}/debian dicretories."
+	exit 1
+fi
+if ! cp buildutils/upstream/metadata "${EXPANDDIR}/debian/upstream/metadata"; then
+	prn_fauilure "Could not copy buildutils/upstream/metadata to ${EXPANDDIR}/debian dicretories."
+	exit 1
+fi
+
+prn_success "Copied/Created changelog, copyright, rules, watch, control.in${EXTRA_COPY_FILES}, source/format, source/local-options, upstream/metadata"
 prn_groupend
 
 # [NOTE]
@@ -337,12 +449,12 @@ prn_groupend
 #
 prn_title "Pre-run gen-control"
 
-cd "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}" || exit 1
+cd "${EXPANDDIR}" || exit 1
 if ! /usr/share/dh-php/gen-control; then
 	prn_fauilure "Failed to run gen-control for initializing control file."
 	exit 1
 fi
-prn_success "Generated ${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}/debian/control"
+prn_success "Generated ${EXPANDDIR}/debian/control"
 prn_groupend
 
 #----------------------------------------------------------
@@ -350,12 +462,12 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Create tar ball of original source file"
 
-cd "${DEB_TOPDIR}" || exit 1
+cd "${BUILDDEBDIR}" || exit 1
 if ! tar cvfz "${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz" "${PACKAGE_NAME}-${PACKAGE_VERSION}"; then
-	prn_fauilure "Failed to craete original source tar ball(${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz)."
+	prn_fauilure "Failed to craete original source tar ball(${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz)."
 	exit 1
 fi
-prn_success "Created ${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz"
+prn_success "Created ${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.orig.tar.gz"
 prn_groupend
 
 #----------------------------------------------------------
@@ -363,7 +475,7 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Run dpkg-buildpackage for creating packages"
 
-cd "${DEB_TOPDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}" || exit 1
+cd "${EXPANDDIR}" || exit 1
 if ! dpkg-buildpackage -us -uc; then
 	prn_fauilure "Failed to create packages."
 	exit 1
@@ -377,57 +489,44 @@ prn_groupend
 prn_title "Check created debian packages"
 
 cd "${SRCTOP}" || exit 1
-echo ""
-# shellcheck disable=SC2012
-ls -la "${DEB_TOPDIR}"/*.deb | sed -e 's/^/    /g'
-echo ""
 
-# shellcheck disable=SC2012
-if [ "$(ls -1 "${DEB_TOPDIR}/${PACKAGE_PHPVER_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}"_*.deb 2>/dev/null    | wc -l)" -ne 1 ]; then
-	prn_fauilure "There are too or few created debian packages(*.deb)."
+#
+# Check and show debian package
+#
+# [NOTE] Check following files:
+#	${PACKAGE_PHPVER_NAME}_${PACKAGE_VERSION}-${BUILD_NUMBER}_*.deb
+#	${PACKAGE_NAME}_${PACKAGE_VERSION}-${BUILD_NUMBER}_*.deb
+#	${PACKAGE_NAME}-all-dev_${PACKAGE_VERSION}-${BUILD_NUMBER}_all.deb
+#
+DEBIAN_PACKAGE_PHP=$(find "${BUILDDEBDIR}" -name "${PACKAGE_PHPVER_NAME}_${PACKAGE_VERSION}-${BUILD_NUMBER}_*.deb" 2>/dev/null)
+DEBIAN_PACKAGE_NORM=$(find "${BUILDDEBDIR}" -name "${PACKAGE_NAME}_${PACKAGE_VERSION}-${BUILD_NUMBER}_*.deb" 2>/dev/null)
+DEBIAN_PACKAGE_ALL=$(find "${BUILDDEBDIR}" -name "${PACKAGE_NAME}-all-dev_${PACKAGE_VERSION}-${BUILD_NUMBER}_all.deb" 2>/dev/null)
+
+FOUND_DEB_PACKAGES="${DEBIAN_PACKAGE_PHP} ${DEBIAN_PACKAGE_NORM} ${DEBIAN_PACKAGE_ALL}"
+
+if [ -z "${DEBIAN_PACKAGE_PHP}" ] || [ -z "${DEBIAN_PACKAGE_NORM}" ] || [ -z "${DEBIAN_PACKAGE_ALL}" ]; then
+	prn_fauilure "No debian package in ${BUILDDEBDIR}."
 	exit 1
 fi
-# shellcheck disable=SC2012
-if [ "$(ls -1 "${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}"_*.deb 2>/dev/null           | wc -l)" -ne 1 ]; then
-	prn_fauilure "There are too or few created debian packages(*.deb)."
-	exit 1
-fi
-# shellcheck disable=SC2012
-if [ "$(ls -1 "${DEB_TOPDIR}/${PACKAGE_NAME}-all-dev_${PACKAGE_VERSION}-${PACKAGE_RELEASE}"_all.deb 2>/dev/null | wc -l)" -ne 1 ]; then
-	prn_fauilure "There are too or few created debian packages(*.deb)."
+if [ "$(echo "${FOUND_DEB_PACKAGES}" | sed -e 's/[[:space:]]/\n/g'| grep -c '\.deb')" -ne 3 ]; then
+	prn_fauilure "There are too or few created debian packages(*.deb) : ${FOUND_DEB_PACKAGES}"
 	exit 1
 fi
 
-# shellcheck disable=SC2012
-DEBIAN_PACKAGE_PHP=$(ls -1 "${DEB_TOPDIR}/${PACKAGE_PHPVER_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}"_*.deb)
-# shellcheck disable=SC2012
-DEBIAN_PACKAGE_NORM=$(ls -1 "${DEB_TOPDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}"_*.deb)
-# shellcheck disable=SC2012
-DEBIAN_PACKAGE_ALL=$(ls -1 "${DEB_TOPDIR}/${PACKAGE_NAME}-all-dev_${PACKAGE_VERSION}-${PACKAGE_RELEASE}"_all.deb)
+for _one_pkg in ${FOUND_DEB_PACKAGES}; do
+	echo ""
+	echo "[INFO] ${_one_pkg} package information"
+	if ! dpkg -c "${_one_pkg}" | sed -e 's/^/    /'; then
+		prn_fauilure "Failed to print ${_one_pkg} package insformation by \"dpkg -c\"."
+		exit 1
+	fi
+	echo "    ---------------------------"
 
-echo "-----------------------------------------------------------"
-echo "Package: ${DEBIAN_PACKAGE_PHP}"
-echo "-----------------------------------------------------------"
-dpkg -c "${DEBIAN_PACKAGE_PHP}" | sed -e 's/^/    /g'
-echo ""
-dpkg -I "${DEBIAN_PACKAGE_PHP}" | sed -e 's/^/    /g'
-echo ""
-
-echo "-----------------------------------------------------------"
-echo "Package: ${DEBIAN_PACKAGE_NORM}"
-echo "-----------------------------------------------------------"
-dpkg -c "${DEBIAN_PACKAGE_NORM}" | sed -e 's/^/    /g'
-echo ""
-dpkg -I "${DEBIAN_PACKAGE_NORM}" | sed -e 's/^/    /g'
-echo ""
-
-echo "-----------------------------------------------------------"
-echo "Package: ${DEBIAN_PACKAGE_ALL}"
-echo "-----------------------------------------------------------"
-dpkg -c "${DEBIAN_PACKAGE_ALL}" | sed -e 's/^/    /g'
-echo ""
-dpkg -I "${DEBIAN_PACKAGE_ALL}" | sed -e 's/^/    /g'
-echo ""
+	if ! dpkg -I "${_one_pkg}" | sed -e 's/^/    /'; then
+		prn_fauilure "Failed to print ${_one_pkg} package insformation by \"dpkg -I\"."
+		exit 1
+	fi
+done
 
 prn_success "Checked package files"
 prn_groupend
@@ -435,28 +534,28 @@ prn_groupend
 #----------------------------------------------------------
 # Copy packages
 #----------------------------------------------------------
-if [ ! -d "${PKG_TOPDIR}" ]; then
-	prn_title "Create ${PKG_TOPDIR} directory"
+if [ ! -d "${DEBPKGDIR}" ]; then
+	prn_title "Create ${DEBPKGDIR} directory"
 
-	if ! mkdir -p "${PKG_TOPDIR}"; then
-		prn_fauilure "Failed to create ${PKG_TOPDIR} directory"
+	if ! mkdir -p "${DEBPKGDIR}"; then
+		prn_fauilure "Failed to create ${DEBPKGDIR} directory"
 		exit 1
 	fi
-	prn_success "Created ${PKG_TOPDIR} directory"
+	prn_success "Created ${DEBPKGDIR} directory"
 	prn_groupend
 fi
 
 prn_title "Copy created debian packages to packages directory"
 
-if ! cp -p "${DEBIAN_PACKAGE_PHP}" "${PKG_TOPDIR}"; then
-	prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_PHP} packages to ${PKG_TOPDIR}"
+if ! cp -p "${DEBIAN_PACKAGE_PHP}" "${DEBPKGDIR}"; then
+	prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_PHP} packages to ${DEBPKGDIR}"
 	exit 1
 fi
 echo "Copied ${DEBIAN_PACKAGE_PHP} package."
 
 if [ "${IS_COPY_COMMON_PKGS}" -eq 1 ]; then
-	if ! cp -p "${DEBIAN_PACKAGE_NORM}" "${PKG_TOPDIR}"; then
-		prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_NORM} packages to ${PKG_TOPDIR}"
+	if ! cp -p "${DEBIAN_PACKAGE_NORM}" "${DEBPKGDIR}"; then
+		prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_NORM} packages to ${DEBPKGDIR}"
 		exit 1
 	fi
 	echo "Copied ${DEBIAN_PACKAGE_NORM} package."
@@ -465,15 +564,15 @@ else
 fi
 
 if [ "${IS_COPY_COMMON_PKGS}" -eq 1 ]; then
-	if ! cp -p "${DEBIAN_PACKAGE_ALL}" "${PKG_TOPDIR}"; then
-		prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_ALL} packages to ${PKG_TOPDIR}"
+	if ! cp -p "${DEBIAN_PACKAGE_ALL}" "${DEBPKGDIR}"; then
+		prn_fauilure "Failed to copy ${DEBIAN_PACKAGE_ALL} packages to ${DEBPKGDIR}"
 		exit 1
 	fi
 	echo "Copied ${DEBIAN_PACKAGE_ALL} package."
 else
 	echo "Skip copying ${DEBIAN_PACKAGE_ALL} package."
 fi
-prn_success "Copied debian packages to ${PKG_TOPDIR}"
+prn_success "Copied debian packages to ${DEBPKGDIR}"
 prn_groupend
 
 #----------------------------------------------------------
@@ -482,7 +581,7 @@ prn_groupend
 prn_title "Install Summary"
 
 prn_success "All processing is succeed"
-echo "You can find ${PACKAGE_NAME} ${PACKAGE_VERSION}-${PACKAGE_RELEASE} version debian package in ${PKG_TOPDIR} directory."
+echo "[SUCCEED] You can find ${PACKAGE_NAME} ${PACKAGE_VERSION}-${BUILD_NUMBER} version debian package in ${DEBPKGDIR} directory."
 echo ""
 prn_groupend
 

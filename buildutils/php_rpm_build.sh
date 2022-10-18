@@ -33,16 +33,24 @@ SRCTOP=$(cd "${SCRIPTDIR}"/.. || exit 1; pwd)
 RPM_TOPDIR="${SRCTOP}/rpmbuild"
 PKG_TOPDIR="${SRCTOP}/packages"
 
+#
+# Variables
+#
+BUILD_NUMBER=0
+IS_CLEAN=0
+NO_INTERACTIVE=0
+
 #----------------------------------------------------------
 # Utility: Usage
 #----------------------------------------------------------
 func_usage()
 {
 	echo ""
-	echo "Usage:  $1 [--help(-h)] [--yes(-y)] [--clean(-c)]"
-	echo "        --help(-h)    print help"
-	echo "        --yes(-y)     runs no interactive mode."
-	echo "        --clean(-c)   only clean work directory."
+	echo "Usage:  $1 [--help(-h)] [--clean(-c)] [--buildnum(-b) <build number>] [--yes(-y)]"
+	echo "        --help(-h)                     print help"
+	echo "        --clean(-c)                    only clean work directory."
+	echo "        --buildnum(-b) <build number>  specify build number for packaging(default 1)"
+	echo "        --yes(-y)                      runs no interactive mode."
 	echo ""
 }
 
@@ -103,8 +111,6 @@ prn_groupend()
 #----------------------------------------------------------
 # Parse options
 #----------------------------------------------------------
-IS_CLEAN=0
-IS_INTERACTIVE=1
 while [ $# -ne 0 ]; do
 	if [ -z "$1" ]; then
 		break
@@ -114,10 +120,38 @@ while [ $# -ne 0 ]; do
 		exit 0
 
 	elif [ "$1" = "-c" ] || [ "$1" = "-C" ] || [ "$1" = "--clean" ] || [ "$1" = "--CLEAN" ]; then
+		if [ "${IS_CLEAN}" -ne 0 ]; then
+			prn_fauilure "Already --clean(-c) option is specified."
+			exit 1
+		fi
 		IS_CLEAN=1
 
+	elif [ "$1" = "-b" ] || [ "$1" = "-B" ] || [ "$1" = "--buildnum" ] || [ "$1" = "--BUILDNUM" ]; then
+		if [ "${BUILD_NUMBER}" -ne 0 ]; then
+			prn_fauilure "Already --buildnum(-b) option is specified(${BUILD_NUMBER})."
+			exit 1
+		fi
+		shift
+		if [ -z "$1" ]; then
+			prn_fauilure "--buildnum(-b) option need parameter."
+			exit 1
+		fi
+		if echo "$1" | grep -q "[^0-9]"; then
+			prn_fauilure "--buildnum(-b) option parameter must be number(and not equal zero)."
+			exit 1
+		fi
+		if [ "$1" -eq 0 ]; then
+			prn_fauilure "--buildnum(-b) option parameter must be number(and not equal zero)."
+			exit 1
+		fi
+		BUILD_NUMBER="$1"
+
 	elif [ "$1" = "-y" ] || [ "$1" = "-Y" ] || [ "$1" = "--yes" ] || [ "$1" = "--YES" ]; then
-		IS_INTERACTIVE=0
+		if [ "${NO_INTERACTIVE}" -ne 0 ]; then
+			prn_fauilure "Already --yes(-y) option is specified."
+			exit 1
+		fi
+		NO_INTERACTIVE=1
 
 	else
 		prn_fauilure "Unknown option $1."
@@ -126,10 +160,17 @@ while [ $# -ne 0 ]; do
 	shift
 done
 
+#
+# Check parameters
+#
+if [ "${BUILD_NUMBER}" -eq 0 ]; then
+	BUILD_NUMBER=1
+fi
+
 #----------------------------------------------------------
 # Welcome message and confirming for interactive mode
 #----------------------------------------------------------
-if [ "${IS_INTERACTIVE}" -eq 1 ] && [ "${IS_CLEAN}" -ne 1 ]; then
+if [ "${NO_INTERACTIVE}" -eq 0 ] && [ "${IS_CLEAN}" -ne 1 ]; then
 	echo "---------------------------------------------------------------"
 	echo " Do you change these file and commit to github?"
 	echo " - ChangeLog     modify / add changes like dch tool format"
@@ -248,14 +289,13 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Get package information"
 
-PACKAGE_NAME=$(head -n 1 ./ChangeLog | awk '{print $1}')
-PACKAGE_VERSION=$(head -n 1 ./ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g')
-PACKAGE_RELEASE=$(head -n 1 ./ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/^.*-//g')
+PACKAGE_NAME=$(head -n 1 ./ChangeLog | awk '{print $1}' | tr -d '\n')
+PACKAGE_VERSION=$(head -n 1 ./ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g' | tr -d '\n')
 
 echo "-----------------------------------------------------------"
 echo " Package name     : ${PACKAGE_NAME}"
 echo " Package version  : ${PACKAGE_VERSION}"
-echo " Package release  : ${PACKAGE_RELEASE}"
+echo " Build number     : ${BUILD_NUMBER}"
 echo "-----------------------------------------------------------"
 prn_success "done"
 prn_groupend
@@ -289,7 +329,7 @@ prn_groupend
 #----------------------------------------------------------
 prn_title "Run rpmbuild"
 
-if ! rpmbuild -vv -ba --define "_topdir ${RPM_TOPDIR}" --define "_prefix /usr" --define "_mandir /usr/share/man" --define "_defaultdocdir /usr/share/doc" --define "package_revision ${PACKAGE_RELEASE}" ./*.spec; then
+if ! rpmbuild -vv -ba --define "_topdir ${RPM_TOPDIR}" --define "_prefix /usr" --define "_mandir /usr/share/man" --define "_defaultdocdir /usr/share/doc" --define "package_revision ${BUILD_NUMBER}" ./*.spec; then
 	prn_fauilure "Failed to build rpm packages by rpmbuild."
 	exit 1
 fi
@@ -357,7 +397,7 @@ prn_groupend
 prn_title "Install Summary"
 
 prn_success "All processing is succeed"
-echo "You can find ${PACKAGE_NAME} ${PACKAGE_VERSION}-${PACKAGE_RELEASE} version rpm package in ${PKG_TOPDIR} directory."
+echo "[SUCCEED] You can find ${PACKAGE_NAME} ${PACKAGE_VERSION}-${BUILD_NUMBER} version rpm package in ${PKG_TOPDIR} directory."
 echo ""
 prn_groupend
 
