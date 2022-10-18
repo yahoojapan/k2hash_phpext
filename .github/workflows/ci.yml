@@ -87,7 +87,7 @@ jobs:
       # Checkout source code
       #
       # [NOTE] using checkout@v1 instead of @v2
-      # In the rpm/debian_build.sh script which run "git status", etc command,
+      # In the php_{rpm|debian}_build.sh script which run "git status", etc command,
       # but the following error occurs.
       #     "fatal: not a git repository (or any parent up to mount point /)"
       # Thus, as a workaround, use @v1.
@@ -160,12 +160,12 @@ jobs:
       - name: Create packages
         run: |
           if [ "${{ env.PACKAGE_TYPE_RPM }}" -eq 1 ]; then
-              /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/rpm_build.sh -y"
+              /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/php_rpm_build.sh -y"
           else
               if [ "${{ matrix.php }}" = "PHP81" ]; then
-                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/debian_build.sh -y -ccp"
+                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/php_debian_build.sh -y -ccp"
               else
-                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/debian_build.sh -y"
+                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/php_debian_build.sh -y"
               fi
           fi
 

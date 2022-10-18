@@ -1,26 +1,22 @@
-dnl
-dnl K2HASH PHP Extension library
-dnl
-dnl Copyright 2015 Yahoo! JAPAN corporation.
-dnl
-dnl K2HASH is key-valuew store base libraries.
-dnl K2HASH is made for the purpose of the construction of
-dnl original KVS system and the offer of the library.
-dnl The characteristic is this KVS library which Key can
-dnl layer. And can support multi-processing and multi-thread,
-dnl and is provided safely as available KVS.
-dnl
-dnl For the full copyright and license information, please view
-dnl the LICENSE file that was distributed with this source code.
-dnl
-dnl AUTHOR:   Hirotaka Wakabayashi
-dnl CREATE:   Tue, Feb 22 2022
-dnl REVISION:
-dnl
-dnl -------------------------------------------------------
-dnl Comments in this file start with the string 'dnl'.
-dnl Remove where necessary.
-dnl -------------------------------------------------------
+#
+# K2HASH PHP Extension library
+#
+# Copyright 2015 Yahoo! JAPAN corporation.
+#
+# K2HASH is key-valuew store base libraries.
+# K2HASH is made for the purpose of the construction of
+# original KVS system and the offer of the library.
+# The characteristic is this KVS library which Key can
+# layer. And can support multi-processing and multi-thread,
+# and is provided safely as available KVS.
+#
+# For the full copyright and license information, please view
+# the LICENSE file that was distributed with this source code.
+#
+# AUTHOR:   Hirotaka Wakabayashi
+# CREATE:   Tue, Feb 22 2022
+# REVISION:
+#
 
 #
 # Set k2hash php extension name
@@ -29,17 +25,40 @@ AC_SUBST([K2HASH_NAME],   "k2hash")
 AC_SUBST([K2H_PECL_NAME], "pecl-k2hash")
 
 #
+# Load customizable variables
+#
+AC_CHECK_FILE([configure.custom],
+	[
+		configure_custom_file="configure.custom"
+		custom_git_domain="$(grep '^\s*GIT_DOMAIN\s*=' configure.custom | sed -e 's|^\s*GIT_DOMAIN\s*=\s*||g' -e 's|^\s*||g' -e 's|\s*$||g')"
+		custom_git_org="$(grep '^\s*GIT_ORG\s*=' configure.custom | sed -e 's|^\s*GIT_ORG\s*=\s*||g' -e 's|^\s*||g' -e 's|\s*$||g')"
+		custom_git_repo="$(grep '^\s*GIT_REPO\s*=' configure.custom | sed -e 's|^\s*GIT_REPO\s*=\s*||g' -e 's|^\s*||g' -e 's|\s*$||g')"
+		custom_dev_email="$(grep '^\s*DEV_EMAIL\s*=' configure.custom | sed -e 's|^\s*DEV_EMAIL\s*=\s*||g' -e 's|^\s*||g' -e 's|\s*$||g')"
+		custom_dev_name="$(grep '^\s*DEB_NAME\s*=' configure.custom | sed -e 's|^\s*DEB_NAME\s*=\s*||g' -e 's|^\s*||g' -e 's|\s*$||g')"
+	],
+	[
+		configure_custom_file=""
+		custom_git_domain="github.com"
+		custom_git_org="yahoojapan"
+		custom_git_repo="k2hash_phpext"
+		custom_dev_email="antpickax-support@mail.yahoo.co.jp"
+		custom_dev_name="K2HASH_DEVELOPER"
+	]
+)
+
+#
 # Common variables
 #
-AC_SUBST([GIT_DOMAIN], "github.com")
-AC_SUBST([GIT_ORG],    "yahoojapan")
-AC_SUBST([GIT_REPO],   "k2hash_phpext")
-AC_SUBST([DEV_EMAIL],  [$(echo ${DEBEMAIL:-antpickax-support@mail.yahoo.co.jp})])
-AC_SUBST([DEV_NAME],   [$(echo ${DEBFULLNAME:-K2HASH_DEVELOPER})])
+AC_SUBST([CONFIGURECUSTOM], "${configure_custom_file}")
+AC_SUBST([GIT_DOMAIN], "${custom_git_domain}")
+AC_SUBST([GIT_ORG], "${custom_git_org}")
+AC_SUBST([GIT_REPO], "${custom_git_repo}")
+AC_SUBST([DEV_EMAIL], "$(echo ${DEBEMAIL:-"${custom_dev_email}"})")
+AC_SUBST([DEV_NAME], "$(echo ${DEBFULLNAME:-"${custom_dev_name}"})")
 
 AC_SUBST([HOME_PAGE],  "https://php.k2hash.antpick.ax/")
-AC_SUBST([PKGLICENSE], [$(grep License LICENSE | sed 's/ License//g')])
-AC_SUBST([DEBLICENSER],[$(grep Copyright LICENSE | sed 's/ *(c)//g')])
+AC_SUBST([PKGLICENSE], [$(grep License LICENSE | sed -e 's/ License//g')])
+AC_SUBST([DEBLICENSER],[$(grep Copyright LICENSE | sed -e 's/ *(c)//g')])
 AC_SUBST([DEBCOPYING], [$(sed -e 's/^$/./g' -e 's/^/ /g' LICENSE)])
 
 #
@@ -131,11 +150,11 @@ if test -d buildutils; then
 	])
 fi
 
-dnl
-dnl Local variables:
-dnl tab-width: 4
-dnl c-basic-offset: 4
-dnl End:
-dnl vim600: noexpandtab sw=4 ts=4 fdm=marker
-dnl vim<600: noexpandtab sw=4 ts=4
-dnl
+#
+# Local variables:
+# tab-width: 4
+# c-basic-offset: 4
+# End:
+# vim600: noexpandtab sw=4 ts=4 fdm=marker
+# vim<600: noexpandtab sw=4 ts=4
+#
