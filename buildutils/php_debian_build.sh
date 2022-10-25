@@ -22,6 +22,29 @@
 # REVISION:
 #
 
+#==============================================================
+# Autobuild for PHP debian package
+#==============================================================
+#
+# Instead of pipefail(for shells not support "set -o pipefail")
+#
+PIPEFAILURE_FILE="/tmp/.pipefailure.$(od -An -tu4 -N4 /dev/random | tr -d ' \n')"
+
+#
+# For shellcheck
+#
+if locale -a | grep -q -i '^[[:space:]]*C.utf8[[:space:]]*$'; then
+	LANG=$(locale -a | grep -i '^[[:space:]]*C.utf8[[:space:]]*$' | sed -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' | tr -d '\n')
+	LC_ALL="${LANG}"
+	export LANG
+	export LC_ALL
+elif locale -a | grep -q -i '^[[:space:]]*en_US.utf8[[:space:]]*$'; then
+	LANG=$(locale -a | grep -i '^[[:space:]]*en_US.utf8[[:space:]]*$' | sed -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' | tr -d '\n')
+	LC_ALL="${LANG}"
+	export LANG
+	export LC_ALL
+fi
+
 #----------------------------------------------------------
 # Common variables
 #----------------------------------------------------------
@@ -397,6 +420,10 @@ if ! OS_VERSION_NAME=$(grep '^[[:space:]]*VERSION_CODENAME[[:space:]]*=' /etc/os
 	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-relase."
 	exit 1
 fi
+if [ -z "${OS_VERSION_NAME}" ]; then
+	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-relase."
+	exit 1
+fi
 if ! sed -e "s/[\(]${PACKAGE_VERSION}[\)]/\(${PACKAGE_VERSION}-${BUILD_NUMBER}\)/g" -e "s/[\)] unstable; /\) ${OS_VERSION_NAME}; /g" ChangeLog > "${EXPANDDIR}/debian/changelog"; then
 	prn_fauilure "Could not convert and copy ChangeLog to ${EXPANDDIR}/debian dicretories."
 	exit 1
@@ -516,13 +543,13 @@ fi
 for _one_pkg in ${FOUND_DEB_PACKAGES}; do
 	echo ""
 	echo "[INFO] ${_one_pkg} package information"
-	if ! dpkg -c "${_one_pkg}" | sed -e 's/^/    /'; then
+	if ({ dpkg -c "${_one_pkg}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 		prn_fauilure "Failed to print ${_one_pkg} package insformation by \"dpkg -c\"."
 		exit 1
 	fi
 	echo "    ---------------------------"
 
-	if ! dpkg -I "${_one_pkg}" | sed -e 's/^/    /'; then
+	if ({ dpkg -I "${_one_pkg}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 		prn_fauilure "Failed to print ${_one_pkg} package insformation by \"dpkg -I\"."
 		exit 1
 	fi

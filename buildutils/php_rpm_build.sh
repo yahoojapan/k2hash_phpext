@@ -22,6 +22,29 @@
 # REVISION:
 #
 
+#==============================================================
+# Autobuild for PHP rpm package
+#==============================================================
+#
+# Instead of pipefail(for shells not support "set -o pipefail")
+#
+#PIPEFAILURE_FILE="/tmp/.pipefailure.$(od -An -tu4 -N4 /dev/random | tr -d ' \n')"
+
+#
+# For shellcheck
+#
+if locale -a | grep -q -i '^[[:space:]]*C.utf8[[:space:]]*$'; then
+	LANG=$(locale -a | grep -i '^[[:space:]]*C.utf8[[:space:]]*$' | sed -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' | tr -d '\n')
+	LC_ALL="${LANG}"
+	export LANG
+	export LC_ALL
+elif locale -a | grep -q -i '^[[:space:]]*en_US.utf8[[:space:]]*$'; then
+	LANG=$(locale -a | grep -i '^[[:space:]]*en_US.utf8[[:space:]]*$' | sed -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' | tr -d '\n')
+	LC_ALL="${LANG}"
+	export LANG
+	export LC_ALL
+fi
+
 #----------------------------------------------------------
 # Common variables
 #----------------------------------------------------------
