@@ -38,7 +38,7 @@
 
 %global with_zts    0
 %global with_tests  1
-%global pecl_name   k2hash
+%global pecl_name   @PHP_SO_NAME@
 %global ini_name    40-%{pecl_name}.ini
 %global base_ini    buildutils/%{pecl_name}.ini
 

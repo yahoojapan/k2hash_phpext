@@ -20,8 +20,8 @@
 #
 
 export REPORT_EXIT_STATUS:=0
-PECL_NAME_OVERRIDE := @K2H_PECL_NAME@
-PECL_CONFIGURE_MAINT_APPEND := --enable-@K2HASH_NAME@
+PECL_NAME_OVERRIDE := @PHP_PECL_BASE_NAME@
+PECL_CONFIGURE_MAINT_APPEND := --enable-@PHP_SO_NAME@
 DH_PHP_VERSIONS_OVERRIDE := @K2H_PHP_VERSION@
 include /usr/share/dh-php/pkg-pecl.mk
 
@@ -43,7 +43,7 @@ build-%:
 
 # [NOTE]
 # The "control" file will be created without the following call,
-# but it will output "php-pecl-k2hash" instead of "php<8.1>-pecl-k2hash"
+# but it will output "php-pecl-<productname>" instead of "php<8.1>-pecl-<productname>"
 # and the build will fail.
 # To avoid this, make the following call.
 #
