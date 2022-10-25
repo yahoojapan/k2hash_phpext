@@ -21,8 +21,8 @@
 #
 # Set k2hash php extension name
 #
-AC_SUBST([K2HASH_NAME],   "k2hash")
-AC_SUBST([K2H_PECL_NAME], "pecl-k2hash")
+AC_SUBST([PHP_SO_NAME], "k2hash")
+AC_SUBST([PHP_PECL_BASE_NAME], "pecl-k2hash")
 
 #
 # Load customizable variables

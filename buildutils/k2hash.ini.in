@@ -17,8 +17,8 @@
 ; CREATE:   Tue, Feb 22 2022
 ; REVISION:
 ;
-; Enable @K2H_PECL_NAME@ extension module
-extension = @K2H_PECL_NAME@.so
+; Enable @PHP_SO_NAME@ extension module
+extension = @PHP_SO_NAME@.so
 
 ; k2hpx_debug sets the serverity of k2hash library logger.
 ; silent means this library logs nothing. This is default.
