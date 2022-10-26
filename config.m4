@@ -112,7 +112,6 @@ if test "${K2H_HAVE_PHP_BINARY}" = "yes"; then
 	AC_SUBST([K2H_PHP_MAJOR_VERSION], [$(php -r 'echo "".PHP_MAJOR_VERSION."";')])
 	AC_SUBST([K2H_PHP_MINOR_VERSION], [$(php -r 'echo "".PHP_MINOR_VERSION."";')])
 	AC_SUBST([K2H_EXT_PKGNAME],       [$(head -n 1 $(pwd)/ChangeLog | awk '{print $1}')])
-	AC_SUBST([K2H_EXT_RELEASE],       [$(head -n 1 $(pwd)/ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/^.*-//g')])
 	AC_SUBST([K2H_EXT_VERSION],       [$(head -n 1 $(pwd)/ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g')])
 
 	AC_DEFINE_UNQUOTED(PHP_K2HASH_VERSION, ["$(head -n 1 $(pwd)/ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g')"], [ PHP Extension version ])
@@ -122,7 +121,6 @@ else
 	AC_SUBST([K2H_PHP_MAJOR_VERSION], "0")
 	AC_SUBST([K2H_PHP_MINOR_VERSION], "0")
 	AC_SUBST([K2H_EXT_PKGNAME],       "php-pecl-k2hash")
-	AC_SUBST([K2H_EXT_RELEASE],       "0")
 	AC_SUBST([K2H_EXT_VERSION],       "0.0.0")
 
 	AC_DEFINE(PHP_K2HASH_VERSION,     "0.0.0", [ PHP Extension version ])
