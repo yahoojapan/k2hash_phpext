@@ -21,8 +21,17 @@
 # REVISION:
 #
 
+#
 # we don't want -z defs linker flag
+#
 %undefine _strict_symbol_defs_build
+
+#
+# Local macros/define
+#
+%if %{undefined package_revision}
+%global package_revision 1
+%endif
 
 %if 0%{?scl:1}
 %global phproot     /opt/remi/%scl_php/root
@@ -47,7 +56,7 @@
 Summary:       A k2hash PHP module written in C
 Name:          %{?sub_prefix}@K2H_EXT_PKGNAME@
 Version:       @K2H_EXT_VERSION@
-Release:       @K2H_EXT_RELEASE@%{?dist}%{!?scl:%{!?nophptag:@K2H_PHP_VERSION@}}
+Release:       %{package_revision}%{?dist}
 License:       MIT
 Group:         Development/Languages
 URL:           https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/
