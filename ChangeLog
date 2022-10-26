@@ -1,3 +1,13 @@
+php-pecl-k2hash (1.1.5) unstable; urgency=low
+
+  * Fixed RPM package name and version pair - #9
+  * Updated config macros and Fixed bugs about packaging - #8
+  * Updated common build scripts - #7
+  * Updated Antpickax common scripts and tools under the buildutils directory - #6
+  * Safely hardened the building and packaging process - #5
+
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Wed, 26 Oct 2022 11:08:14 +0900
+
 php-pecl-k2hash (1.1.4) unstable; urgency=low
 
   * Version control in the build process is centralized by ChangeLog - #3
