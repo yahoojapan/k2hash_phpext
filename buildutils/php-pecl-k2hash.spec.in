@@ -53,43 +53,42 @@
 
 %global buildver %(pkg-config --silence-errors --modversion libk2hash 2>/dev/null || echo 65536)
 
-Summary:       A k2hash PHP module written in C
-Name:          %{?sub_prefix}@K2H_EXT_PKGNAME@
-Version:       @K2H_EXT_VERSION@
-Release:       %{package_revision}%{?dist}
-License:       MIT
-Group:         Development/Languages
-URL:           https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/
-Source0:       https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/archive/@K2H_EXT_PKGNAME@-%{version}.tar.gz
+Summary:            A k2hash PHP module written in C
+Name:               %{?sub_prefix}@K2H_EXT_PKGNAME@
+Version:            @K2H_EXT_VERSION@
+Release:            %{package_revision}%{?dist}
+License:            MIT
+Group:              Development/Languages
+URL:                https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/
+Source0:            https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@/archive/@K2H_EXT_PKGNAME@-%{version}.tar.gz
 
-BuildRequires:  %{?dtsprefix}gcc
-BuildRequires: %{?scl_prefix}php-devel >= 7.4
-BuildRequires: k2hash-devel   >= %{buildver}
-Requires:      k2hash%{?_isa} >= %{buildver}
+BuildRequires:      %{?dtsprefix}gcc
+BuildRequires:      %{?scl_prefix}php-devel                      >= 7.4
+BuildRequires:      k2hash-devel                                 >= %{buildver}
+Requires:           k2hash%{?_isa}                               >= %{buildver}
 
 %if 0%{?php_zend_api}
-Requires:      %{?scl_prefix}php(zend-abi) = %{php_zend_api}
-Requires:      %{?scl_prefix}php(api) = %{php_core_api}
+Requires:           %{?scl_prefix}php(zend-abi)                  = %{php_zend_api}
+Requires:           %{?scl_prefix}php(api)                       = %{php_core_api}
 %endif
 %{?_sclreq:Requires: %{?scl_prefix}runtime%{?_sclreq}%{?_isa}}
 
-Provides:      %{?scl_prefix}php-%{pecl_name}               = %{version}
-Provides:      %{?scl_prefix}php-%{pecl_name}%{?_isa}       = %{version}
-Provides:      %{?scl_prefix}php-pecl(%{pecl_name})         = %{version}
-Provides:      %{?scl_prefix}php-pecl(%{pecl_name})%{?_isa} = %{version}
+Provides:           %{?scl_prefix}php-%{pecl_name}               = %{version}
+Provides:           %{?scl_prefix}php-%{pecl_name}%{?_isa}       = %{version}
+Provides:           %{?scl_prefix}php-pecl(%{pecl_name})         = %{version}
+Provides:           %{?scl_prefix}php-pecl(%{pecl_name})%{?_isa} = %{version}
 %if "%{?scl_prefix}" != "%{?sub_prefix}"
-Provides:      %{?scl_prefix}php-pecl-%{pecl_name}          = %{version}-%{release}
-Provides:      %{?scl_prefix}php-pecl-%{pecl_name}%{?_isa}  = %{version}-%{release}
+Provides:           %{?scl_prefix}php-pecl-%{pecl_name}          = %{version}-%{release}
+Provides:           %{?scl_prefix}php-pecl-%{pecl_name}%{?_isa}  = %{version}-%{release}
 %endif
 
-# obsoletes rh-php71-******
-Provides:      rh-php-%{pecl_name}               = 1.1.0 
-Provides:      rh-php-%{pecl_name}%{?_isa}       = 1.1.0
-Provides:      rh-php-pecl(%{pecl_name})         = 1.1.0
-Provides:      rh-php-pecl(%{pecl_name})%{?_isa} = 1.1.0
+Provides:           rh-php-%{pecl_name}                          = 1.1.0
+Provides:           rh-php-%{pecl_name}%{?_isa}                  = 1.1.0
+Provides:           rh-php-pecl(%{pecl_name})                    = 1.1.0
+Provides:           rh-php-pecl(%{pecl_name})%{?_isa}            = 1.1.0
 %if "%{?scl_prefix}" != "%{?sub_prefix}"
-Provides:      rh-php-pecl-%{pecl_name}          = 1.1.0-1
-Provides:      rh-php-pecl-%{pecl_name}%{?_isa}  = 1.1.0-1
+Provides:           rh-php-pecl-%{pecl_name}                     = 1.1.0-1
+Provides:           rh-php-pecl-%{pecl_name}%{?_isa}             = 1.1.0-1
 %endif
 
 #
