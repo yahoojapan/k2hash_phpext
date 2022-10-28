@@ -417,11 +417,11 @@ fi
 # convert and copy changelog
 #
 if ! OS_VERSION_NAME=$(grep '^[[:space:]]*VERSION_CODENAME[[:space:]]*=' /etc/os-release | sed -e 's/^[[:space:]]*VERSION_CODENAME[[:space:]]*=//g' -e 's/^[[:space:]]*//g' -e 's/[[:space:]]*$//g' | tr -d '\n'); then
-	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-relase."
+	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-release."
 	exit 1
 fi
 if [ -z "${OS_VERSION_NAME}" ]; then
-	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-relase."
+	prn_fauilure "Could not get OS VERSION CODENAME from /etc/os-release."
 	exit 1
 fi
 if ! sed -e "s/[\(]${PACKAGE_VERSION}[\)]/\(${PACKAGE_VERSION}-${BUILD_NUMBER}\)/g" -e "s/[\)] unstable; /\) ${OS_VERSION_NAME}; /g" ChangeLog > "${EXPANDDIR}/debian/changelog"; then
