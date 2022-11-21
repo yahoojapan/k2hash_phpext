@@ -57,12 +57,25 @@ jobs:
       #
       # matrix for containers
       #
+      # [NOTICE]
+      # The following OS are excluded from testing due to issues
+      # with libraries in different packages:
+      #
+      #    - ubuntu:22.04
+      #    - debian:11
+      #    - rockylinux:9
+      #    - fedora:37
+      #    - fedora:36
+      #    - fedora:35 (EOL: 2022-12-13)
+      #
       matrix:
         container:
           - ubuntu:20.04
           - ubuntu:18.04
-          - quay.io/centos/centos:stream8
-          - quay.io/centos/centos:centos7
+          - debian:10
+          - rockylinux:8
+          - centos:centos7
+
         php:
           - PHP74
           - PHP80
@@ -86,8 +99,8 @@ jobs:
       #
       # Checkout source code
       #
-      # [NOTE] using checkout@v1 instead of @v2
-      # In the php_{rpm|debian}_build.sh script which run "git status", etc command,
+      # [NOTE] using checkout@v1 instead of @v2/@v3
+      # In the php_{rpm|debian}_build.sh script which run "git <command>", etc command,
       # but the following error occurs.
       #     "fatal: not a git repository (or any parent up to mount point /)"
       # Thus, as a workaround, use @v1.
@@ -96,113 +109,46 @@ jobs:
         uses: actions/checkout@v1
 
       #
-      # install_packages.sh installs the required packages depending on the OS
-      # and PHP. And BUILD_PLATFORM_COMMAND / RUBY_SCL_ENV_FILE environment
-      # variable is set in it.
+      # Set environments from secrets
       #
-      - name: Install packages
+      # [NOTE] Secrets
+      # Use Secrets of organization or repository as parameters to
+      # pass to build_helper.sh for building and packaging, .
+      #
+      # The available Secret variables are listed below:
+      #    PHPEXTTYPE_VARS_FILE       : specify custom variables file
+      #    BUILD_NUMBER               : buld number for packaging
+      #    DEVELOPER_FULLNAME         : developer name for package
+      #    DEVELOPER_EMAIL            : developer e-mail for package
+      #    FORCE_PUBLISH              : true means force to publish packages, false means never publish
+      #    USE_PACKAGECLOUD_REPO      : true means using pacakgecloud.io repo, false is not using
+      #  * PACKAGECLOUD_TOKEN         : The token for publishing to packagcloud.io
+      #    PACKAGECLOUD_OWNER         : owner name as a pat of path to packagcloud.io for publishing/downloading
+      #    PACKAGECLOUD_PUBLISH_REPO  : repo name as a pat of path to packagcloud.io for publishing
+      #    PACKAGECLOUD_DOWNLOAD_REPO : repo name as a pat of path to packagcloud.io for downloading
+      #
+      # "PACKAGECLOUD_TOKEN" is a required variable to publish the
+      # package.
+      #
+      - name: Set environments from secrets
         run: |
-          /bin/sh -c ".github/workflows/install_packages.sh ${{ matrix.php }} ${{ matrix.container }}"
+          echo "ENV_PHPEXTTYPE_VARS_FILE=${{ secrets.PHPEXTTYPE_VARS_FILE }}"             >> "${GITHUB_ENV}"
+          echo "ENV_BUILD_NUMBER=${{ secrets.BUILD_NUMBER }}"                             >> "${GITHUB_ENV}"
+          echo "ENV_DEVELOPER_FULLNAME=${{ secrets.DEVELOPER_FULLNAME }}"                 >> "${GITHUB_ENV}"
+          echo "ENV_DEVELOPER_EMAIL=${{ secrets.DEVELOPER_EMAIL }}"                       >> "${GITHUB_ENV}"
+          echo "ENV_FORCE_PUBLISH=${{ secrets.FORCE_PUBLISH }}"                           >> "${GITHUB_ENV}"
+          echo "ENV_USE_PACKAGECLOUD_REPO=${{ secrets.USE_PACKAGECLOUD_REPO }}"           >> "${GITHUB_ENV}"
+          echo "ENV_PACKAGECLOUD_TOKEN=${{ secrets.PACKAGECLOUD_TOKEN }}"                 >> "${GITHUB_ENV}"
+          echo "ENV_PACKAGECLOUD_OWNER=${{ secrets.PACKAGECLOUD_OWNER }}"                 >> "${GITHUB_ENV}"
+          echo "ENV_PACKAGECLOUD_PUBLISH_REPO=${{ secrets.PACKAGECLOUD_PUBLISH_REPO }}"   >> "${GITHUB_ENV}"
+          echo "ENV_PACKAGECLOUD_DOWNLOAD_REPO=${{ secrets.PACKAGECLOUD_DOWNLOAD_REPO }}" >> "${GITHUB_ENV}"
 
       #
-      # CppCheck
+      # Run building and packaging helper
       #
-      - name: CppCheck
+      - name: Run building and packaging
         run: |
-          if command -v cppcheck >/dev/null 2>&1; then
-              cppcheck --quiet --error-exitcode=1 --inline-suppr --std=c++03 --xml --enable=warning,style,information --suppress=missingInclude .
-          else
-              echo "CppCheck is not installed, skip checking by CppCheck."
-          fi
-
-      #
-      # ShellCheck
-      #
-      - name: ShellCheck
-        run: |
-          if command -v shellcheck >/dev/null 2>&1; then
-              LC_ALL=C.UTF-8 shellcheck --shell=sh $(grep '#![[:space:]]*/bin/sh' $(find . -type f -name \*.sh | grep -v './autom4te.cache/' | grep -v './build/' | grep -v './include/' | grep -v './modules/') | sed -e 's|^\(.*\):#\!.*$|\1|g')
-          else
-              echo "ShellCheck is not installed, skip checking by ShellCheck."
-          fi
-
-      #
-      # Phpize
-      #
-      - name: Run phpize
-        run: |
-          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} phpize"
-
-      #
-      # Configure
-      #
-      - name: Run configure
-        run: |
-          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./configure"
-
-      #
-      # Build
-      #
-      - name: Build
-        run: |
-          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} make"
-
-      #
-      # Test
-      #
-      - name: Test
-        run: |
-          /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} make test"
-
-      #
-      # Packaging
-      #
-      - name: Create packages
-        run: |
-          if [ "${{ env.PACKAGE_TYPE_RPM }}" -eq 1 ]; then
-              /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/php_rpm_build.sh -y"
-          else
-              if [ "${{ matrix.php }}" = "PHP81" ]; then
-                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/php_debian_build.sh -y -ccp"
-              else
-                  /bin/sh -c "${{ env.BUILD_PLATFORM_COMMAND }} ./buildutils/php_debian_build.sh -y"
-              fi
-          fi
-
-      #
-      # Publish packages
-      #
-      # [NOTE]
-      # The following two environment variables are set in install_packages.sh.
-      #    DIST_TAG                   : distribution tag (ex. "ubuntu/focal")
-      #    PKG_EXT                    : package file extension (ex. "deb")
-      #
-      # The following environment variables are the repository information for packagecloud.io.
-      # If not set, the default value will be used.
-      #    PACKAGECLOUD_OWNER         : owner name as a pat of path to packagcloud.io (default. "antpickax")
-      #    PACKAGECLOUD_PUBLISH_REPO  : repo name as a pat of path to packagcloud.io (default. "current")
-      # 
-      # The following environment variables are tokens for uploading packages to packagecloud.io.
-      # Be sure to set it to Secret on Github.
-      #    PACKAGECLOUD_TOKEN         : The token for publishing to packagcloud.io
-      # 
-      # If you want to "forcibly" publish the package, set "true" in the following environment variables.
-      #    FORCE_PUBLISH              : true means force to publish packages
-      #
-      # The RUBY_SCL_ENV_FILE environment variable, if any, is used internally in publish_packages.sh.
-      #
-      - name: Publish packages
-        env:
-          TMP_CI_PACKAGECLOUD_OWNER:        ${{ secrets.PACKAGECLOUD_OWNER }}
-          TMP_CI_PACKAGECLOUD_PUBLISH_REPO: ${{ secrets.PACKAGECLOUD_PUBLISH_REPO }}
-          TMP_CI_PACKAGECLOUD_TOKEN:        ${{ secrets.PACKAGECLOUD_TOKEN }}
-          TMP_CI_FORCE_PUBLISH:             ${{ secrets.FORCE_PUBLISH }}
-        run: |
-          if [ -n "${TMP_CI_PACKAGECLOUD_OWNER}" ]; then         OPT_CI_PACKAGECLOUD_OWNER="-pcowner ${TMP_CI_PACKAGECLOUD_OWNER}";               else OPT_CI_PACKAGECLOUD_OWNER="-pcowner antpickax";      fi
-          if [ -n "${TMP_CI_PACKAGECLOUD_PUBLISH_REPO}" ]; then  OPT_CI_PACKAGECLOUD_PUBLISH_REPO="-pcprepo ${TMP_CI_PACKAGECLOUD_PUBLISH_REPO}"; else OPT_CI_PACKAGECLOUD_PUBLISH_REPO="-pcprepo current"; fi
-          if [ -n "${TMP_CI_PACKAGECLOUD_TOKEN}" ]; then         OPT_CI_PACKAGECLOUD_TOKEN="-pctoken ${TMP_CI_PACKAGECLOUD_TOKEN}";               fi
-          if [ "X${TMP_CI_FORCE_PUBLISH}" = "Xtrue" ]; then      OPT_CI_FORCE_PUBLISH="-f";                                                       fi
-          /bin/sh -c ".github/workflows/publish_packages.sh -disttag ${DIST_TAG} -pkgext ${PKG_EXT} ${OPT_CI_PACKAGECLOUD_OWNER} ${OPT_CI_PACKAGECLOUD_PUBLISH_REPO} ${OPT_CI_PACKAGECLOUD_TOKEN} ${OPT_CI_FORCE_PUBLISH}"
+          /bin/sh -c "$GITHUB_WORKSPACE/.github/workflows/phpext_helper.sh -os ${{ matrix.container }} -php ${{ matrix.php }}"
 
 #
 # Local variables:
