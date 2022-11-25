@@ -338,14 +338,56 @@ PRNSUCCESS "Got package information"
 EXPANDDIR="${BUILDDEBDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}"
 
 #----------------------------------------------------------
-# Make source tar.gz from git by archive
+# Make source tar.gz
 #----------------------------------------------------------
 PRNTITLE "Create base tar ball of source files"
 
-if ! git archive HEAD --prefix="${PACKAGE_NAME}-${PACKAGE_VERSION}"/ --output="${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz; then
-	PRNERR "Could not make source tar ball(${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz) from github repository."
-	exit 1
+if [ -d "${SRCTOP}/.git" ] && [ "$(git status -s 2>&1 | wc -l)" -eq 0 ]; then
+	#
+	# No untracked files, make source package(tar.gz) by git archive
+	#
+	if ! git archive HEAD --prefix="${PACKAGE_NAME}-${PACKAGE_VERSION}"/ --output="${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz; then
+		PRNERR "Could not make source tar ball(${BUILDDEBDIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.gz) from github repository."
+		exit 1
+	fi
+else
+	#
+	# Found untracked files or Not have .git directory, source code package(tar.gz) like "make dist" and copy it
+	#
+	# [NOTICE]
+	# PHP Extension is built using "phpize(config.m4)".
+	# The "Makefile" created by "phpize" does not have "make dist",
+	# so the source code expanded by "Github Actions" is created in
+	# advance as "<DIRNAME>_allsource.tar.gz" with "phpext_helper.sh".
+	# Extract this "<DIRNAME>_allsource.tar.gz" and create a file
+	# similar to "make dist" here.
+	#
+	_SOURCECODE_DIRNAME=$(basename "${SRCTOP}")
+	_ALL_SOURCE_TARGZ_FILENAME="${_SOURCECODE_DIRNAME}_allsource.tar.gz"
+
+	if [ ! -f "${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}" ]; then
+		PRNERR "Not found all source code tar.gz file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME})."
+		exit 1
+	fi
+	if ! tar xvfz "${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}" -C /tmp/; then
+		PRNERR "Failed to expand all source code tar.gz file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}) to /tmp."
+		exit 1
+	fi
+	if [ ! -d /tmp/"${_SOURCECODE_DIRNAME}" ]; then
+		PRNERR "Not found expanded all source code directory(/tmp/${_SOURCECODE_DIRNAME}) from file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME})."
+		exit 1
+	fi
+	if ! mv /tmp/"${_SOURCECODE_DIRNAME}" /tmp/"${PACKAGE_NAME}-${PACKAGE_VERSION}"; then
+		PRNERR "Failed to rename from /tmp/${_SOURCECODE_DIRNAME} directory to /tmp/${PACKAGE_NAME}-${PACKAGE_VERSION}."
+		exit 1
+	fi
+	if ! (cd /tmp || exit 1; tar cvfz "${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}".tar.gz "${PACKAGE_NAME}-${PACKAGE_VERSION}"); then
+		PRNERR "Failed to create ${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz."
+		exit 1
+	fi
+	rm -rf /tmp/"${PACKAGE_NAME}-${PACKAGE_VERSION}"
 fi
+
 PRNSUCCESS "Created ${BUILDDEBDIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.tar.gz"
 
 #----------------------------------------------------------

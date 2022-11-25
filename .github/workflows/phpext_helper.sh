@@ -51,7 +51,7 @@ fi
 PRGNAME=$(basename "$0")
 SCRIPTDIR=$(dirname "$0")
 SCRIPTDIR=$(cd "${SCRIPTDIR}" || exit 1; pwd)
-SRCTOP=$(cd "${SCRIPTDIR}"/.. || exit 1; pwd)
+SRCTOP=$(cd "${SCRIPTDIR}"/../.. || exit 1; pwd)
 
 #
 # Message variables
@@ -237,6 +237,28 @@ RUN_PUBLISH_PACKAGE=1
 #
 run_pre_configuration()
 {
+	# [NOTICE]
+	# Current actions/checkout@v3 (Github Action) is not make ".git" directory.
+	# If there are a ".git" directory and no "Untracked files", you can use
+	# "git archive HEAD" to tar.gz the source code for package creation.
+	# But we need a way to create a ".git" directory if it doesn't exist.
+	# The PHP Extension uses "phpize(config.m4)" and this tool does not support
+	# "make dist", so we need to prepare a way as same as "make dist".
+	# Therefore, it is necessary to create a "tar.gz" file from only all source
+	# code before running "phpize".
+	# Once "actions/checkout" extracts the ".git" directory, we can use
+	# "git archive HEAD", but "make dist" is not supported, so this process
+	# will remain permanent.
+	# This source code "tar.gz" file is required for processing "php_rpm_build.sh"
+	# and "php_debian_build.sh".
+	#
+	_SOURCECODE_DIRNAME=$(basename "${SRCTOP}")
+	_ALL_SOURCE_TARGZ_FILENAME="${_SOURCECODE_DIRNAME}_allsource.tar.gz"
+	if ! (cd .. || exit 1; touch "${_SOURCECODE_DIRNAME}/${_ALL_SOURCE_TARGZ_FILENAME}"; tar cvfz "${_SOURCECODE_DIRNAME}/${_ALL_SOURCE_TARGZ_FILENAME}" --exclude="${_SOURCECODE_DIRNAME}/${_ALL_SOURCE_TARGZ_FILENAME}" "${_SOURCECODE_DIRNAME}"); then
+		PRNERR "Failed to creating all source code tar.gz file for backup(packaging)."
+		return 1
+	fi
+
 	if ! /bin/sh -c "${SWITCH_PHP_COMMAND} phpize"; then
 		PRNERR "Failed to run \"phpize\" before configration."
 		return 1
@@ -1504,6 +1526,7 @@ PRNSUCCESS "Install shellcheck"
 #
 # Configuration
 #
+cd "${SRCTOP}" || exit 1
 
 #
 # Before configuration

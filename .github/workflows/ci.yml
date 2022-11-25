@@ -99,14 +99,8 @@ jobs:
       #
       # Checkout source code
       #
-      # [NOTE] using checkout@v1 instead of @v2/@v3
-      # In the php_{rpm|debian}_build.sh script which run "git <command>", etc command,
-      # but the following error occurs.
-      #     "fatal: not a git repository (or any parent up to mount point /)"
-      # Thus, as a workaround, use @v1.
-      #
       - name: Checkout sources
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       #
       # Set environments from secrets

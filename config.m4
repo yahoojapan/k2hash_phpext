@@ -127,6 +127,25 @@ else
 fi
 
 #
+# AC Macros for checking dependencies, etc
+#
+# [NOTE]
+# The macros below are the macros that were output when I ran autoscan manually.
+#
+AC_CHECK_FUNCS([strncasecmp])
+AC_CHECK_HEADERS([fcntl.h])
+AC_CHECK_HEADER_STDBOOL
+AC_C_INLINE
+AC_FUNC_MALLOC
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
+AC_TYPE_OFF_T
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
+
+#
 # Make changelog strings for rpm
 #
 if test -f $(pwd)/buildutils/make_rpm_changelog.sh; then
