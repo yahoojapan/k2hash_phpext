@@ -83,7 +83,6 @@ PHP_METHOD(K2hKeyQueue, isEmpty)
 		RETURN_FALSE;
 	}
 	// push
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_empty(*res_k2hkeyqhandle)) {
 		RETURN_FALSE;
@@ -109,7 +108,6 @@ PHP_METHOD(K2hKeyQueue, count)
 		RETURN_FALSE;
 	}
 	// get
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	int	count = k2h_keyq_count(*res_k2hkeyqhandle);
 	RETURN_LONG((long)count);
@@ -143,7 +141,6 @@ PHP_METHOD(K2hKeyQueue, read)
 	// get
 	char*	pkey	= NULL;
 	char*	pvalue	= NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_str_read_keyval_wp(*res_k2hkeyqhandle, &pkey, &pvalue, (int)pos, pass)) {
 		//php_error_docref(NULL, E_NOTICE, "K2hKeyQueue::read: failed to read key and value from key queue.");
@@ -197,7 +194,6 @@ PHP_METHOD(K2hKeyQueue, push)
 		php_error_docref(NULL, E_ERROR, "K2hKeyQueue::push: value is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	time_t	tmexpire	= 0;
 	time_t*	ptmexpire	= NULL;
@@ -206,7 +202,6 @@ PHP_METHOD(K2hKeyQueue, push)
 		ptmexpire	= &tmexpire;
 	}
 	// push
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_str_push_keyval_wa(*res_k2hkeyqhandle, key, value, pass, ptmexpire)) {
 		php_error_docref(NULL, E_NOTICE, "K2hKeyQueue::push: failed to push key and value into queue.");
@@ -237,7 +232,6 @@ PHP_METHOD(K2hKeyQueue, pop)
 	// pop
 	char*	pkey	= NULL;
 	char*	pvalue	= NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_str_pop_keyval_wp(*res_k2hkeyqhandle, &pkey, &pvalue, pass)) {
 		php_error_docref(NULL, E_NOTICE, "K2hKeyQueue::pop: failed to pop key and value from queue.");
@@ -283,7 +277,6 @@ PHP_METHOD(K2hKeyQueue, remove)
 		RETURN_FALSE;
 	}
 	// remove
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_remove_wp(*res_k2hkeyqhandle, (int)count, pass)) {
 		php_error_docref(NULL, E_NOTICE, "K2hKeyQueue::remove: failed to remove data from queue.");
@@ -320,7 +313,6 @@ PHP_METHOD(K2hKeyQueue, dump)
 		}
 	}
 	// remove
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_dump(*res_k2hkeyqhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hKeyQueue::dump: failed to dump queue.");

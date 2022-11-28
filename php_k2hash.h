@@ -166,11 +166,9 @@ void class_init_k2hash(void);
 
 #define K2HASH_G(v) ZEND_MODULE_GLOBALS_ACCESSOR(k2hash, v)
 
-// cppcheck-suppress unmatchedSuppression
 // cppcheck-suppress unknownMacro
 ZEND_BEGIN_MODULE_GLOBALS(k2hash)
 char *k2hpx_debug;
-// cppcheck-suppress unmatchedSuppression
 // cppcheck-suppress unknownMacro
 ZEND_END_MODULE_GLOBALS(k2hash)
 

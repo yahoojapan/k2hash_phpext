@@ -391,7 +391,6 @@ PHP_FUNCTION(k2hpx_close)
 		php_error_docref(NULL, E_NOTICE, "k2hpx_close: waitms must be -1, 0, 1...");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_close_wait(*handle, waitms)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_close: failed to close handle.");
@@ -485,7 +484,6 @@ PHP_FUNCTION(k2hpx_disable_transaction)
 		php_error_docref(NULL, E_ERROR, "k2hpx_disable_transaction: handle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_disable_transaction(*handle)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_disable_transaction: failed to set disable.");
@@ -555,7 +553,6 @@ PHP_FUNCTION(k2hpx_put_archive)
 		php_error_docref(NULL, E_ERROR, "k2hpx_put_archive: filepath is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_put_archive(*handle, filepath, 0 != errskip ? true : false)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_put_archive: failed to put archive to filepath.");
@@ -585,7 +582,6 @@ PHP_FUNCTION(k2hpx_load_archive)
 		php_error_docref(NULL, E_ERROR, "k2hpx_load_archive: filepath is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_load_archive(*handle, filepath, 0 != errskip ? true : false)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_load_archive: failed to load archive from filepath.");
@@ -660,7 +656,6 @@ PHP_FUNCTION(k2hpx_set_common_attr)
 			pexpire_val	= &expire_val;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_set_common_attr(*handle, pmtime_val, penc_val, pfile, phis_val, pexpire_val)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_set_common_attr: failed to set common attributes.");
@@ -683,7 +678,6 @@ PHP_FUNCTION(k2hpx_clean_common_attr)
 		php_error_docref(NULL, E_ERROR, "k2hpx_clean_common_attr: handle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_clean_common_attr(*handle)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_clean_common_attr: failed to clear common attributes setting.");
@@ -712,7 +706,6 @@ PHP_FUNCTION(k2hpx_add_attr_plugin_library)
 		php_error_docref(NULL, E_ERROR, "k2hpx_add_attr_plugin_library: library file path is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_add_attr_plugin_library(*handle, libfile)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_add_attr_plugin_library: failed to load plugin attribute library.");
@@ -742,7 +735,6 @@ PHP_FUNCTION(k2hpx_add_attr_crypt_pass)
 		php_error_docref(NULL, E_ERROR, "k2hpx_add_attr_crypt_pass: encrypt pass phrase is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_add_attr_crypt_pass(*handle, encpass, is_default_encrypt)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_add_attr_crypt_pass: failed to add encrypt pass phrase.");
@@ -775,7 +767,6 @@ PHP_FUNCTION(k2hpx_print_attr_version)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_print_attr_version(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_print_attr_version: failed to print all attributes version.");
@@ -808,7 +799,6 @@ PHP_FUNCTION(k2hpx_print_attr_information)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_print_attr_information(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_print_attr_information: failed to print attributes information.");
@@ -972,7 +962,6 @@ PHP_FUNCTION(k2hpx_get_attrs)
 	}
 	PK2HATTRPCK	pattrs; // TODO where malloc?
 	int			attrspckcnt = 0;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL != (pattrs = k2h_get_str_direct_attrs(*handle, key, &attrspckcnt)) && 0 < attrspckcnt) {
 		int	cnt;
@@ -1020,7 +1009,6 @@ PHP_FUNCTION(k2hpx_get_attr_value)
 	PK2HATTRPCK	pattrs; // TODO where malloc?
 	int			attrspckcnt	= 0;
 	bool		is_found	= false;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL != (pattrs = k2h_get_str_direct_attrs(*handle, key, &attrspckcnt)) && 0 < attrspckcnt) {
 		int	cnt;
@@ -1037,10 +1025,8 @@ PHP_FUNCTION(k2hpx_get_attr_value)
 					RETURN_FALSE;
 				}
 				// copy
-				// cppcheck-suppress unmatchedSuppression
 				// cppcheck-suppress nullPointerRedundantCheck
 				memcpy(pattrval, pattrs[cnt].pval, pattrs[cnt].vallength);
-				// cppcheck-suppress unmatchedSuppression
 				// cppcheck-suppress nullPointerRedundantCheck
 				pattrval[pattrs[cnt].vallength] = '\0';
 				// set return value
@@ -1136,7 +1122,6 @@ PHP_FUNCTION(k2hpx_add_subkey)
 	}
 	// get now subkeys list
 	int			skeypckcnt	= 0;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	PK2HKEYPCK	pskeypck	= k2h_get_direct_subkeys(*handle, (const unsigned char*)key, strlen(key) + 1, &skeypckcnt);
 	// make new subkeys list(+1)
@@ -1149,7 +1134,6 @@ PHP_FUNCTION(k2hpx_add_subkey)
 		RETURN_FALSE;
 	}
 	// set subkey into first entry in new subkeys list
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL == (pnewpck[0].pkey = (unsigned char*)calloc(strlen(subkey) + 1, sizeof(unsigned char)))) {
 		php_error_docref(NULL, E_ERROR, "k2hpx_add_subkey: could not allocation memory.");
@@ -1159,10 +1143,8 @@ PHP_FUNCTION(k2hpx_add_subkey)
 		free(pnewpck);
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	memcpy(pnewpck[0].pkey, subkey, strlen(subkey));
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	pnewpck[0].length = strlen(subkey) + 1;
 	// set old subkeys list into new list
@@ -1187,7 +1169,6 @@ PHP_FUNCTION(k2hpx_add_subkey)
 		k2h_free_keypack(pskeypck, skeypckcnt);
 	}
 	// set new subkeys
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_set_subkeys(*handle, (const unsigned char*)key, strlen(key) + 1, pnewpck, setpos)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_add_subkey: failed to set subkey into key.");
@@ -1233,7 +1214,6 @@ PHP_FUNCTION(k2hpx_add_subkeys)
 		// https://phpinternals.net/docs/zend_hash_foreach_num_key_val
 		zend_long lkey;
 		zval *val;
-		// cppcheck-suppress unmatchedSuppression
 		// cppcheck-suppress uninitvar
 		ZEND_HASH_FOREACH_NUM_KEY_VAL(subkeys_hash, lkey, val) {
 			// for debug
@@ -1260,7 +1240,6 @@ PHP_FUNCTION(k2hpx_add_subkeys)
 		ZEND_HASH_FOREACH_END();
 	}
 	// over write all subkeys(if pnewpck is null, remove all subkeys)
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_set_subkeys(*handle, (const unsigned char*)key, strlen(key) + 1, pnewpck, setpos)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_add_subkeys: failed to set subkeys into key.");
@@ -1299,7 +1278,6 @@ PHP_FUNCTION(k2hpx_add_attr)
 		php_error_docref(NULL, E_ERROR, "k2hpx_add_attr: attribute key is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_add_str_attr(*handle, key, attrkey, attrval)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_add_attr: failed to add attribute into key.");
@@ -1328,7 +1306,6 @@ PHP_FUNCTION(k2hpx_remove_all)
 		php_error_docref(NULL, E_ERROR, "k2hpx_remove_all: key is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_remove_str_all(*handle, key)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_remove_all: failed to remove all for key.");
@@ -1399,7 +1376,6 @@ PHP_FUNCTION(k2hpx_rename)
 		php_error_docref(NULL, E_ERROR, "k2hpx_rename: new key is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_rename_str(*handle, key, newkey)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_rename: failed to rename key name.");
@@ -1456,7 +1432,6 @@ PHP_FUNCTION(k2hpx_find_next)
 		RETURN_FALSE;
 	}
 	k2h_find_h	nexthandle;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == (nexthandle = k2h_find_next(*findhandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_find_next: failed to get next find handle.");
@@ -1481,7 +1456,6 @@ PHP_FUNCTION(k2hpx_find_free)
 		php_error_docref(NULL, E_ERROR, "k2hpx_find_free: findhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_find_free(*findhandle)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_find_free: failed to free find handle.");
@@ -1505,7 +1479,6 @@ PHP_FUNCTION(k2hpx_find_get_key)
 		RETURN_FALSE;
 	}
 	char*	pkey;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL == (pkey = k2h_find_get_str_key(*findhandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_find_get_key: could not get key string by findhandle.");
@@ -1530,7 +1503,6 @@ PHP_FUNCTION(k2hpx_find_get_value)
 		RETURN_FALSE;
 	}
 	char*	pvalue;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL == (pvalue = k2h_find_get_direct_value(*findhandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_find_get_value: could not get value string by findhandle.");
@@ -1557,7 +1529,6 @@ PHP_FUNCTION(k2hpx_find_get_subkeys)
 	}
 	int		subkey_count;
 	char**	pskeyarray = NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(0 != (subkey_count = k2h_find_get_str_subkeys(*findhandle, &pskeyarray))) {
 		char**	pptmp;
@@ -1597,7 +1568,6 @@ PHP_FUNCTION(k2hpx_da_get_handle)
 		RETURN_FALSE;
 	}
 	k2h_da_h	dahandle;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == (dahandle = k2h_da_str_handle(*handle, key, mode))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_handle: failed to get handle for direct access.");
@@ -1630,7 +1600,6 @@ PHP_FUNCTION(k2hpx_da_get_handle_read)
 		RETURN_FALSE;
 	}
 	k2h_da_h	dahandle;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == (dahandle = k2h_da_str_handle_read(*handle, key))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_handle_read: failed to get readable handle for direct access.");
@@ -1663,7 +1632,6 @@ PHP_FUNCTION(k2hpx_da_get_handle_write)
 		RETURN_FALSE;
 	}
 	k2h_da_h	dahandle;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == (dahandle = k2h_da_str_handle_write(*handle, key))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_handle_write: failed to get writable handle for direct access.");
@@ -1696,7 +1664,6 @@ PHP_FUNCTION(k2hpx_da_get_handle_rw)
 		RETURN_FALSE;
 	}
 	k2h_da_h	dahandle;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == (dahandle = k2h_da_str_handle_rw(*handle, key))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_handle_rw: failed to get writable handle for direct access.");
@@ -1721,7 +1688,6 @@ PHP_FUNCTION(k2hpx_da_free)
 		php_error_docref(NULL, E_ERROR, "k2hpx_da_free: handle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_da_free(*dahandle)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_free: failed to free direct access handle.");
@@ -1745,7 +1711,6 @@ PHP_FUNCTION(k2hpx_da_get_length)
 		RETURN_FALSE;
 	}
 	long	length;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(0 > (length = (long)k2h_da_get_length(*dahandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_length: failed to get value length by direct access handle.");
@@ -1771,7 +1736,6 @@ PHP_FUNCTION(k2hpx_da_get_offset)
 	}
 	off_t	roffset;
 	off_t	woffset;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(-1 == (roffset = k2h_da_get_read_offset(*dahandle)) || -1 == (woffset = k2h_da_get_write_offset(*dahandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_offset: failed to get offset for direct access handle.");
@@ -1796,7 +1760,6 @@ PHP_FUNCTION(k2hpx_da_get_read_offset)
 		RETURN_FALSE;
 	}
 	off_t	roffset;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(-1 == (roffset = k2h_da_get_read_offset(*dahandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_read_offset: failed to get readable offset for direct access handle.");
@@ -1820,7 +1783,6 @@ PHP_FUNCTION(k2hpx_da_get_write_offset)
 		RETURN_FALSE;
 	}
 	off_t	woffset;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(-1 == (woffset = k2h_da_get_write_offset(*dahandle))) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_get_write_offset: failed to get writable offset for direct access handle.");
@@ -1859,7 +1821,6 @@ PHP_FUNCTION(k2hpx_da_set_offset)
 	}
 	off_t	roffset = (off_t)Z_LVAL_P(zval_roffset);
 	off_t	woffset = (off_t)Z_LVAL_P(zval_woffset);
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_da_set_read_offset(*dahandle, roffset) || !k2h_da_set_write_offset(*dahandle, woffset)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_set_offset: failed to set offsets.");
@@ -1887,7 +1848,6 @@ PHP_FUNCTION(k2hpx_da_set_read_offset)
 		php_error_docref(NULL, E_ERROR, "k2hpx_da_set_read_offset: offset is invalid.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_da_set_read_offset(*dahandle, (off_t)offset)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_set_read_offset: failed to set readable offset.");
@@ -1915,7 +1875,6 @@ PHP_FUNCTION(k2hpx_da_set_write_offset)
 		php_error_docref(NULL, E_ERROR, "k2hpx_da_set_write_offset: offset is invalid.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_da_set_write_offset(*dahandle, (off_t)offset)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_da_set_write_offset: failed to set writable offset.");
@@ -2160,7 +2119,6 @@ PHP_FUNCTION(k2hpx_q_free)
 		php_error_docref(NULL, E_ERROR, "k2hpx_q_free: qhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_free(*qhandle)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_q_free: failed to free queue handle.");
@@ -2183,7 +2141,6 @@ PHP_FUNCTION(k2hpx_q_empty)
 		php_error_docref(NULL, E_ERROR, "k2hpx_q_empty: qhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_empty(*qhandle)) {
 		RETURN_FALSE;
@@ -2205,7 +2162,6 @@ PHP_FUNCTION(k2hpx_q_count)
 		php_error_docref(NULL, E_ERROR, "k2hpx_q_count: qhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	int	count = k2h_q_count(*qhandle);
 	RETURN_LONG((long)count);
@@ -2234,7 +2190,6 @@ PHP_FUNCTION(k2hpx_q_read)
 		RETURN_FALSE;
 	}
 	char*	pdata = NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_str_read_wp(*qhandle, &pdata, (int)pos, pass)) {
 		//php_error_docref(NULL, E_NOTICE, "k2hpx_q_read: failed to read data from queue.");
@@ -2273,7 +2228,6 @@ PHP_FUNCTION(k2hpx_q_push)
 		tmexpire	= expire;
 		ptmexpire	= &tmexpire;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_str_push_wa(*qhandle, datavalue, NULL, 0, pass, ptmexpire)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_q_push: failed to push datavalue into queue.");
@@ -2299,7 +2253,6 @@ PHP_FUNCTION(k2hpx_q_pop)
 		RETURN_FALSE;
 	}
 	char*	pdata = NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_str_pop_wa(*qhandle, &pdata, NULL, NULL, pass)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_q_pop: failed to pop data from queue.");
@@ -2330,7 +2283,6 @@ PHP_FUNCTION(k2hpx_q_remove)
 		php_error_docref(NULL, E_ERROR, "k2hpx_q_remove: count must be over 0.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_remove_wp(*qhandle, (int)count, pass)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_q_remove: failed to remove count data from queue.");
@@ -2363,7 +2315,6 @@ PHP_FUNCTION(k2hpx_q_dump)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_q_dump(*qhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_q_dump: failed to dump queue.");
@@ -2419,7 +2370,6 @@ PHP_FUNCTION(k2hpx_keyq_free)
 		php_error_docref(NULL, E_ERROR, "k2hpx_keyq_free: keyqhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_free(*keyqhandle)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_keyq_free: failed to free key queue handle.");
@@ -2442,7 +2392,6 @@ PHP_FUNCTION(k2hpx_keyq_empty)
 		php_error_docref(NULL, E_ERROR, "k2hpx_keyq_empty: keyqhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_empty(*keyqhandle)) {
 		RETURN_FALSE;
@@ -2464,7 +2413,6 @@ PHP_FUNCTION(k2hpx_keyq_count)
 		php_error_docref(NULL, E_ERROR, "k2hpx_keyq_count: keyqhandle is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	int	count = k2h_keyq_count(*keyqhandle);
 	RETURN_LONG((long)count);
@@ -2494,7 +2442,6 @@ PHP_FUNCTION(k2hpx_keyq_read)
 	}
 	char*	pkey	= NULL;
 	char*	pvalue	= NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_str_read_keyval_wp(*keyqhandle, &pkey, &pvalue, (int)pos, pass)) {
 		//php_error_docref(NULL, E_NOTICE, "k2hpx_keyq_read: failed to get key and value from key queue.");
@@ -2550,7 +2497,6 @@ PHP_FUNCTION(k2hpx_keyq_push)
 		tmexpire	= expire;
 		ptmexpire	= &tmexpire;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_str_push_keyval_wa(*keyqhandle, key, value, pass, ptmexpire)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_keyq_push: failed to push key and value into key queue.");
@@ -2578,7 +2524,6 @@ PHP_FUNCTION(k2hpx_keyq_pop)
 	}
 	char*	pkey	= NULL;
 	char*	pvalue	= NULL;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_str_pop_keyval_wp(*keyqhandle, &pkey, &pvalue, pass)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_keyq_pop: failed to pop key and value from queue.");
@@ -2619,7 +2564,6 @@ PHP_FUNCTION(k2hpx_keyq_remove)
 		php_error_docref(NULL, E_ERROR, "k2hpx_keyq_remove: count must be over 0.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_remove_wp(*keyqhandle, (int)count, pass)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_keyq_remove: failed to remove count data from queue.");
@@ -2652,7 +2596,6 @@ PHP_FUNCTION(k2hpx_keyq_dump)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_keyq_dump(*keyqhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_keyq_dump: failed to dump key queue.");
@@ -2685,7 +2628,6 @@ PHP_FUNCTION(k2hpx_dump_head)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_head(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_dump_head: failed to dump head.");
@@ -2718,7 +2660,6 @@ PHP_FUNCTION(k2hpx_dump_keytable)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_keytable(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_dump_keytable: failed to dump keytable.");
@@ -2751,7 +2692,6 @@ PHP_FUNCTION(k2hpx_dump_full_keytable)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_full_keytable(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_dump_full_keytable: failed to dump full keytable.");
@@ -2784,7 +2724,6 @@ PHP_FUNCTION(k2hpx_dump_elementtable)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_elementtable(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_dump_elementtable: failed to dump element table.");
@@ -2817,7 +2756,6 @@ PHP_FUNCTION(k2hpx_dump_full)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_full(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_dump_full: failed to dump full.");
@@ -2850,7 +2788,6 @@ PHP_FUNCTION(k2hpx_print_state)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_print_state(*handle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "k2hpx_print_state: failed to dump full.");
