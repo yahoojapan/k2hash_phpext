@@ -79,7 +79,6 @@ PHP_METHOD(K2hIterator, current)
 		php_error_docref(NULL, E_NOTICE, "K2hiterator::current: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	char*	value = k2h_find_get_direct_value(*res_findhandle);
 	if(!value) {
@@ -105,7 +104,6 @@ PHP_METHOD(K2hIterator, key)
 		RETURN_FALSE;
 	}
 	// get key
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	char*	key = k2h_find_get_str_key(*res_findhandle);
 	if(!key) {
@@ -131,7 +129,6 @@ PHP_METHOD(K2hIterator, next)
 		RETURN_FALSE;
 	}
 	// set next handle
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	*res_findhandle = k2h_find_next(*res_findhandle);
 }
@@ -159,7 +156,6 @@ PHP_METHOD(K2hIterator, valid)
 		php_error_docref(NULL, E_NOTICE, "K2hiterator::current: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == *res_findhandle) {
 		RETURN_FALSE;

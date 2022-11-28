@@ -284,8 +284,7 @@ run_configuration()
 run_pre_cleanup()
 {
 	if [ -n "${PRE_CLEANUP_FILES_DIRS}" ]; then
-		# shellcheck disable=SC2086
-		rm -rf ${_CLEANUP_FILES_DIRS}
+		/bin/sh -c "rm -rf ${_CLEANUP_FILES_DIRS}"
 	else
 		PRNINFO "Nothing to cleanup files or directories."
 	fi
@@ -374,15 +373,6 @@ run_shellcheck()
 		return 1
 	fi
 
-	SHELLCHECK_TARGET_DIRS_OPT=""
-	for _one_dir in ${SHELLCHECK_TARGET_DIRS}; do
-		if [ -z "${SHELLCHECK_TARGET_DIRS_OPT}" ]; then
-			SHELLCHECK_TARGET_DIRS_OPT="${_one_dir}"
-		else
-			SHELLCHECK_TARGET_DIRS_OPT="${SHELLCHECK_TARGET_DIRS_OPT} ${_one_dir}"
-		fi
-	done
-
 	#
 	# Exclude options
 	#
@@ -418,7 +408,7 @@ run_shellcheck()
 	# SHELLCHECK_FILES_SH			: Script files with file extension ".sh" and "#!<shell command>"
 	# SHELLCHECK_FILES_INCLUDE_SH	: Files included in script files with file extension ".sh" but without "#!<shell command>"
 	#
-	SHELLCHECK_EXCEPT_PATHS_CMD="| grep -v '\.sh.' | grep -v '\.log' | grep -v '\.git/'"
+	SHELLCHECK_EXCEPT_PATHS_CMD="| grep -v '\.sh\.' | grep -v '\.log' | grep -v '/\.git/'"
 	for _one_path in ${SHELLCHECK_EXCEPT_PATHS}; do
 		SHELLCHECK_EXCEPT_PATHS_CMD="${SHELLCHECK_EXCEPT_PATHS_CMD} | grep -v '${_one_path}'"
 	done
@@ -899,12 +889,12 @@ PRE_CLEANUP_FILES_DIRS=""
 CPPCHECK_TARGET="."
 CPPCHECK_BASE_OPT="--quiet --error-exitcode=1 --inline-suppr -j 4 --std=c++03 --xml --enable=warning,style,information,missingInclude"
 CPPCHECK_ENABLE_VALUES="warning style information missingInclude"
-CPPCHECK_IGNORE_VALUES="missingIncludeSystem unmatchedSuppression"
+CPPCHECK_IGNORE_VALUES="unmatchedSuppression"
 CPPCHECK_BUILD_DIR="/tmp/cppcheck"
 
 SHELLCHECK_TARGET_DIRS="."
 SHELLCHECK_BASE_OPT="--shell=sh"
-SHELLCHECK_EXCEPT_PATHS=".libs/ autom4te.cache/ build/ debian_build/ rpmbuild/ include/ modules/ packages/ run-tests.php"
+SHELLCHECK_EXCEPT_PATHS="/\.libs/ /autom4te.cache/ /build/ /debian_build/ /rpmbuild/ /include/ /modules/ /packages/ /run-tests.php"
 SHELLCHECK_IGN="SC1117 SC1090 SC1091"
 SHELLCHECK_INCLUDE_IGN="SC2034 SC2148"
 

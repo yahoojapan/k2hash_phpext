@@ -93,10 +93,8 @@ PHP_METHOD(K2hash, open)
 		php_error_docref(NULL, E_NOTICE, "K2hash::open: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	*res_newhandle = k2h_open(filepath, 0 != readonly ? true : false, 0 != removefile ? true : false, 0 != fullmap ? true : false, (int)maskbitcnt, (int)cmaskbitcnt, (int)maxelementcnt, (size_t)pagesize);
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == *res_newhandle) {
 		RETURN_FALSE;
@@ -131,10 +129,8 @@ PHP_METHOD(K2hash, openRW)
 		php_error_docref(NULL, E_NOTICE, "K2hash::open: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	*res_newhandle = k2h_open_rw(filepath, 0 != fullmap ? true : false, (int)maskbitcnt, (int)cmaskbitcnt, (int)maxelementcnt, (size_t)pagesize);
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == *res_newhandle) {
 		RETURN_FALSE;
@@ -169,10 +165,8 @@ PHP_METHOD(K2hash, openRO)
 		php_error_docref(NULL, E_NOTICE, "K2hash::open: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	*res_newhandle = k2h_open_ro(filepath, 0 != fullmap ? true : false, (int)maskbitcnt, (int)cmaskbitcnt, (int)maxelementcnt, (size_t)pagesize);
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == *res_newhandle) {
 		RETURN_FALSE;
@@ -207,10 +201,8 @@ PHP_METHOD(K2hash, openTempfile)
 		php_error_docref(NULL, E_NOTICE, "K2hash::open: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	*res_newhandle = k2h_open_tempfile(filepath, 0 != fullmap ? true : false, (int)maskbitcnt, (int)cmaskbitcnt, (int)maxelementcnt, (size_t)pagesize);
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == *res_newhandle) {
 		RETURN_FALSE;
@@ -238,10 +230,8 @@ PHP_METHOD(K2hash, openMem)
 		php_error_docref(NULL, E_NOTICE, "K2hash::open: custom object initialize error.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	*res_newhandle = k2h_open_mem((int)maskbitcnt, (int)cmaskbitcnt, (int)maxelementcnt, (size_t)pagesize);
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(K2H_INVALID_HANDLE == *res_newhandle) {
 		RETURN_FALSE;
@@ -278,7 +268,6 @@ PHP_METHOD(K2hash, close)
 		RETURN_FALSE;
 	}
 	// close with timeout
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_close_wait(*res_k2hhandle, waitms)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::close: failed to close k2hash.");
@@ -310,7 +299,6 @@ PHP_METHOD(K2hash, transaction)
 		php_error_docref(NULL, E_NOTICE, "K2hash::transaction: could not open k2hash.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	time_t	tmexpire	= 0;
 	time_t*	ptmexpire	= NULL;
@@ -319,7 +307,6 @@ PHP_METHOD(K2hash, transaction)
 		ptmexpire	= &tmexpire;
 	}
 	// transaction
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_transaction_param_we(*res_k2hhandle, 0 != enable ? true : false, (!transfile || 0 == transfile_len) ? NULL : transfile, (!prefix || 0 == prefix_len) ? NULL : (const unsigned char*)prefix, prefix_len, (!param || 0 == param_len) ? NULL : (const unsigned char*)param, param_len, ptmexpire)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::transaction: failed to enable/disable transaction.");
@@ -350,7 +337,6 @@ PHP_METHOD(K2hash, enableTransaction)
 		php_error_docref(NULL, E_NOTICE, "K2hash::enableTransaction: could not open k2hash.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	time_t	tmexpire	= 0;
 	time_t*	ptmexpire	= NULL;
@@ -359,7 +345,6 @@ PHP_METHOD(K2hash, enableTransaction)
 		ptmexpire	= &tmexpire;
 	}
 	// transaction
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_enable_transaction_param_we(*res_k2hhandle, (!transfile || 0 == transfile_len) ? NULL : transfile, (!prefix || 0 == prefix_len) ? NULL : (const unsigned char*)prefix, prefix_len, (!param || 0 == param_len) ? NULL : (const unsigned char*)param, param_len, ptmexpire)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::enableTransaction: failed to enable transaction.");
@@ -384,7 +369,6 @@ PHP_METHOD(K2hash, disableTransaction)
 		RETURN_FALSE;
 	}
 	// transaction
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_disable_transaction(*res_k2hhandle)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::disableTransaction: failed to disable transaction.");
@@ -462,7 +446,6 @@ PHP_METHOD(K2hash, putArchive)
 		RETURN_FALSE;
 	}
 	// archive
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_put_archive(*res_k2hhandle, filepath, 0 != errskip ? true : false)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::putArchive: failed to put archive.");
@@ -494,7 +477,6 @@ PHP_METHOD(K2hash, loadArchive)
 		RETURN_FALSE;
 	}
 	// archive
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_load_archive(*res_k2hhandle, filepath, 0 != errskip ? true : false)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::loadArchive: failed to load archive.");
@@ -525,7 +507,6 @@ PHP_METHOD(K2hash, setCommonAttribute)
 		php_error_docref(NULL, E_NOTICE, "K2hash::setCommonAttribute: could not open k2hash.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	bool	mtime_val	= false;
 	bool*	pmtime_val	= NULL;
@@ -533,7 +514,6 @@ PHP_METHOD(K2hash, setCommonAttribute)
 		mtime_val	= K2H_VAL_ATTR_ENABLE == is_mtime ? true : false;
 		pmtime_val	= &mtime_val;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	bool		enc_val		= false;
 	bool*		penc_val	= NULL;
@@ -553,7 +533,6 @@ PHP_METHOD(K2hash, setCommonAttribute)
 			pfile		= !passfile || passfile_len == 0 ? NULL : passfile;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	bool	his_val		= false;
 	bool*	phis_val	= NULL;
@@ -561,7 +540,6 @@ PHP_METHOD(K2hash, setCommonAttribute)
 		his_val		= K2H_VAL_ATTR_ENABLE == is_history ? true : false;
 		phis_val	= &his_val;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	time_t	expire_val	= 0;
 	time_t*	pexpire_val	= NULL;
@@ -579,7 +557,6 @@ PHP_METHOD(K2hash, setCommonAttribute)
 		}
 	}
 	// set
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_set_common_attr(*res_k2hhandle, pmtime_val, penc_val, pfile, phis_val, pexpire_val)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::setCommonAttribute: failed to set common attributes.");
@@ -603,7 +580,6 @@ PHP_METHOD(K2hash, cleanCommonAttribute)
 		php_error_docref(NULL, E_NOTICE, "K2hash::cleanCommonAttribute: could not open k2hash.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_clean_common_attr(*res_k2hhandle)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::cleanCommonAttribute: failed to clear common attributes.");
@@ -629,7 +605,6 @@ PHP_METHOD(K2hash, addAttrPluginLib)
 		php_error_docref(NULL, E_NOTICE, "K2hash::addAttrPluginLib: could not open k2hash.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_add_attr_plugin_library(*res_k2hhandle, libfile)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::addAttrPluginLib: failed to load plugin attribute library.");
@@ -657,7 +632,6 @@ PHP_METHOD(K2hash, addAttrCryptPass)
 		php_error_docref(NULL, E_NOTICE, "K2hash::addAttrCryptPass: could not open k2hash.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_add_attr_crypt_pass(*res_k2hhandle, encpass, is_default_encrypt)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::addAttrCryptPass: failed to add pass phrase.");
@@ -691,7 +665,6 @@ PHP_METHOD(K2hash, getAttrVersionInfos)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_print_attr_version(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::getAttrVersionInfos: failed to print attribute version inrmation.");
@@ -725,7 +698,6 @@ PHP_METHOD(K2hash, getAttrInfos)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_print_attr_version(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::getAttrInfos: failed to print all attribute inrmation.");
@@ -775,7 +747,6 @@ PHP_METHOD(K2hash, getValue)
 			}
 		}
 	} else {
-		// cppcheck-suppress unmatchedSuppression
 		// cppcheck-suppress nullPointerRedundantCheck
 		char**	pskeyarray = NULL;
 		int		subkey_count;
@@ -897,7 +868,6 @@ PHP_METHOD(K2hash, getAttrs)
 	// get
 	PK2HATTRPCK	pattrs;
 	int			attrspckcnt = 0;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL != (pattrs = k2h_get_str_direct_attrs(*res_k2hhandle, key, &attrspckcnt)) && 0 < attrspckcnt) {
 		int	cnt;
@@ -947,7 +917,6 @@ PHP_METHOD(K2hash, getAttrValue)
 	PK2HATTRPCK	pattrs;
 	int			attrspckcnt	= 0;
 	bool		is_found	= false;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL != (pattrs = k2h_get_str_direct_attrs(*res_k2hhandle, key, &attrspckcnt)) && 0 < attrspckcnt) {
 		int	cnt;
@@ -964,10 +933,8 @@ PHP_METHOD(K2hash, getAttrValue)
 					RETURN_FALSE;
 				}
 				// copy
-				// cppcheck-suppress unmatchedSuppression
 				// cppcheck-suppress nullPointerRedundantCheck
 				memcpy(pattrval, pattrs[cnt].pval, pattrs[cnt].vallength);
-				// cppcheck-suppress unmatchedSuppression
 				// cppcheck-suppress nullPointerRedundantCheck
 				pattrval[pattrs[cnt].vallength] = '\0';
 				// set return value
@@ -1015,7 +982,6 @@ PHP_METHOD(K2hash, setValue)
 		php_error_docref(NULL, E_NOTICE, "K2hash::setValue: key is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress unreadVariable
 	time_t	tmexpire	= 0;
 	time_t*	ptmexpire	= NULL;
@@ -1063,7 +1029,6 @@ PHP_METHOD(K2hash, addSubkey)
 	}
 	// get now subkeys list
 	int			skeypckcnt	= 0;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	PK2HKEYPCK	pskeypck	= k2h_get_direct_subkeys(*res_k2hhandle, (const unsigned char*)key, strlen(key) + 1, &skeypckcnt);
 	// make new subkeys list(+1)
@@ -1076,7 +1041,6 @@ PHP_METHOD(K2hash, addSubkey)
 		RETURN_FALSE;
 	}
 	// set subkey into first entry in new subkeys list
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL == (pnewpck[0].pkey = (unsigned char*)calloc(strlen(subkey) + 1, sizeof(unsigned char)))) {
 		php_error_docref(NULL, E_ERROR, "K2hash::addSubkey: could not allocation memory.");
@@ -1086,17 +1050,14 @@ PHP_METHOD(K2hash, addSubkey)
 		free(pnewpck);
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	memcpy(pnewpck[0].pkey, subkey, strlen(subkey));
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	pnewpck[0].length = strlen(subkey) + 1;
 	// set old subkeys list into new list
 	int setpos = 1;
 	int	cnt;
 	for(cnt = 0; cnt < skeypckcnt; cnt++) {
-		// cppcheck-suppress unmatchedSuppression
 		// cppcheck-suppress nullPointerRedundantCheck
 		if(0 == strcmp((const char*)pskeypck[cnt].pkey, subkey)) {
 			// found same key name
@@ -1116,7 +1077,6 @@ PHP_METHOD(K2hash, addSubkey)
 		k2h_free_keypack(pskeypck, skeypckcnt);
 	}
 	// set new subkeys
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_set_subkeys(*res_k2hhandle, (const unsigned char*)key, strlen(key) + 1, pnewpck, setpos)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::addSubkey: failed to set subkey into key.");
@@ -1164,7 +1124,6 @@ PHP_METHOD(K2hash, addSubkeys)
 		// copy
 		zend_long lkey;
 		zval *val;
-		// cppcheck-suppress unmatchedSuppression
 		// cppcheck-suppress uninitvar
 		ZEND_HASH_FOREACH_NUM_KEY_VAL(subkeys_hash, lkey, val) {
 			if(!val || IS_STRING != Z_TYPE_P(val)) {
@@ -1188,7 +1147,6 @@ PHP_METHOD(K2hash, addSubkeys)
 		ZEND_HASH_FOREACH_END();
 	}
 	// over write all subkeys(if pnewpck is null, remove all subkeys)
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_set_subkeys(*res_k2hhandle, (const unsigned char*)key, strlen(key) + 1, pnewpck, setpos)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::addSubkeys: failed to set subkeys into key.");
@@ -1228,7 +1186,6 @@ PHP_METHOD(K2hash, addAttr)
 		php_error_docref(NULL, E_NOTICE, "K2hash::addAttr: attribute key is empty.");
 		RETURN_FALSE;
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_add_str_attr(*res_k2hhandle, key, attrkey, attrval)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::addAttr: failed to add attribute into key.");
@@ -1259,7 +1216,6 @@ PHP_METHOD(K2hash, removeAll)
 		RETURN_FALSE;
 	}
 	// remove
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_remove_str_all(*res_k2hhandle, key)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::removeAll: failed to remove all for key.");
@@ -1334,7 +1290,6 @@ PHP_METHOD(K2hash, rename)
 		RETURN_FALSE;
 	}
 	// rename
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_rename_str(*res_k2hhandle, key, newkey)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::rename: failed to rename key name.");
@@ -1400,7 +1355,6 @@ PHP_METHOD(K2hash, getStream)
 	}
 	// build stream
 	php_stream*	res_stream;
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(NULL == (res_stream = k2hpx_da_open(*res_k2hhandle, key, mode STREAMS_REL_CC))) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::getStream: could not open stream by key with mode.");
@@ -1510,7 +1464,6 @@ PHP_METHOD(K2hash, dumpHead)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_head(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::dumpHead: failed to dump head.");
@@ -1545,7 +1498,6 @@ PHP_METHOD(K2hash, dumpKeytable)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_keytable(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::dumpKeytable: failed to dump head.");
@@ -1580,7 +1532,6 @@ PHP_METHOD(K2hash, dumpFullKeytable)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_full_keytable(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::dumpFullKeytable: failed to dump head.");
@@ -1615,7 +1566,6 @@ PHP_METHOD(K2hash, dumpElementtable)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_elementtable(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::dumpElementtable: failed to dump head.");
@@ -1650,7 +1600,6 @@ PHP_METHOD(K2hash, dumpFull)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_dump_full(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::dumpFull: failed to dump head.");
@@ -1685,7 +1634,6 @@ PHP_METHOD(K2hash, printState)
 			RETURN_FALSE;
 		}
 	}
-	// cppcheck-suppress unmatchedSuppression
 	// cppcheck-suppress nullPointerRedundantCheck
 	if(!k2h_print_state(*res_k2hhandle, fp)) {
 		php_error_docref(NULL, E_NOTICE, "K2hash::printState: failed to dump head.");
