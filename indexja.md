@@ -8,7 +8,7 @@ lang_opp_word: To English
 arrow_link_overview: <a href="homeja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>概要</a>
 arrow_link_feature: <a href="featureja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>特徴</a>
 arrow_link_usage: <a href="usageja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>使い方</a>
-arrow_link_source: <a href="sourceja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>ソースコード</a>
+arrow_link_source: <span class="link-title"><span class="arrow-base link-arrow-right"></span>ソースコード
 arrow_link_developer: <a href="developerja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>開発者</a>
 arrow_link_environments: <a href="environmentsja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>環境変数</a>
 ---
