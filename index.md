@@ -8,7 +8,7 @@ lang_opp_word: To Japanese
 arrow_link_overview: <a href="home.html" class="link-title"><span class="arrow-base link-arrow-right"></span>Overview</a>
 arrow_link_feature: <a href="feature.html" class="link-title"><span class="arrow-base link-arrow-right"></span>Feature</a>
 arrow_link_usage: <a href="usage.html" class="link-title"><span class="arrow-base link-arrow-right"></span>Usage</a>
-arrow_link_source: <a href="sourceja.html" class="link-title"><span class="arrow-base link-arrow-right"></span>Source Code</a>
+arrow_link_source: <span class="link-title"><span class="arrow-base link-arrow-right"></span>Source Code
 arrow_link_developer: <a href="developer.html" class="link-title"><span class="arrow-base link-arrow-right"></span>Developer</a>
 arrow_link_environments: <a href="environments.html" class="link-title"><span class="arrow-base link-arrow-right"></span>Environments</a>
 ---
