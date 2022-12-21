@@ -242,7 +242,7 @@ if [ "${NO_INTERACTIVE}" -eq 0 ] && [ "${IS_CLEAN}" -ne 1 ]; then
 		if [ "${CONFIRM}" = "y" ] || [ "${CONFIRM}" = "Y" ] || [ "${CONFIRM}" = "yes" ] || [ "${CONFIRM}" = "YES" ]; then
 			IS_CONFIRMED=1
 		elif [ "${CONFIRM}" = "n" ] || [ "${CONFIRM}" = "N" ] || [ "${CONFIRM}" = "no" ] || [ "${CONFIRM}" = "NO" ]; then
-			echo "Interrupt this processing, bye..."
+			PRNINFO "Interrupt this processing, bye..."
 			exit 0
 		fi
 	done
@@ -282,6 +282,7 @@ git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 
 if [ -n "$(git status --untracked-files=no --porcelain 2>&1)" ]; then
 	PRNWARN "Some files are in untracked state. Packages are created for testing, but must not be published."
+	PRNFAILURE "Check untracked files, but continue..."
 else
 	PRNSUCCESS "No untracked files"
 fi
@@ -636,9 +637,9 @@ if [ "${IS_COPY_COMMON_PKGS}" -eq 1 ]; then
 		PRNERR "Failed to copy ${DEBIAN_PACKAGE_ALL} packages to ${DEBPKGDIR}"
 		exit 1
 	fi
-	echo "Copied ${DEBIAN_PACKAGE_ALL} package."
+	PRNINFO "Copied ${DEBIAN_PACKAGE_ALL} package."
 else
-	echo "Skip copying ${DEBIAN_PACKAGE_ALL} package."
+	PRNINFO "Skip copying ${DEBIAN_PACKAGE_ALL} package."
 fi
 PRNSUCCESS "Copied debian packages to ${DEBPKGDIR}"
 
