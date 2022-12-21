@@ -1,4 +1,6 @@
-ty tools for building PHP packages by AntPickax
+#!/bin/sh
+#
+# Utility tools for building PHP packages by AntPickax
 #
 # Copyright 2022 Yahoo Japan Corporation.
 #
@@ -221,7 +223,7 @@ if [ "${NO_INTERACTIVE}" -eq 0 ] && [ "${IS_CLEAN}" -ne 1 ]; then
 		if [ "${CONFIRM}" = "y" ] || [ "${CONFIRM}" = "Y" ] || [ "${CONFIRM}" = "yes" ] || [ "${CONFIRM}" = "YES" ]; then
 			IS_CONFIRMED=1
 		elif [ "${CONFIRM}" = "n" ] || [ "${CONFIRM}" = "N" ] || [ "${CONFIRM}" = "no" ] || [ "${CONFIRM}" = "NO" ]; then
-			echo "Interrupt this processing, bye..."
+			PRNINFO "Interrupt this processing, bye..."
 			exit 0
 		fi
 	done
@@ -277,6 +279,7 @@ git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 
 if [ -n "$(git status --untracked-files=no --porcelain 2>&1)" ]; then
 	PRNWARN "Some files are in untracked state. Packages are created for testing, but must not be published."
+	PRNFAILURE "Check untracked files, but continue..."
 else
 	PRNSUCCESS "No untracked files"
 fi
