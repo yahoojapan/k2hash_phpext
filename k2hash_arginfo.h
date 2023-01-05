@@ -1,7 +1,7 @@
 /*
 * K2HASH PHP Extension library
 *
-* Copyright 2015 Yahoo! JAPAN corporation.
+* Copyright 2015 Yahoo Japan Corporation.
 *
 * K2HASH is key-valuew store base libraries.
 * K2HASH is made for the purpose of the construction of
@@ -1020,4 +1020,3 @@ static const zend_function_entry class_K2hIterator_methods[] = {
 * vim600: noexpandtab sw=4 ts=4 fdm=marker
 * vim<600: noexpandtab sw=4 ts=4
 */
-

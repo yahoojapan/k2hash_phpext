@@ -1,7 +1,7 @@
 #
 # K2HASH PHP Extension library
 #
-# Copyright 2022 Yahoo! JAPAN corporation.
+# Copyright 2022 Yahoo Japan Corporation.
 #
 # K2HASH is key-valuew store base libraries.
 # K2HASH is made for the purpose of the construction of
