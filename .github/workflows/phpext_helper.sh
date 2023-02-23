@@ -72,7 +72,7 @@ CI_FORCE_PUBLISH=""
 CI_USE_PACKAGECLOUD_REPO=1
 CI_PACKAGECLOUD_TOKEN=""
 CI_PACKAGECLOUD_OWNER="antpickax"
-CI_PACKAGECLOUD_PUBLISH_REPO="current"
+CI_PACKAGECLOUD_PUBLISH_REPO="stable"
 CI_PACKAGECLOUD_DOWNLOAD_REPO="stable"
 #
 CI_IN_SCHEDULE_PROCESS=0
@@ -284,7 +284,9 @@ run_configuration()
 run_pre_cleanup()
 {
 	if [ -n "${PRE_CLEANUP_FILES_DIRS}" ]; then
-		/bin/sh -c "rm -rf ${_CLEANUP_FILES_DIRS}"
+		for _pre_cleanup_file_dir in ${PRE_CLEANUP_FILES_DIRS}; do
+			rm -rf "${_pre_cleanup_file_dir}"
+		done
 	else
 		PRNINFO "Nothing to cleanup files or directories."
 	fi
@@ -910,7 +912,7 @@ MAKE_TEST_OPT_OTHER="test"
 
 CREATE_PACKAGE_TOOL_RPM="buildutils/php_rpm_build.sh"
 CREATE_PACKAGE_TOOL_DEBIAN="buildutils/php_debian_build.sh"
-CREATE_PACKAGE_TOOL_ALPINE="buildutils/php_apline_build.sh"
+CREATE_PACKAGE_TOOL_ALPINE="buildutils/php_alpine_build.sh"
 CREATE_PACKAGE_TOOL_OTHER=""
 
 CREATE_PACKAGE_TOOL_OPT_AUTO="-y"
@@ -932,6 +934,20 @@ if [ -f "${CI_PHPEXTTYPE_VARS_FILE}" ]; then
 	. "${CI_PHPEXTTYPE_VARS_FILE}"
 else
 	PRNWARN "${CI_PHPEXTTYPE_VARS_FILE} file is not existed."
+fi
+if [ -n "${NOT_PROVIDED_PHPVER}" ] && [ "${NOT_PROVIDED_PHPVER}" -eq 1 ]; then
+	#
+	# Not provided this combination of OS and PHP.
+	#
+	# [NOTE]
+	# Exit this script here with SUCCESS status.
+	#
+	PRNSUCCESS "Load local variables with an external file"
+
+	PRNINFO "This OS and PHP combination is not provided, so stop all processing with success status."
+
+	PRNSUCCESS "Finished all processing without error(not provoded this OS and PHP combination)."
+	exit 0
 fi
 
 #
@@ -1087,6 +1103,12 @@ echo ""
 echo "  INSTALLER_BIN                 = ${INSTALLER_BIN}"
 echo "  INSTALL_QUIET_ARG             = ${INSTALL_QUIET_ARG}"
 echo "  INSTALL_PKG_LIST              = ${INSTALL_PKG_LIST}"
+echo "  UPDATE_CMD                    = ${UPDATE_CMD}"
+echo "  UPDATE_CMD_ARG                = ${UPDATE_CMD_ARG}"
+echo "  INSTALL_CMD                   = ${INSTALL_CMD}"
+echo "  INSTALL_CMD_ARG               = ${INSTALL_CMD_ARG}"
+echo "  INSTALL_AUTO_ARG              = ${INSTALL_AUTO_ARG}"
+echo "  INSTALL_QUIET_ARG             = ${INSTALL_QUIET_ARG}"
 echo ""
 echo "  INSTALL_PHP_PRE_ADD_REPO      = ${INSTALL_PHP_PRE_ADD_REPO}"
 echo "  INSTALL_PHP_REPO              = ${INSTALL_PHP_REPO}"
@@ -1133,7 +1155,7 @@ PRNTITLE "Update repository and Install curl"
 # Update local packages
 #
 PRNINFO "Update local packages"
-if ({ RUNCMD "${INSTALLER_BIN}" update -y "${INSTALL_QUIET_ARG}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+if ({ RUNCMD "${INSTALLER_BIN}" "${UPDATE_CMD}" "${UPDATE_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 	PRNERR "Failed to update local packages"
 	exit 1
 fi
@@ -1143,7 +1165,7 @@ fi
 #
 if ! CURLCMD=$(command -v curl); then
 	PRNINFO "Install curl command"
-	if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" curl || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+	if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" curl || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 		PRNERR "Failed to install curl command"
 		exit 1
 	fi
@@ -1156,7 +1178,6 @@ else
 fi
 PRNSUCCESS "Update repository and Install curl"
 
-
 #--------------------------------------------------------------
 # Set package repository for packagecloud.io
 #--------------------------------------------------------------
@@ -1168,24 +1189,29 @@ if [ "${CI_USE_PACKAGECLOUD_REPO}" -eq 1 ]; then
 	#
 	if [ "${IS_OS_CENTOS}" -eq 1 ] || [ "${IS_OS_FEDORA}" -eq 1 ] || [ "${IS_OS_ROCKY}" -eq 1 ]; then
 		PC_REPO_ADD_SH="script.rpm.sh"
+		PC_REPO_ADD_SH_RUN="bash"
 	elif [ "${IS_OS_UBUNTU}" -eq 1 ] || [ "${IS_OS_DEBIAN}" -eq 1 ]; then
 		PC_REPO_ADD_SH="script.deb.sh"
+		PC_REPO_ADD_SH_RUN="bash"
+	elif [ "${IS_OS_ALPINE}" -eq 1 ]; then
+		PC_REPO_ADD_SH="script.alpine.sh"
+		PC_REPO_ADD_SH_RUN="sh"
 	else
 		PC_REPO_ADD_SH=""
+		PC_REPO_ADD_SH_RUN=""
 	fi
 	if [ -n "${PC_REPO_ADD_SH}" ]; then
 		PRNINFO "Download script and setup packagecloud.io reposiory"
-		if ({ RUNCMD "${CURLCMD} -s https://packagecloud.io/install/repositories/${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_DOWNLOAD_REPO}/${PC_REPO_ADD_SH} | bash" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${CURLCMD} -s https://packagecloud.io/install/repositories/${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_DOWNLOAD_REPO}/${PC_REPO_ADD_SH} | ${PC_REPO_ADD_SH_RUN}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to download script or setup packagecloud.io reposiory"
 			exit 1
 		fi
 	else
-		PRNWARN "OS is not debian/ubuntu nor centos/fedora/rocky, then we do not know which download script use. Thus skip to setup packagecloud.io repository."
+		PRNWARN "OS is not debian/ubuntu nor centos/fedora/rocky nor alpine, then we do not know which download script use. Thus skip to setup packagecloud.io repository."
 	fi
 else
 	PRNINFO "Not set packagecloud.io repository."
 fi
-
 PRNSUCCESS "Set package repository for packagecloud.io"
 
 #----------------------------------------------------------
@@ -1194,7 +1220,8 @@ PRNSUCCESS "Set package repository for packagecloud.io"
 PRNTITLE "Install packages(repositories) before adding PHP repository"
 
 if [ -n "${INSTALL_PHP_PRE_ADD_REPO}" ]; then
-	if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" "${INSTALL_PHP_PRE_ADD_REPO}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+	PRNINFO "Install packages"
+	if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" "${INSTALL_PHP_PRE_ADD_REPO}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 		PRNERR "Failed to install packages(repositories) before adding PHP repository."
 		exit 1
 	fi
@@ -1210,13 +1237,14 @@ PRNSUCCESS "Install packages(repositories) before adding PHP repository"
 PRNTITLE "Add PHP repositories"
 
 if [ -n "${INSTALL_PHP_REPO}" ]; then
+	PRNINFO "PHP repositories"
 	if [ "${IS_OS_CENTOS}" -eq 1 ] || [ "${IS_OS_ROCKY}" -eq 1 ] || [ "${IS_OS_FEDORA}" -eq 1 ]; then
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" "${INSTALL_PHP_REPO}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" "${INSTALL_PHP_REPO}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to add PHP repository."
 			exit 1
 		fi
 	elif [ "${IS_OS_UBUNTU}" -eq 1 ]; then
-		if ({ RUNCMD add-apt-repository -y "${INSTALL_PHP_REPO}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD add-apt-repository "${INSTALL_AUTO_ARG}" "${INSTALL_PHP_REPO}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to add PHP repository."
 			exit 1
 		fi
@@ -1236,7 +1264,7 @@ if [ -n "${INSTALL_PHP_REPO}" ]; then
 			PRNERR "Failed to add repository for PHP"
 			exit 1
 		fi
-		if ({ RUNCMD "${INSTALLER_BIN}" update -y "${INSTALL_QUIET_ARG}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${UPDATE_CMD}" "${UPDATE_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to re-update local packages"
 			exit 1
 		fi
@@ -1256,7 +1284,7 @@ PRNTITLE "Install packages for building/packaging"
 
 if [ -n "${INSTALL_PKG_LIST}" ]; then
 	PRNINFO "Install packages"
-	if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" "${INSTALL_PKG_LIST}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+	if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" "${INSTALL_PKG_LIST}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 		PRNERR "Failed to install packages"
 		exit 1
 	fi
@@ -1273,7 +1301,7 @@ PRNTITLE "Install PHP packages"
 
 if [ -n "${INSTALL_PHP_PKG_LIST}" ]; then
 	PRNINFO "Install packages"
-	if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" "${INSTALL_PHP_OPT}" "${INSTALL_PHP_PKG_LIST}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+	if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" "${INSTALL_PHP_OPT}" "${INSTALL_PHP_PKG_LIST}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 		PRNERR "Failed to install PHP packages"
 		exit 1
 	fi
@@ -1311,6 +1339,7 @@ PRNTITLE "Install published tools for uploading packages to packagecloud.io"
 if [ "${CI_DO_PUBLISH}" -eq 1 ]; then
 	PRNINFO "Install published tools for uploading packages to packagecloud.io"
 	GEM_BIN="gem"
+	GEM_INSTALL_CMD="install"
 
 	if [ "${IS_OS_CENTOS}" -eq 1 ] && echo "${CI_OSTYPE}" | sed -e 's#:##g' | grep -q -i -e 'centos7' -e 'centos6'; then
 		#
@@ -1318,25 +1347,35 @@ if [ "${CI_DO_PUBLISH}" -eq 1 ]; then
 		#
 		PRNWARN "OS is CentOS 7(6), so install ruby by special means(SCL)."
 
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" centos-release-scl || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" centos-release-scl || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install SCL packages"
 			exit 1
 		fi
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y "${INSTALL_QUIET_ARG}" rh-ruby24 rh-ruby24-ruby-devel rh-ruby24-rubygem-rake || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" rh-ruby24 rh-ruby24-ruby-devel rh-ruby24-rubygem-rake || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install ruby packages"
 			exit 1
 		fi
 		. /opt/rh/rh-ruby24/enable
 
-		if ({ RUNCMD "${GEM_BIN}" install package_cloud || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${GEM_BIN}" "${GEM_INSTALL_CMD}" package_cloud || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install packagecloud.io upload tools"
 			exit 1
 		fi
+
+	elif [ "${IS_OS_ALPINE}" -eq 1 ]; then
+		#
+		# Case for Alpine
+		#
+		if ({ RUNCMD "${GEM_BIN}" "${GEM_INSTALL_CMD}" package_cloud || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+			PRNERR "Failed to install packagecloud.io upload tools"
+			exit 1
+		fi
+
 	else
 		#
 		# Case for other than CentOS
 		#
-		if ({ RUNCMD "${GEM_BIN}" install rake package_cloud || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${GEM_BIN}" "${GEM_INSTALL_CMD}" rake package_cloud || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install packagecloud.io upload tools"
 			exit 1
 		fi
@@ -1344,7 +1383,6 @@ if [ "${CI_DO_PUBLISH}" -eq 1 ]; then
 else
 	PRNINFO "Skip to install published tools for uploading packages to packagecloud.io, because this CI process does not upload any packages."
 fi
-
 PRNSUCCESS "Install published tools for uploading packages to packagecloud.io"
 
 #--------------------------------------------------------------
@@ -1360,7 +1398,7 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 		#
 		# CentOS
 		#
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y epel-release || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" epel-release || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install epel repository"
 			exit 1
 		fi
@@ -1368,7 +1406,7 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 			PRNERR "Failed to disable epel repository"
 			exit 1
 		fi
-		if ({ RUNCMD "${INSTALLER_BIN}" --enablerepo=epel install -y cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" --enablerepo=epel "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install cppcheck from epel repository"
 			exit 1
 		fi
@@ -1378,7 +1416,7 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 		#
 		# Fedora
 		#
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install cppcheck"
 			exit 1
 		fi
@@ -1388,7 +1426,7 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 			#
 			# Rocky 8
 			#
-			if ({ RUNCMD "${INSTALLER_BIN}" install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+			if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 				PRNERR "Failed to install epel repository"
 				exit 1
 			fi
@@ -1404,7 +1442,7 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 			#
 			# Rocky 9 or later
 			#
-			if ({ RUNCMD "${INSTALLER_BIN}" install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+			if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 				PRNERR "Failed to install epel repository"
 				exit 1
 			fi
@@ -1413,7 +1451,7 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 				exit 1
 			fi
 		fi
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install cppcheck"
 			exit 1
 		fi
@@ -1423,7 +1461,16 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 		#
 		# Ubuntu or Debian
 		#
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+			PRNERR "Failed to install cppcheck"
+			exit 1
+		fi
+
+	elif [ "${IS_OS_ALPINE}" -eq 1 ]; then
+		#
+		# Alpine
+		#
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" cppcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install cppcheck"
 			exit 1
 		fi
@@ -1434,7 +1481,6 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 else
 	PRNINFO "Skip to install cppcheck package, because cppcheck process does not need."
 fi
-
 PRNSUCCESS "Install cppcheck"
 
 #--------------------------------------------------------------
@@ -1450,7 +1496,7 @@ if [ "${RUN_SHELLCHECK}" -eq 1 ]; then
 		# CentOS
 		#
 		if [ "${IS_SET_ANOTHER_REPOSITORIES}" -eq 0 ]; then
-			if ({ RUNCMD "${INSTALLER_BIN}" install -y epel-release || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+			if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" epel-release || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 				PRNERR "Failed to install epel repository"
 				exit 1
 			fi
@@ -1460,7 +1506,7 @@ if [ "${RUN_SHELLCHECK}" -eq 1 ]; then
 			fi
 			IS_SET_ANOTHER_REPOSITORIES=1
 		fi
-		if ({ RUNCMD "${INSTALLER_BIN}" --enablerepo=epel install -y ShellCheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" --enablerepo=epel "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" ShellCheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install ShellCheck from epel repository"
 			exit 1
 		fi
@@ -1469,7 +1515,7 @@ if [ "${RUN_SHELLCHECK}" -eq 1 ]; then
 		#
 		# Fedora
 		#
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y ShellCheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" ShellCheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install cppcheck"
 			exit 1
 		fi
@@ -1496,7 +1542,16 @@ if [ "${RUN_SHELLCHECK}" -eq 1 ]; then
 		#
 		# Ubuntu or Debian
 		#
-		if ({ RUNCMD "${INSTALLER_BIN}" install -y shellcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" shellcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+			PRNERR "Failed to install cppcheck"
+			exit 1
+		fi
+
+	elif [ "${IS_OS_ALPINE}" -eq 1 ]; then
+		#
+		# Alpine
+		#
+		if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" shellcheck || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install cppcheck"
 			exit 1
 		fi
@@ -1507,7 +1562,6 @@ if [ "${RUN_SHELLCHECK}" -eq 1 ]; then
 else
 	PRNINFO "Skip to install shellcheck package, because shellcheck process does not need."
 fi
-
 PRNSUCCESS "Install shellcheck"
 
 #==============================================================

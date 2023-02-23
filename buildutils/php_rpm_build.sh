@@ -316,7 +316,7 @@ for _SUB_RPM_DIR in ${_SUB_RPM_DIRS}; do
 	fi
 done
 
-PRNSUCCESS "Created ${DEB_TOPDIR}"
+PRNSUCCESS "Created ${RPM_TOPDIR}"
 
 #----------------------------------------------------------
 # Get package name and version/build number
@@ -365,7 +365,7 @@ else
 		PRNERR "Not found all source code tar.gz file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME})."
 		exit 1
 	fi
-	if ! tar xvfz "${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}" -C /tmp/; then
+	if ! tar xvfz "${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}" -C /tmp/ >/dev/null 2>&1; then
 		PRNERR "Failed to expand all source code tar.gz file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}) to /tmp."
 		exit 1
 	fi
@@ -373,6 +373,8 @@ else
 		PRNERR "Not found expanded all source code directory(/tmp/${_SOURCECODE_DIRNAME}) from file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME})."
 		exit 1
 	fi
+	rm -rf /tmp/"${_SOURCECODE_DIRNAME}"/.git
+
 	if ! mv /tmp/"${_SOURCECODE_DIRNAME}" /tmp/"${PACKAGE_NAME}-${PACKAGE_VERSION}"; then
 		PRNERR "Failed to rename from /tmp/${_SOURCECODE_DIRNAME} directory to /tmp/${PACKAGE_NAME}-${PACKAGE_VERSION}."
 		exit 1

@@ -370,7 +370,7 @@ else
 		PRNERR "Not found all source code tar.gz file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME})."
 		exit 1
 	fi
-	if ! tar xvfz "${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}" -C /tmp/; then
+	if ! tar xvfz "${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}" -C /tmp/ >/dev/null 2>&1; then
 		PRNERR "Failed to expand all source code tar.gz file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME}) to /tmp."
 		exit 1
 	fi
@@ -378,6 +378,8 @@ else
 		PRNERR "Not found expanded all source code directory(/tmp/${_SOURCECODE_DIRNAME}) from file(${SRCTOP}/${_ALL_SOURCE_TARGZ_FILENAME})."
 		exit 1
 	fi
+	rm -rf /tmp/"${_SOURCECODE_DIRNAME}"/.git
+
 	if ! mv /tmp/"${_SOURCECODE_DIRNAME}" /tmp/"${PACKAGE_NAME}-${PACKAGE_VERSION}"; then
 		PRNERR "Failed to rename from /tmp/${_SOURCECODE_DIRNAME} directory to /tmp/${PACKAGE_NAME}-${PACKAGE_VERSION}."
 		exit 1
@@ -407,10 +409,11 @@ PRNSUCCESS "Expanded to ${EXPANDDIR}"
 #----------------------------------------------------------
 PRNTITLE "Remove unnecessary files and directories"
 
+rm -rf "${EXPANDDIR}/.git"
 rm -rf "${EXPANDDIR}/.github"
 rm -rf "${EXPANDDIR}/buildutils"
 rm -f  "${EXPANDDIR}/.gitignore"
-PRNSUCCESS "Removed .github, .gitignore, buildutils/"
+PRNSUCCESS "Removed .git .github, .gitignore, buildutils/"
 
 #----------------------------------------------------------
 # Setup debian directory
@@ -528,6 +531,26 @@ if ! /usr/share/dh-php/gen-control; then
 	PRNERR "Failed to run gen-control for initializing control file."
 	exit 1
 fi
+
+# [NOTICE]
+# gen-control extracts the package of "Package: php-pecl-k2hash" part as a "dummy"
+# package and as an "*-all-dev" package.
+# And this tool is also called by dpkg-buildpackage.
+#
+# On debian(11), dh-php(5.2+0~20230112.20+debian11~1.gbp19bbdb)/gen-control adds
+# unnecessary comments to control file.
+#	--------------------------------
+#	
+#	 .
+#	 This is empty package that depends on default(all) PHP version.
+#	--------------------------------
+# Also, the above postscript may be added after a line feed, so be careful about
+# the description in the control.in.in file. If added after a newline, the package
+# build will fail.
+# Write the package part of "Package: php-pecl-*****" at the end of the file.
+# And don't put a newline on the last line.
+# If you get an error near this part of this script, check the above statement first.
+
 PRNSUCCESS "Generated ${EXPANDDIR}/debian/control"
 
 #----------------------------------------------------------

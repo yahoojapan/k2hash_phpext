@@ -31,15 +31,26 @@
 #
 # In the initial state, you need to set the following variables:
 #   DIST_TAG                      : "Distro/Version" for publishing packages
-#   PKG_EXT                       : The extension of the package file
+#   INSTALL_PKG_LIST              : A list of packages to be installed for
+#                                   build and packaging
+#
+#   INSTALLER_BIN                 : Package management command
+#   UPDATE_CMD                    : Update sub command for package management
+#                                   command
+#   UPDATE_CMD_ARG                : Update sub command arguments for package
+#                                   management command
+#   INSTALL_CMD                   : Install sub command for package management
+#                                   command
+#   INSTALL_CMD_ARG               : Install sub command arguments for package
+#                                   management command
+#   INSTALL_AUTO_ARG              : No interaption arguments for package
+#                                   management command
+#   INSTALL_QUIET_ARG             : Quiet arguments for package management
+#                                   command
 #   PKG_OUTPUT_DIR                : Set the directory path where the package
 #                                   will be created relative to the top
 #                                   directory of the source
-#
-#   INSTALLER_BIN                 : Package management command
-#   INSTALL_QUIET_ARG             : Quiet option for installing packages
-#   INSTALL_PKG_LIST              : A list of packages to be installed for
-#                                   build and packaging
+#   PKG_EXT                       : The extension of the package file
 #
 #   INSTALL_PHP_PRE_ADD_REPO      : Install packages(or repositories) before
 #                                   adding PHP repository
@@ -60,6 +71,8 @@
 #   IS_OS_ROCKY                   : Set to 1 for Rocky, 0 otherwise
 #   IS_OS_ALPINE                  : Set to 1 for Alpine, 0 otherwise
 #
+#   NOT_PROVIDED_PHPVER           : Set to 1 if PHP * OS is not supported
+#
 # Set these variables according to the CI_OSTYPE and CI_PHPTYPE
 # variable.
 # The value of the CI_OSTYPE and CI_PHPTYPE variable matches the
@@ -74,6 +87,11 @@ PKG_EXT=""
 PKG_OUTPUT_DIR=""
 
 INSTALLER_BIN=""
+UPDATE_CMD=""
+UPDATE_CMD_ARG=""
+INSTALL_CMD=""
+INSTALL_CMD_ARG=""
+INSTALL_AUTO_ARG=""
 INSTALL_QUIET_ARG=""
 INSTALL_PKG_LIST=""
 
@@ -101,6 +119,11 @@ IS_OS_FEDORA=0
 IS_OS_ROCKY=0
 IS_OS_ALPINE=0
 
+#
+# Special variables
+#
+NOT_PROVIDED_PHPVER=0
+
 #----------------------------------------------------------
 # Variables for each OS/PHP Type
 #----------------------------------------------------------
@@ -121,6 +144,9 @@ elif [ "${CI_PHPTYPE}" = "PHP8.0" ] || [ "${CI_PHPTYPE}" = "PHP80" ] || [ "${CI_
 elif [ "${CI_PHPTYPE}" = "PHP8.1" ] || [ "${CI_PHPTYPE}" = "PHP81" ] || [ "${CI_PHPTYPE}" = "PHP8" ] || [ "${CI_PHPTYPE}" = "8.1" ] || [ "${CI_PHPTYPE}" = "81" ] || [ "${CI_PHPTYPE}" = "8" ]; then
 	PHPVER_NOPERIOD="81"
 	PHPVER_WITHPERIOD="8.1"
+elif [ "${CI_PHPTYPE}" = "PHP8.2" ] || [ "${CI_PHPTYPE}" = "PHP82" ] || [ "${CI_PHPTYPE}" = "8.2" ] || [ "${CI_PHPTYPE}" = "82" ] || [ "${CI_PHPTYPE}" = "8" ]; then
+	PHPVER_NOPERIOD="82"
+	PHPVER_WITHPERIOD="8.2"
 fi
 
 #
@@ -137,6 +163,11 @@ elif [ "${CI_OSTYPE}" = "ubuntu:22.04" ] || [ "${CI_OSTYPE}" = "ubuntu:jammy" ];
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="apt-get"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-qq"
 	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
 
@@ -156,6 +187,11 @@ elif [ "${CI_OSTYPE}" = "ubuntu:20.04" ] || [ "${CI_OSTYPE}" = "ubuntu:focal" ];
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="apt-get"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-qq"
 	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
 
@@ -175,6 +211,11 @@ elif [ "${CI_OSTYPE}" = "ubuntu:18.04" ] || [ "${CI_OSTYPE}" = "ubuntu:bionic" ]
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="apt-get"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-qq"
 	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
 
@@ -194,6 +235,11 @@ elif [ "${CI_OSTYPE}" = "debian:11" ] || [ "${CI_OSTYPE}" = "debian:bullseye" ];
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="apt-get"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-qq"
 	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
 
@@ -209,13 +255,17 @@ elif [ "${CI_OSTYPE}" = "debian:11" ] || [ "${CI_OSTYPE}" = "debian:bullseye" ];
 
 	IS_OS_DEBIAN=1
 
-
 elif [ "${CI_OSTYPE}" = "debian:10" ] || [ "${CI_OSTYPE}" = "debian:buster" ]; then
 	DIST_TAG="debian/buster"
 	PKG_EXT="deb"
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="apt-get"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-qq"
 	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
 
@@ -237,6 +287,11 @@ elif [ "${CI_OSTYPE}" = "rockylinux:9.0" ] || [ "${CI_OSTYPE}" = "rockylinux:9" 
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="dnf"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
 
@@ -254,9 +309,16 @@ elif [ "${CI_OSTYPE}" = "rockylinux:8.6" ] || [ "${CI_OSTYPE}" = "rockylinux:8" 
 	DIST_TAG="el/8"
 	PKG_EXT="rpm"
 	PKG_OUTPUT_DIR="packages"
+
 	INSTALLER_BIN="dnf"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
+
 	INSTALL_PHP_PRE_ADD_REPO=""
 	INSTALL_PHP_REPO="https://rpms.remirepo.net/enterprise/remi-release-8.rpm"
 	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
@@ -272,6 +334,11 @@ elif [ "${CI_OSTYPE}" = "centos:7" ] || [ "${CI_OSTYPE}" = "centos:centos7" ]; t
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="yum"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python k2hash-devel"
 
@@ -291,6 +358,11 @@ elif [ "${CI_OSTYPE}" = "fedora:37" ]; then
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="dnf"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
 
@@ -310,6 +382,11 @@ elif [ "${CI_OSTYPE}" = "fedora:36" ]; then
 	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="dnf"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
 
@@ -323,24 +400,33 @@ elif [ "${CI_OSTYPE}" = "fedora:36" ]; then
 
 	IS_OS_FEDORA=1
 
-elif [ "${CI_OSTYPE}" = "fedora:35" ]; then
-	DIST_TAG="fedora/35"
-	PKG_EXT="rpm"
-	PKG_OUTPUT_DIR="packages"
+elif [ "${CI_OSTYPE}" = "alpine:3.17" ]; then
+	DIST_TAG="alpine/v3.17"
+	PKG_EXT="apk"
+	PKG_OUTPUT_DIR="apk_build"
 
-	INSTALLER_BIN="dnf"
+	INSTALLER_BIN="apk"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG="--no-progress"
+	INSTALL_CMD="add"
+	INSTALL_CMD_ARG="--no-progress --no-cache"
+	INSTALL_AUTO_ARG=""
 	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
+	INSTALL_PKG_LIST="bash sudo alpine-sdk util-linux-misc musl-locales ruby-dev procps k2hash-dev"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
-	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-35.rpm"
-	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
+	INSTALL_PHP_REPO=""
+	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD} php${PHPVER_NOPERIOD}-dev"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG=""
 	INSTALL_PHP_POST_BIN=""
-	SWITCH_PHP_COMMAND="scl enable php${PHPVER_NOPERIOD} --"
+	SWITCH_PHP_COMMAND=""
 
-	IS_OS_FEDORA=1
+	IS_OS_ALPINE=1
+
+	if [ "${PHPVER_NOPERIOD}" != "81" ]; then
+		NOT_PROVIDED_PHPVER=1
+	fi
 fi
 
 #---------------------------------------------------------------
@@ -406,7 +492,7 @@ fi
 #
 #	CREATE_PACKAGE_TOOL_RPM			"buildutils/php_rpm_build.sh"
 #	CREATE_PACKAGE_TOOL_DEBIAN		"buildutils/php_debian_build.sh"
-#	CREATE_PACKAGE_TOOL_ALPINE		"buildutils/php_apline_build.sh"
+#	CREATE_PACKAGE_TOOL_ALPINE		"buildutils/php_alpine_build.sh"
 #	CREATE_PACKAGE_TOOL_OTHER		""
 #
 #	CREATE_PACKAGE_TOOL_OPT_AUTO	"-y"
@@ -422,6 +508,7 @@ PRE_CLEANUP_FILES_DIRS="
 	core.*
 	rpmbuild
 	debian_build
+	apk_build
 	packages
 	tests/*.diff
 	tests/*.exp
