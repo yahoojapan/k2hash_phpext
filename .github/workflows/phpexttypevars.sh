@@ -140,7 +140,7 @@ elif [ "${CI_PHPTYPE}" = "PHP7.4" ] || [ "${CI_PHPTYPE}" = "PHP74" ] || [ "${CI_
 	PHPVER_WITHPERIOD="7.4"
 elif [ "${CI_PHPTYPE}" = "PHP8.0" ] || [ "${CI_PHPTYPE}" = "PHP80" ] || [ "${CI_PHPTYPE}" = "8.0" ] || [ "${CI_PHPTYPE}" = "80" ]; then
 	PHPVER_NOPERIOD="80"
-	PHPVER_WITHPERIOD="8.1"
+	PHPVER_WITHPERIOD="8.0"
 elif [ "${CI_PHPTYPE}" = "PHP8.1" ] || [ "${CI_PHPTYPE}" = "PHP81" ] || [ "${CI_PHPTYPE}" = "8.1" ] || [ "${CI_PHPTYPE}" = "81" ]; then
 	PHPVER_NOPERIOD="81"
 	PHPVER_WITHPERIOD="8.1"
@@ -173,7 +173,7 @@ elif [ "${CI_OSTYPE}" = "ubuntu:22.04" ] || [ "${CI_OSTYPE}" = "ubuntu:jammy" ];
 
 	INSTALL_PHP_PRE_ADD_REPO="ca-certificates apt-transport-https software-properties-common"
 	INSTALL_PHP_REPO="ppa:ondrej/php"
-	INSTALL_PHP_PKG_LIST="dh-php php-all-dev php${PHPVER_WITHPERIOD} libapache2-mod-php${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
@@ -197,7 +197,7 @@ elif [ "${CI_OSTYPE}" = "ubuntu:20.04" ] || [ "${CI_OSTYPE}" = "ubuntu:focal" ];
 
 	INSTALL_PHP_PRE_ADD_REPO="ca-certificates apt-transport-https software-properties-common"
 	INSTALL_PHP_REPO="ppa:ondrej/php"
-	INSTALL_PHP_PKG_LIST="dh-php php-all-dev php${PHPVER_WITHPERIOD} libapache2-mod-php${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
@@ -221,7 +221,7 @@ elif [ "${CI_OSTYPE}" = "ubuntu:18.04" ] || [ "${CI_OSTYPE}" = "ubuntu:bionic" ]
 
 	INSTALL_PHP_PRE_ADD_REPO="ca-certificates apt-transport-https software-properties-common"
 	INSTALL_PHP_REPO="ppa:ondrej/php"
-	INSTALL_PHP_PKG_LIST="dh-php php-all-dev php${PHPVER_WITHPERIOD} libapache2-mod-php${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
@@ -247,7 +247,7 @@ elif [ "${CI_OSTYPE}" = "debian:11" ] || [ "${CI_OSTYPE}" = "debian:bullseye" ];
 	INSTALL_PHP_REPO="packages.sury.org/php"
 	INSTALL_PHP_REPO_GPG_URL="https://packages.sury.org/php/apt.gpg"
 	INSTALL_PHP_REPO_GPG_FILEPATH="/usr/share/keyrings/deb.sury.org-php.gpg"
-	INSTALL_PHP_PKG_LIST="dh-php php-all-dev php${PHPVER_WITHPERIOD} libapache2-mod-php${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
@@ -273,7 +273,7 @@ elif [ "${CI_OSTYPE}" = "debian:10" ] || [ "${CI_OSTYPE}" = "debian:buster" ]; t
 	INSTALL_PHP_REPO="packages.sury.org/php"
 	INSTALL_PHP_REPO_GPG_URL="https://packages.sury.org/php/apt.gpg"
 	INSTALL_PHP_REPO_GPG_FILEPATH="/usr/share/keyrings/deb.sury.org-php.gpg"
-	INSTALL_PHP_PKG_LIST="dh-php php-all-dev php${PHPVER_WITHPERIOD} libapache2-mod-php${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
 	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
