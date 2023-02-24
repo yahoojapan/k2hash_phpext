@@ -141,10 +141,10 @@ elif [ "${CI_PHPTYPE}" = "PHP7.4" ] || [ "${CI_PHPTYPE}" = "PHP74" ] || [ "${CI_
 elif [ "${CI_PHPTYPE}" = "PHP8.0" ] || [ "${CI_PHPTYPE}" = "PHP80" ] || [ "${CI_PHPTYPE}" = "8.0" ] || [ "${CI_PHPTYPE}" = "80" ]; then
 	PHPVER_NOPERIOD="80"
 	PHPVER_WITHPERIOD="8.1"
-elif [ "${CI_PHPTYPE}" = "PHP8.1" ] || [ "${CI_PHPTYPE}" = "PHP81" ] || [ "${CI_PHPTYPE}" = "PHP8" ] || [ "${CI_PHPTYPE}" = "8.1" ] || [ "${CI_PHPTYPE}" = "81" ] || [ "${CI_PHPTYPE}" = "8" ]; then
+elif [ "${CI_PHPTYPE}" = "PHP8.1" ] || [ "${CI_PHPTYPE}" = "PHP81" ] || [ "${CI_PHPTYPE}" = "8.1" ] || [ "${CI_PHPTYPE}" = "81" ]; then
 	PHPVER_NOPERIOD="81"
 	PHPVER_WITHPERIOD="8.1"
-elif [ "${CI_PHPTYPE}" = "PHP8.2" ] || [ "${CI_PHPTYPE}" = "PHP82" ] || [ "${CI_PHPTYPE}" = "8.2" ] || [ "${CI_PHPTYPE}" = "82" ] || [ "${CI_PHPTYPE}" = "8" ]; then
+elif [ "${CI_PHPTYPE}" = "PHP8.2" ] || [ "${CI_PHPTYPE}" = "PHP82" ] || [ "${CI_PHPTYPE}" = "8.2" ] || [ "${CI_PHPTYPE}" = "82" ]; then
 	PHPVER_NOPERIOD="82"
 	PHPVER_WITHPERIOD="8.2"
 fi
@@ -293,7 +293,7 @@ elif [ "${CI_OSTYPE}" = "rockylinux:9.0" ] || [ "${CI_OSTYPE}" = "rockylinux:9" 
 	INSTALL_CMD_ARG=""
 	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
+	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
 	INSTALL_PHP_REPO="https://rpms.remirepo.net/enterprise/remi-release-9.rpm"
@@ -317,7 +317,7 @@ elif [ "${CI_OSTYPE}" = "rockylinux:8.6" ] || [ "${CI_OSTYPE}" = "rockylinux:8" 
 	INSTALL_CMD_ARG=""
 	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
+	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
 	INSTALL_PHP_REPO="https://rpms.remirepo.net/enterprise/remi-release-8.rpm"
@@ -364,7 +364,7 @@ elif [ "${CI_OSTYPE}" = "fedora:37" ]; then
 	INSTALL_CMD_ARG=""
 	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
+	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
 	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-37.rpm"
@@ -388,7 +388,7 @@ elif [ "${CI_OSTYPE}" = "fedora:36" ]; then
 	INSTALL_CMD_ARG=""
 	INSTALL_AUTO_ARG="-y"
 	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python3 k2hash-devel"
+	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
 	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-36.rpm"
@@ -403,7 +403,7 @@ elif [ "${CI_OSTYPE}" = "fedora:36" ]; then
 elif [ "${CI_OSTYPE}" = "alpine:3.17" ]; then
 	DIST_TAG="alpine/v3.17"
 	PKG_EXT="apk"
-	PKG_OUTPUT_DIR="apk_build"
+	PKG_OUTPUT_DIR="packages"
 
 	INSTALLER_BIN="apk"
 	UPDATE_CMD="update"
@@ -518,7 +518,7 @@ PRE_CLEANUP_FILES_DIRS="
 	tests/*.sh
 	php-pecl-k2hash.spec"
 
-if [ "${PHPVER_NOPERIOD}" = "81" ]; then
+if [ "${PHPVER_NOPERIOD}" = "82" ]; then
 	if [ "${IS_OS_UBUNTU}" -eq 1 ] || [ "${IS_OS_DEBIAN}" -eq 1 ]; then
 		CREATE_PACKAGE_TOOL_OPT_DEBIAN="-ccp"
 	fi
