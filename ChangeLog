@@ -1,3 +1,9 @@
+php-pecl-k2hash (1.1.8) unstable; urgency=low
+
+  * Fixed a bug about publishing in phpext_helper.sh - #24
+
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Fri, 24 Feb 2023 12:01:09 +0900
+
 php-pecl-k2hash (1.1.7) unstable; urgency=low
 
   * Changed support OS(added ALPINE) and PHP version - #22
