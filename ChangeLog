@@ -1,3 +1,16 @@
+php-pecl-k2hash (1.1.7) unstable; urgency=low
+
+  * Changed support OS(added ALPINE) and PHP version - #22
+  * Updated header and footer in comment lines - #20
+  * Updated issue/pullrequest templates - #19
+  * Fixed php package builder scripts - #18
+  * Reviewed ShellCheck and CppCheck processing and fixed bugs - #16
+  * Updated actions/checkout from v1 to v3 - #15
+  * Changed build logic and updated related files - #14
+  * Fixed a misspelling - #13
+
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Fri, 24 Feb 2023 10:51:01 +0900
+
 php-pecl-k2hash (1.1.6) unstable; urgency=low
 
   * Updated files related to packaging - #11
