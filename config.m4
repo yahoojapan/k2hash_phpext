@@ -164,6 +164,7 @@ if test -d buildutils; then
 		$(pwd)/buildutils/copyright
 		$(pwd)/buildutils/watch
 		$(pwd)/buildutils/upstream/metadata
+		$(pwd)/buildutils/APKBUILD.templ
 	])
 fi
 

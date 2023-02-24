@@ -57,29 +57,24 @@ jobs:
       #
       # matrix for containers
       #
-      # [NOTICE]
-      # The following OS are excluded from testing due to issues
-      # with libraries in different packages:
-      #
-      #    - ubuntu:22.04
-      #    - debian:11
-      #    - rockylinux:9
-      #    - fedora:37
-      #    - fedora:36
-      #    - fedora:35 (EOL: 2022-12-13)
-      #
       matrix:
         container:
+          - ubuntu:22.04
           - ubuntu:20.04
           - ubuntu:18.04
-          - debian:10
-          - rockylinux:8
+          - debian:bullseye
+          - debian:buster
           - centos:centos7
+          - rockylinux:9
+          - rockylinux:8
+          - fedora:37
+          - fedora:36
+          - alpine:3.17
 
         php:
-          - PHP74
           - PHP80
           - PHP81
+          - PHP82
 
     container:
       image: ${{ matrix.container }}
@@ -97,7 +92,8 @@ jobs:
 
     steps:
       #
-      # Checkout source code
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your
+      # job can access it
       #
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -117,9 +113,9 @@ jobs:
       #    FORCE_PUBLISH              : true means force to publish packages, false means never publish
       #    USE_PACKAGECLOUD_REPO      : true means using pacakgecloud.io repo, false is not using
       #  * PACKAGECLOUD_TOKEN         : The token for publishing to packagcloud.io
-      #    PACKAGECLOUD_OWNER         : owner name as a pat of path to packagcloud.io for publishing/downloading
-      #    PACKAGECLOUD_PUBLISH_REPO  : repo name as a pat of path to packagcloud.io for publishing
-      #    PACKAGECLOUD_DOWNLOAD_REPO : repo name as a pat of path to packagcloud.io for downloading
+      #    PACKAGECLOUD_OWNER         : owner name as a part of path to packagcloud.io for publishing/downloading
+      #    PACKAGECLOUD_PUBLISH_REPO  : repo name as a part of path to packagcloud.io for publishing
+      #    PACKAGECLOUD_DOWNLOAD_REPO : repo name as a part of path to packagcloud.io for downloading
       #
       # "PACKAGECLOUD_TOKEN" is a required variable to publish the
       # package.
