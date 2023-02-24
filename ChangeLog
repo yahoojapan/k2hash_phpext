@@ -1,8 +1,9 @@
 php-pecl-k2hash (1.1.9) unstable; urgency=low
 
+  * Fixed phpexttypevars.sh and php_alpine_build.sh - #28
   * Updated/Fixed Github Actions configuration(phpexttypevars.sh) - #26
 
- -- Takeshi Nakatani <ggtakec@gmail.com>  Fri, 24 Feb 2023 14:53:49 +0900
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Fri, 24 Feb 2023 16:55:22 +0900
 
 php-pecl-k2hash (1.1.8) unstable; urgency=low
 
