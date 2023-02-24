@@ -684,13 +684,30 @@ for _one_pkg in "${APK_TOPDIR}"/"${SRCTOP_DIRNAME}"/"${ARCH_NAME}"/*.apk; do
 	fi
 done
 
+#----------------------------------------------------------
+# Copy packages
+#----------------------------------------------------------
+if [ ! -d "${PKG_TOPDIR}" ]; then
+	PRNTITLE "Create ${PKG_TOPDIR} directory"
+	if ! mkdir -p "${PKG_TOPDIR}"; then
+		PRNERR "Failed to create ${PKG_TOPDIR} directory"
+		exit 1
+	fi
+	PRNSUCCESS "Created ${PKG_TOPDIR} directory"
+fi
+
 #
 # Copy APK packages
 #
+PRNTITLE "Copy created APK packages to packages directory"
+
 if ! cp -p "${APK_TOPDIR}"/"${SRCTOP_DIRNAME}"/"${ARCH_NAME}"/*.apk "${PKG_TOPDIR}"; then
 	PRNERR "Failed to copy ${APK_TOPDIR}/${SRCTOP_DIRNAME}/${ARCH_NAME}/*.apk package to ${PKG_TOPDIR} directory."
 	exit 1
 fi
+ls -la "${PKG_TOPDIR}"
+
+PRNSUCCESS "Copied created APK packages to packages directory"
 
 #---------------------------------------------------------------
 # Finish
