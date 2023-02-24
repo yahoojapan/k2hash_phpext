@@ -555,7 +555,7 @@ run_publish_package()
 			PRNERR "Token for uploading to packagecloud.io is not specified."
 			return 1
 		fi
-		if ! PACKAGECLOUD_TOKEN="${CI_PACKAGECLOUD_TOKEN}" /bin/sh -c "package_cloud push ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG} ${SRCTOP}${PKG_OUTPUT_DIR}/*.${PKG_EXT}"; then
+		if ! PACKAGECLOUD_TOKEN="${CI_PACKAGECLOUD_TOKEN}" /bin/sh -c "package_cloud push ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG} ${SRCTOP}/${PKG_OUTPUT_DIR}/*.${PKG_EXT}"; then
 			PRNERR "Failed to publish *.${PKG_EXT} packages to ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG}"
 			return 1
 		fi
