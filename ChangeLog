@@ -1,3 +1,9 @@
+php-pecl-k2hash (1.1.10) unstable; urgency=low
+
+  * Updated building/packaging scripts - #30
+
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Mon, 06 Mar 2023 23:34:10 +0900
+
 php-pecl-k2hash (1.1.9) unstable; urgency=low
 
   * Fixed phpexttypevars.sh and php_alpine_build.sh - #28
