@@ -50,6 +50,15 @@ build-%:
 debian/control: debian/control.in
 	/usr/share/dh-php/gen-control
 
+# [NOTE] 2023/9
+# Because updated pkg-pecl.mk, the "-a" option is added when calling gen-control.
+# If this "-a" option is given, an error will occur, so do not add the "-a" option
+# as before the update.
+#
+override_dh_clean:
+	dh_clean
+	/usr/share/dh-php/gen-control
+
 #
 # Local variables:
 # tab-width: 4
