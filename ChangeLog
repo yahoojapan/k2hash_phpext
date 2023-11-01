@@ -1,3 +1,9 @@
+php-pecl-k2hash (1.1.12) unstable; urgency=low
+
+  * Changed support OS (fedora and ubuntu) and updated tool - #35
+
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Wed, 01 Nov 2023 19:59:02 +0900
+
 php-pecl-k2hash (1.1.11) unstable; urgency=low
 
   * Updated support OSs(unsupported ubuntu 18.04) - #33
