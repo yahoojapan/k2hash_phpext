@@ -21,7 +21,9 @@
 #ifndef PHP_K2HASH_H
 #define PHP_K2HASH_H
 
+// cppcheck-suppress missingIncludeSystem
 #include <k2hash.h>
+// cppcheck-suppress missingIncludeSystem
 #include <fcntl.h>
 #include "config.h"
 

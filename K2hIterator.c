@@ -22,7 +22,9 @@
 #include "config.h"
 #endif
 
+// cppcheck-suppress missingInclude
 #include "php.h"
+// cppcheck-suppress missingInclude
 #include "ext/standard/info.h"
 #include "php_k2hash.h"
 #include "k2hash_compat.h"
