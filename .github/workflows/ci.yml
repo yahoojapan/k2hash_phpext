@@ -67,8 +67,8 @@ jobs:
           - rockylinux:9
           - rockylinux:8
           - centos:centos7
+          - fedora:38
           - fedora:37
-          - fedora:36
           - alpine:3.18
 
         php:
