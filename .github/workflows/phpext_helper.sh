@@ -1296,16 +1296,32 @@ if [ -n "${INSTALL_PHP_REPO}" ]; then
 			PRNERR "\"INSTALL_PHP_REPO_GPG_URL\" or \"INSTALL_PHP_REPO_GPG_FILEPATH\" varibales are not specified."
 			exit 1
 		fi
-		if ({ RUNCMD "${CURLCMD}" -sSLo "${INSTALL_PHP_REPO_GPG_FILEPATH}" "${INSTALL_PHP_REPO_GPG_URL}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
-			PRNERR "Failed to install gpg file."
-			exit 1
-		fi
-		if ({ RUNCMD "echo 'deb [signed-by=${INSTALL_PHP_REPO_GPG_FILEPATH}] https://${INSTALL_PHP_REPO}/ $(lsb_release -sc) main' > /etc/apt/sources.list.d/php.list" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
-			PRNERR "Failed to add repository for PHP"
-			exit 1
-		fi
-		if ({ RUNCMD "${INSTALLER_BIN}" "${UPDATE_CMD}" "${UPDATE_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
-			PRNERR "Failed to re-update local packages"
+
+		# [NOTE]
+		# We have confirmed cases where lookup of packages.sury.org is not possible.
+		# Thus, this script is trying to retry in that case.
+		#
+		_RETRY_COUNT=0
+		while [ "${_RETRY_COUNT}" -lt 10 ]; do
+			if ({ RUNCMD "${CURLCMD}" -sSLo "${INSTALL_PHP_REPO_GPG_FILEPATH}" "${INSTALL_PHP_REPO_GPG_URL}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+				PRNWARN "Failed to install gpg file, so retry..."
+			else
+				if ({ RUNCMD "echo 'deb [signed-by=${INSTALL_PHP_REPO_GPG_FILEPATH}] https://${INSTALL_PHP_REPO}/ $(lsb_release -sc) main' > /etc/apt/sources.list.d/php.list" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+					PRNWARN "Failed to add repository for PHP, so retry..."
+				else
+					if ({ RUNCMD "${INSTALLER_BIN}" "${UPDATE_CMD}" "${UPDATE_CMD_ARG}" "${INSTALL_AUTO_ARG}" "${INSTALL_QUIET_ARG}" || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+						PRNWARN "Failed to re-update local packages, so retry..."
+					else
+						# Success
+						break
+					fi
+				fi
+			fi
+			_RETRY_COUNT=$((_RETRY_COUNT + 1))
+			sleep 20
+		done
+		if [ "${_RETRY_COUNT}" -ge 10 ]; then
+			PRNERR "Failed to add PHP repository and update local packages."
 			exit 1
 		fi
 	else
