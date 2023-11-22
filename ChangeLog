@@ -1,8 +1,9 @@
 php-pecl-k2hash (1.1.13) unstable; urgency=low
 
+  * Updated build_helper.sh for fixing about ruby and shellcheck - #39
   * Updated phpext_helper.sh to retry PHP repository registration - #37
 
- -- Takeshi Nakatani <ggtakec@gmail.com>  Wed, 22 Nov 2023 08:52:42 +0900
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Wed, 22 Nov 2023 09:52:18 +0900
 
 php-pecl-k2hash (1.1.12) unstable; urgency=low
 
