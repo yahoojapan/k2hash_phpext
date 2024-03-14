@@ -354,6 +354,30 @@ elif [ "${CI_OSTYPE}" = "centos:7" ] || [ "${CI_OSTYPE}" = "centos:centos7" ]; t
 
 	IS_OS_CENTOS=1
 
+elif [ "${CI_OSTYPE}" = "fedora:39" ]; then
+	DIST_TAG="fedora/39"
+	PKG_EXT="rpm"
+	PKG_OUTPUT_DIR="packages"
+
+	INSTALLER_BIN="dnf"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
+	INSTALL_QUIET_ARG="-q"
+	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
+
+	INSTALL_PHP_PRE_ADD_REPO=""
+	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-39.rpm"
+	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
+	INSTALL_PHP_OPT=""
+	INSTALL_PHP_POST_CONFIG=""
+	INSTALL_PHP_POST_BIN=""
+	SWITCH_PHP_COMMAND="scl enable php${PHPVER_NOPERIOD} --"
+
+	IS_OS_FEDORA=1
+
 elif [ "${CI_OSTYPE}" = "fedora:38" ]; then
 	DIST_TAG="fedora/38"
 	PKG_EXT="rpm"
@@ -378,29 +402,33 @@ elif [ "${CI_OSTYPE}" = "fedora:38" ]; then
 
 	IS_OS_FEDORA=1
 
-elif [ "${CI_OSTYPE}" = "fedora:37" ]; then
-	DIST_TAG="fedora/37"
-	PKG_EXT="rpm"
+elif [ "${CI_OSTYPE}" = "alpine:3.19" ]; then
+	DIST_TAG="alpine/v3.19"
+	PKG_EXT="apk"
 	PKG_OUTPUT_DIR="packages"
 
-	INSTALLER_BIN="dnf"
+	INSTALLER_BIN="apk"
 	UPDATE_CMD="update"
-	UPDATE_CMD_ARG=""
-	INSTALL_CMD="install"
-	INSTALL_CMD_ARG=""
-	INSTALL_AUTO_ARG="-y"
+	UPDATE_CMD_ARG="--no-progress"
+	INSTALL_CMD="add"
+	INSTALL_CMD_ARG="--no-progress --no-cache"
+	INSTALL_AUTO_ARG=""
 	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
+	INSTALL_PKG_LIST="bash sudo alpine-sdk util-linux-misc musl-locales ruby-dev procps k2hash-dev"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
-	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-37.rpm"
-	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
+	INSTALL_PHP_REPO=""
+	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD} php${PHPVER_NOPERIOD}-dev"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG=""
 	INSTALL_PHP_POST_BIN=""
-	SWITCH_PHP_COMMAND="scl enable php${PHPVER_NOPERIOD} --"
+	SWITCH_PHP_COMMAND=""
 
-	IS_OS_FEDORA=1
+	IS_OS_ALPINE=1
+
+	if [ "${PHPVER_NOPERIOD}" != "82" ]; then
+		NOT_PROVIDED_PHPVER=1
+	fi
 
 elif [ "${CI_OSTYPE}" = "alpine:3.18" ]; then
 	DIST_TAG="alpine/v3.18"
