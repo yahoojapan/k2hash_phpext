@@ -1,8 +1,9 @@
 php-pecl-k2hash (1.1.14) unstable; urgency=low
 
+  * Changed to skip some tests - #43
   * Updated github actions tools and Changed support OS/PHP - #41
 
- -- Takeshi Nakatani <ggtakec@gmail.com>  Thu, 14 Mar 2024 18:04:02 +0900
+ -- Takeshi Nakatani <ggtakec@gmail.com>  Fri, 15 Mar 2024 15:04:42 +0900
 
 php-pecl-k2hash (1.1.13) unstable; urgency=low
 
