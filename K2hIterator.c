@@ -27,7 +27,7 @@
 // cppcheck-suppress missingInclude
 #include "ext/standard/info.h"
 #include "php_k2hash.h"
-#include "k2hash_compat.h"
+#include "k2hash_arginfo.h"
 
 extern int le_k2hhandle;
 zend_class_entry * php_k2hiterator_ce = NULL;

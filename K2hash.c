@@ -27,7 +27,7 @@
 // cppcheck-suppress missingInclude
 #include "ext/standard/info.h"
 #include "php_k2hash.h"
-#include "k2hash_compat.h"
+#include "k2hash_arginfo.h"
 
 extern php_stream* k2hpx_da_open(k2h_h handle, const char* key, const char* mode STREAMS_DC);
 extern zend_class_entry *php_k2hqueue_ce;

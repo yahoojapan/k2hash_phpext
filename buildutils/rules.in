@@ -41,24 +41,6 @@ override_dh_testdir: $(DIR_TARGETS)
 build-%:
 	mkdir -p build-$(*)
 
-# [NOTE]
-# The "control" file will be created without the following call,
-# but it will output "php-pecl-<productname>" instead of "php<8.1>-pecl-<productname>"
-# and the build will fail.
-# To avoid this, make the following call.
-#
-debian/control: debian/control.in
-	/usr/share/dh-php/gen-control
-
-# [NOTE] 2023/9
-# Because updated pkg-pecl.mk, the "-a" option is added when calling gen-control.
-# If this "-a" option is given, an error will occur, so do not add the "-a" option
-# as before the update.
-#
-override_dh_clean:
-	dh_clean
-	/usr/share/dh-php/gen-control
-
 #
 # Local variables:
 # tab-width: 4

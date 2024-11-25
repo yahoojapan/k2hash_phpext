@@ -27,7 +27,7 @@
 // cppcheck-suppress missingInclude
 #include "ext/standard/info.h"
 #include "php_k2hash.h"
-#include "k2hash_compat.h"
+#include "k2hash_arginfo.h"
 
 /* For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
