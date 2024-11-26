@@ -66,7 +66,6 @@
 #
 #   IS_OS_UBUNTU                  : Set to 1 for Ubuntu, 0 otherwise
 #   IS_OS_DEBIAN                  : Set to 1 for Debian, 0 otherwise
-#   IS_OS_CENTOS                  : Set to 1 for CentOS, 0 otherwise
 #   IS_OS_FEDORA                  : Set to 1 for Fedora, 0 otherwise
 #   IS_OS_ROCKY                   : Set to 1 for Rocky, 0 otherwise
 #   IS_OS_ALPINE                  : Set to 1 for Alpine, 0 otherwise
@@ -114,7 +113,6 @@ PHPVER_WITHPERIOD=""
 
 IS_OS_UBUNTU=0
 IS_OS_DEBIAN=0
-IS_OS_CENTOS=0
 IS_OS_FEDORA=0
 IS_OS_ROCKY=0
 IS_OS_ALPINE=0
@@ -135,18 +133,22 @@ if [ -z "${CI_PHPTYPE}" ]; then
 	# Unknown PHP version : Nothing to do
 	#
 	:
-elif [ "${CI_PHPTYPE}" = "PHP7.4" ] || [ "${CI_PHPTYPE}" = "PHP74" ] || [ "${CI_PHPTYPE}" = "PHP7" ] || [ "${CI_PHPTYPE}" = "7.4" ] || [ "${CI_PHPTYPE}" = "74" ] || [ "${CI_PHPTYPE}" = "7" ]; then
-	PHPVER_NOPERIOD="74"
-	PHPVER_WITHPERIOD="7.4"
-elif [ "${CI_PHPTYPE}" = "PHP8.0" ] || [ "${CI_PHPTYPE}" = "PHP80" ] || [ "${CI_PHPTYPE}" = "8.0" ] || [ "${CI_PHPTYPE}" = "80" ]; then
+
+elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.0" -e "PHP80" -e "8.0" -e "80"; then
 	PHPVER_NOPERIOD="80"
 	PHPVER_WITHPERIOD="8.0"
-elif [ "${CI_PHPTYPE}" = "PHP8.1" ] || [ "${CI_PHPTYPE}" = "PHP81" ] || [ "${CI_PHPTYPE}" = "8.1" ] || [ "${CI_PHPTYPE}" = "81" ]; then
+
+elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.1" -e "PHP81" -e "8.1" -e "81"; then
 	PHPVER_NOPERIOD="81"
 	PHPVER_WITHPERIOD="8.1"
-elif [ "${CI_PHPTYPE}" = "PHP8.2" ] || [ "${CI_PHPTYPE}" = "PHP82" ] || [ "${CI_PHPTYPE}" = "8.2" ] || [ "${CI_PHPTYPE}" = "82" ]; then
+
+elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.2" -e "PHP82" -e "8.2" -e "82"; then
 	PHPVER_NOPERIOD="82"
 	PHPVER_WITHPERIOD="8.2"
+
+elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.3" -e "PHP83" -e "8.3" -e "83"; then
+	PHPVER_NOPERIOD="83"
+	PHPVER_WITHPERIOD="8.3"
 fi
 
 #
@@ -157,7 +159,32 @@ if [ -z "${CI_OSTYPE}" ]; then
 	# Unknown OS : Nothing to do
 	#
 	:
-elif [ "${CI_OSTYPE}" = "ubuntu:22.04" ] || [ "${CI_OSTYPE}" = "ubuntu:jammy" ]; then
+
+elif echo "${CI_OSTYPE}" | grep -q -i -e "ubuntu:24.04" -e "ubuntu:noble"; then
+	DIST_TAG="ubuntu/noble"
+	PKG_EXT="deb"
+	PKG_OUTPUT_DIR="packages"
+
+	INSTALLER_BIN="apt-get"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG=""
+	INSTALL_CMD="install"
+	INSTALL_CMD_ARG=""
+	INSTALL_AUTO_ARG="-y"
+	INSTALL_QUIET_ARG="-qq"
+	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
+
+	INSTALL_PHP_PRE_ADD_REPO="ca-certificates apt-transport-https software-properties-common"
+	INSTALL_PHP_REPO="ppa:ondrej/php"
+	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_OPT=""
+	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
+	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
+	SWITCH_PHP_COMMAND=""
+
+	IS_OS_UBUNTU=1
+
+elif echo "${CI_OSTYPE}" | grep -q -i -e "ubuntu:22.04" -e "ubuntu:jammy"; then
 	DIST_TAG="ubuntu/jammy"
 	PKG_EXT="deb"
 	PKG_OUTPUT_DIR="packages"
@@ -181,7 +208,7 @@ elif [ "${CI_OSTYPE}" = "ubuntu:22.04" ] || [ "${CI_OSTYPE}" = "ubuntu:jammy" ];
 
 	IS_OS_UBUNTU=1
 
-elif [ "${CI_OSTYPE}" = "ubuntu:20.04" ] || [ "${CI_OSTYPE}" = "ubuntu:focal" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i -e "ubuntu:20.04" -e "ubuntu:focal"; then
 	DIST_TAG="ubuntu/focal"
 	PKG_EXT="deb"
 	PKG_OUTPUT_DIR="packages"
@@ -205,7 +232,7 @@ elif [ "${CI_OSTYPE}" = "ubuntu:20.04" ] || [ "${CI_OSTYPE}" = "ubuntu:focal" ];
 
 	IS_OS_UBUNTU=1
 
-elif [ "${CI_OSTYPE}" = "debian:12" ] || [ "${CI_OSTYPE}" = "debian:bookworm" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i -e "debian:12" -e "debian:bookworm"; then
 	DIST_TAG="debian/bookworm"
 	PKG_EXT="deb"
 	PKG_OUTPUT_DIR="packages"
@@ -231,7 +258,7 @@ elif [ "${CI_OSTYPE}" = "debian:12" ] || [ "${CI_OSTYPE}" = "debian:bookworm" ];
 
 	IS_OS_DEBIAN=1
 
-elif [ "${CI_OSTYPE}" = "debian:11" ] || [ "${CI_OSTYPE}" = "debian:bullseye" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i -e "debian:11" -e "debian:bullseye"; then
 	DIST_TAG="debian/bullseye"
 	PKG_EXT="deb"
 	PKG_OUTPUT_DIR="packages"
@@ -257,33 +284,7 @@ elif [ "${CI_OSTYPE}" = "debian:11" ] || [ "${CI_OSTYPE}" = "debian:bullseye" ];
 
 	IS_OS_DEBIAN=1
 
-elif [ "${CI_OSTYPE}" = "debian:10" ] || [ "${CI_OSTYPE}" = "debian:buster" ]; then
-	DIST_TAG="debian/buster"
-	PKG_EXT="deb"
-	PKG_OUTPUT_DIR="packages"
-
-	INSTALLER_BIN="apt-get"
-	UPDATE_CMD="update"
-	UPDATE_CMD_ARG=""
-	INSTALL_CMD="install"
-	INSTALL_CMD_ARG=""
-	INSTALL_AUTO_ARG="-y"
-	INSTALL_QUIET_ARG="-qq"
-	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
-
-	INSTALL_PHP_PRE_ADD_REPO="ca-certificates apt-transport-https software-properties-common"
-	INSTALL_PHP_REPO="packages.sury.org/php"
-	INSTALL_PHP_REPO_GPG_URL="https://packages.sury.org/php/apt.gpg"
-	INSTALL_PHP_REPO_GPG_FILEPATH="/usr/share/keyrings/deb.sury.org-php.gpg"
-	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
-	INSTALL_PHP_OPT=""
-	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
-	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
-	SWITCH_PHP_COMMAND=""
-
-	IS_OS_DEBIAN=1
-
-elif [ "${CI_OSTYPE}" = "rockylinux:9.0" ] || [ "${CI_OSTYPE}" = "rockylinux:9" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i "rockylinux:9"; then
 	DIST_TAG="el/9"
 	PKG_EXT="rpm"
 	PKG_OUTPUT_DIR="packages"
@@ -307,7 +308,7 @@ elif [ "${CI_OSTYPE}" = "rockylinux:9.0" ] || [ "${CI_OSTYPE}" = "rockylinux:9" 
 
 	IS_OS_ROCKY=1
 
-elif [ "${CI_OSTYPE}" = "rockylinux:8.6" ] || [ "${CI_OSTYPE}" = "rockylinux:8" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i "rockylinux:8"; then
 	DIST_TAG="el/8"
 	PKG_EXT="rpm"
 	PKG_OUTPUT_DIR="packages"
@@ -330,32 +331,8 @@ elif [ "${CI_OSTYPE}" = "rockylinux:8.6" ] || [ "${CI_OSTYPE}" = "rockylinux:8" 
 	SWITCH_PHP_COMMAND="scl enable php${PHPVER_NOPERIOD} --"
 	IS_OS_ROCKY=1
 
-elif [ "${CI_OSTYPE}" = "centos:7" ] || [ "${CI_OSTYPE}" = "centos:centos7" ]; then
-	DIST_TAG="el/7"
-	PKG_EXT="rpm"
-	PKG_OUTPUT_DIR="packages"
-
-	INSTALLER_BIN="yum"
-	UPDATE_CMD="update"
-	UPDATE_CMD_ARG=""
-	INSTALL_CMD="install"
-	INSTALL_CMD_ARG=""
-	INSTALL_AUTO_ARG="-y"
-	INSTALL_QUIET_ARG="-q"
-	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build rubygems procps python k2hash-devel"
-
-	INSTALL_PHP_PRE_ADD_REPO="centos-release-scl-rh centos-release-scl"
-	INSTALL_PHP_REPO="https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
-	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
-	INSTALL_PHP_OPT="--enablerepo=remi-php${PHPVER_NOPERIOD}"
-	INSTALL_PHP_POST_CONFIG=""
-	INSTALL_PHP_POST_BIN=""
-	SWITCH_PHP_COMMAND="scl enable php${PHPVER_NOPERIOD} --"
-
-	IS_OS_CENTOS=1
-
-elif [ "${CI_OSTYPE}" = "fedora:39" ]; then
-	DIST_TAG="fedora/39"
+elif echo "${CI_OSTYPE}" | grep -q -i "fedora:41"; then
+	DIST_TAG="fedora/41"
 	PKG_EXT="rpm"
 	PKG_OUTPUT_DIR="packages"
 
@@ -369,7 +346,7 @@ elif [ "${CI_OSTYPE}" = "fedora:39" ]; then
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
-	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-39.rpm"
+	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-41.rpm"
 	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG=""
@@ -378,8 +355,8 @@ elif [ "${CI_OSTYPE}" = "fedora:39" ]; then
 
 	IS_OS_FEDORA=1
 
-elif [ "${CI_OSTYPE}" = "fedora:38" ]; then
-	DIST_TAG="fedora/38"
+elif echo "${CI_OSTYPE}" | grep -q -i "fedora:40"; then
+	DIST_TAG="fedora/40"
 	PKG_EXT="rpm"
 	PKG_OUTPUT_DIR="packages"
 
@@ -393,7 +370,7 @@ elif [ "${CI_OSTYPE}" = "fedora:38" ]; then
 	INSTALL_PKG_LIST="git make diffutils pkgconfig patch yum-utils rpmdevtools redhat-rpm-config rpm-build rpm-devel rpmlint scl-utils-build ruby-devel rubygems procps python3 k2hash-devel"
 
 	INSTALL_PHP_PRE_ADD_REPO=""
-	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-38.rpm"
+	INSTALL_PHP_REPO="https://rpms.remirepo.net/fedora/remi-release-40.rpm"
 	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD}-php-devel php${PHPVER_NOPERIOD}-scldevel php${PHPVER_NOPERIOD}-build"
 	INSTALL_PHP_OPT=""
 	INSTALL_PHP_POST_CONFIG=""
@@ -402,7 +379,35 @@ elif [ "${CI_OSTYPE}" = "fedora:38" ]; then
 
 	IS_OS_FEDORA=1
 
-elif [ "${CI_OSTYPE}" = "alpine:3.19" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.20"; then
+	DIST_TAG="alpine/v3.20"
+	PKG_EXT="apk"
+	PKG_OUTPUT_DIR="packages"
+
+	INSTALLER_BIN="apk"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG="--no-progress"
+	INSTALL_CMD="add"
+	INSTALL_CMD_ARG="--no-progress --no-cache"
+	INSTALL_AUTO_ARG=""
+	INSTALL_QUIET_ARG="-q"
+	INSTALL_PKG_LIST="bash sudo alpine-sdk util-linux-misc musl-locales ruby-dev procps k2hash-dev"
+
+	INSTALL_PHP_PRE_ADD_REPO=""
+	INSTALL_PHP_REPO=""
+	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD} php${PHPVER_NOPERIOD}-dev"
+	INSTALL_PHP_OPT=""
+	INSTALL_PHP_POST_CONFIG=""
+	INSTALL_PHP_POST_BIN=""
+	SWITCH_PHP_COMMAND=""
+
+	IS_OS_ALPINE=1
+
+	if [ "${PHPVER_NOPERIOD}" != "83" ]; then
+		NOT_PROVIDED_PHPVER=1
+	fi
+
+elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.19"; then
 	DIST_TAG="alpine/v3.19"
 	PKG_EXT="apk"
 	PKG_OUTPUT_DIR="packages"
@@ -430,7 +435,7 @@ elif [ "${CI_OSTYPE}" = "alpine:3.19" ]; then
 		NOT_PROVIDED_PHPVER=1
 	fi
 
-elif [ "${CI_OSTYPE}" = "alpine:3.18" ]; then
+elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.18"; then
 	DIST_TAG="alpine/v3.18"
 	PKG_EXT="apk"
 	PKG_OUTPUT_DIR="packages"

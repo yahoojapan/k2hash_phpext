@@ -3,13 +3,15 @@ Section: php
 Priority: optional
 Maintainer: @DEV_NAME@ <@DEV_EMAIL@>
 Uploaders:  @DEV_NAME@ <@DEV_EMAIL@>
-Build-Depends: debhelper (>= 10~), debhelper-compat (= 11), dh-php (>= 4~), k2hash-dev, php@K2H_PHP_MAJOR_VERSION@.@K2H_PHP_MINOR_VERSION@-dev
+Build-Depends: debhelper (>= 10~), debhelper-compat (= 11), dh-php (>= 4~),
+               php@K2H_PHP_VERSION@-dev, k2hash-dev
 Standards-Version: 4.5.1
 Homepage: @HOME_PAGE@
 Vcs-Git: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@.git
 Vcs-Browser: https://@GIT_DOMAIN@/@GIT_ORG@/@GIT_REPO@
+X-PHP-Versions: @K2H_PHP_VERSION@
 
-Package: php7.4-@PHP_PECL_BASE_NAME@
+Package: php@K2H_PHP_VERSION@-@PHP_PECL_BASE_NAME@
 Architecture: any
 Pre-Depends: php-common (>= 2:69~)
 Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
@@ -18,34 +20,8 @@ Breaks: ${pecl:Breaks}
 Replaces: ${pecl:Replaces}
 Suggests: ${pecl:Suggests}
 Recommends: ${pecl:Recommends}
-Description: k2hash extension for PHP7.4
- This extension adds API for k2hash for PHP7.4.
- This package is a metapackage of @K2H_EXT_PKGNAME@.
-
-Package: php8.0-@PHP_PECL_BASE_NAME@
-Architecture: any
-Pre-Depends: php-common (>= 2:69~)
-Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
-Provides: ${pecl:Provides}, ${php:Provides}
-Breaks: ${pecl:Breaks}
-Replaces: ${pecl:Replaces}
-Suggests: ${pecl:Suggests}
-Recommends: ${pecl:Recommends}
-Description: k2hash extension for PHP8.0
- This extension adds API for k2hash for PHP8.0.
- This package is a metapackage of @K2H_EXT_PKGNAME@.
-
-Package: php8.1-@PHP_PECL_BASE_NAME@
-Architecture: any
-Pre-Depends: php-common (>= 2:69~)
-Depends: ucf, ${misc:Depends}, ${pecl:Depends}, ${shlibs:Depends}, ${php:Depends}
-Provides: ${pecl:Provides}, ${php:Provides}
-Breaks: ${pecl:Breaks}
-Replaces: ${pecl:Replaces}
-Suggests: ${pecl:Suggests}
-Recommends: ${pecl:Recommends}
-Description: k2hash extension for PHP8.1
- This extension adds API for k2hash for PHP8.1.
+Description: k2hash extension for PHP@K2H_PHP_VERSION@
+ This extension adds API for k2hash for PHP@K2H_PHP_VERSION@.
  This package is a metapackage of @K2H_EXT_PKGNAME@.
 
 Package: @K2H_EXT_PKGNAME@
