@@ -26,25 +26,22 @@ K2HASH PHP Extension のパッケージは、[AntPickax packagecloud.io](https:/
 リポジトリは、[こちら](https://packagecloud.io/antpickax/stable/install) の手順に従って簡単に登録できます。  
 リポジトリの登録が終わったら、K2HASH PHP Extension をインストールしてください。
 
+_PHPバージョンは提供されているパッケージに応じたバージョンを指定してください。_
 
-DebianベースのLinuxユーザは、下の手順でインストールできます。
-
+### DebianベースLinuxの利用者は、以下の手順に従ってください。
 ```
 $ sudo apt-get update -y
 
 $ sudo apt-get install curl -y
 $ curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.deb.sh | sudo bash
 
-$ sudo apt-get install -y php8.1 libapache2-mod-php8.1
+$ sudo apt-get install -y php8.4 libapache2-mod-php8.4
 $ sudo update-alternatives --set php-config /usr/bin/php-config8.1
-$ sudo update-alternatives --set php /usr/bin/php8.1
+$ sudo update-alternatives --set php /usr/bin/php8.4
 $ sudo apt-get install -y k2hash php-pecl-k2hash
 ```
 
-
-Fedora派生のRPMベースのLinux(Fedora, CentOS, CentOS Stream, RHELなど)ユーザは、下の手順でインストールできます。
-
-
+#### RPMベースのLinuxの場合は、以下の手順に従ってください。
 ```
 $ sudo dnf update -y
 
@@ -53,10 +50,19 @@ $ curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.r
 $ sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 $ sudo dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 $ sudo dnf module reset php
-$ sudo dnf module install php:remi-8.1
+$ sudo dnf module install php:remi-8.4
 $ sudo dnf install -y php-pecl-k2hash
 ```
 
+#### ALPINEベースのLinuxの場合は、以下の手順に従ってください。
+```
+# apk update
+
+# curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.alpine.sh | sh
+
+# apk add php83 php83-dev php83-tokenizer
+$ apk add php83-pecl-k2hash
+```
 
 ## 2. 実行テスト
 以下のようなファイルを作成し、ファイル作成、キーと値の書き込み、読み出しができるか確認してみてください。  
@@ -78,7 +84,6 @@ $ sudo dnf install -y php-pecl-k2hash
 ?>
 ```
 
-
 ## 3. ロード・実行
 [PHP](https://www.php.net/) の説明に従って、K2HASH PHP Extensionをロードして使ってください。  
 パッケージでK2HASH PHP Extensionをインストールした場合、`k2hash.ini` が含まれており、すぐに利用できます。  
@@ -88,7 +93,6 @@ $ sudo dnf install -y php-pecl-k2hash
 一つ目の例では、値を持ったキーを保存し、それを取得しています。 二つ目の例では、子供のキーを持ったキーを保存し、それを取得しています。  
 
 ### 例 1 - K2hashサンプルコード
-
 ```
 <?php
     // k2hpx_set_debug_level_message();
@@ -110,7 +114,6 @@ $ sudo dnf install -y php-pecl-k2hash
 ```
 string(5) "value"
 ```
-
 
 ### 例 2 - K2hashサンプルコード
 
@@ -141,4 +144,3 @@ array(3) {
   string(7) "subkey3"
 }
 ```
-

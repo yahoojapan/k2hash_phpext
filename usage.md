@@ -26,8 +26,9 @@ First, you register the repository of [AntPickax packagecloud.io](https://packag
 You can easily register the repository by following the steps at [here](https://packagecloud.io/antpickax/stable/install).  
 After registering the repository, install the K2HASH PHP Extension.  
 
-Debian based Linux users can install it by following the steps below:
+_Specify the PHP version according to the package provided._
 
+### For Debian-based Linux distributions users, follow the steps below:
 ```
 $ sudo apt-get update -y
 
@@ -40,9 +41,7 @@ $ sudo update-alternatives --set php /usr/bin/php8.1
 $ sudo apt-get install -y k2hash php-pecl-k2hash
 ```
 
-
-Fedora derived RPM based Linux(Fedora, CentOS, CentOS Stream, RHEL, etc.) users can install it by following the steps below:
-
+### For RPM-based Linux distributions users, follow the steps below:
 ```
 $ sudo dnf update -y
 
@@ -55,6 +54,15 @@ $ sudo dnf module install php:remi-8.1
 $ sudo dnf install -y php-pecl-k2hash
 ```
 
+#### For ALPINE-based Linux distributions users, follow the steps below:
+```
+# apk update
+
+# curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.alpine.sh | sh
+
+# apk add php83 php83-dev php83-tokenizer
+$ apk add php83-pecl-k2hash
+```
 
 ## 2. Test Execution
 Please create the following file and check whether file creation, key and value writing and reading are possible.
@@ -76,7 +84,6 @@ echo "OK";
 ?>
 ```
 
-
 ## 3. Importing and Executing
 Load and use the K2HASH PHP Extension as described in [PHP](https://www.php.net/).  
 If you installed the package, `k2hash.ini` is included in the package and you can use it immediately.  
@@ -86,7 +93,6 @@ Below is an example of PHP source code using some K2HASH PHP Extensions.
 The first example shows how to set a key with a value and get it. The second one shows set a key with a subkey with a value and get it. 
 
 ### Example 1 - Adds a key/value pair
-
 ```
 <?php
     // k2hpx_set_debug_level_message();
@@ -109,9 +115,7 @@ The above example will output something similar to:
 string(5) "value"
 ```
 
-
 ### Example 2 - Adds a key with a subkey
-
 ```
 <?php
     // set subkeys & get subkeys
@@ -139,4 +143,3 @@ array(3) {
   string(7) "subkey3"
 }
 ```
-

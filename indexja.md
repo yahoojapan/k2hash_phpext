@@ -18,7 +18,7 @@ arrow_link_environments: <a href="environmentsja.html" class="link-title"><span 
 **K2HASH PHP Extension** を利用して、**K2HASH**ライブラリが提供するすべての機能を [PHP](https://www.php.net/) から利用できます。  
 **K2HASH PHP Extension** は、Yahoo! JAPANがオープンソースとして公開するプロダクト [AntPickax](https://antpick.ax/indexja.html) のひとつです。  
 
-![k2HASH PHP Extension](images/top_k2hash_pxpext.png)
+![k2HASH PHP Extension](images/top_k2hash_phpext.png)
 
 ## {{ page.arrow_link_overview }}
 **K2HASH PHP Extension** の[概要](homeja.html)について説明します。  
