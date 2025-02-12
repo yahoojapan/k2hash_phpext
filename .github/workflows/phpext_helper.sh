@@ -630,11 +630,11 @@ while [ $# -ne 0 ]; do
 	if [ -z "$1" ]; then
 		break
 
-	elif [ "$1" = "-h" ] || [ "$1" = "-H" ] || [ "$1" = "--help" ] || [ "$1" = "--HELP" ]; then
+	elif echo "$1" | grep -q -i -e "^-h$" -e "^--help$"; then
 		func_usage "${PRGNAME}"
 		exit 0
 
-	elif [ "$1" = "-os" ] || [ "$1" = "-OS" ] || [ "$1" = "--ostype" ] || [ "$1" = "--OSTYPE" ]; then
+	elif echo "$1" | grep -q -i -e "^-os$" -e "^--ostype$"; then
 		if [ -n "${OPT_OSTYPE}" ]; then
 			PRNERR "already set \"--ostype(-os)\" option."
 			exit 1
@@ -646,7 +646,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_OSTYPE="$1"
 
-	elif [ "$1" = "-php" ] || [ "$1" = "-PHP" ] || [ "$1" = "--phptype" ] || [ "$1" = "--PHPTYPE" ]; then
+	elif echo "$1" | grep -q -i -e "^-php$" -e "^--phptype$"; then
 		if [ -n "${OPT_PHPTYPE}" ]; then
 			PRNERR "already set \"--phptype(-php)\" option."
 			exit 1
@@ -658,7 +658,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_PHPTYPE="$1"
 
-	elif [ "$1" = "-f" ] || [ "$1" = "-F" ] || [ "$1" = "--phpexttype-vars-file" ] || [ "$1" = "--PHPEXTTYPE-VARS-FILE" ]; then
+	elif echo "$1" | grep -q -i -e "^-f$" -e "^--phpexttype-vars-file$"; then
 		if [ -n "${OPT_PHPEXTTYPE_VARS_FILE}" ]; then
 			PRNERR "already set \"--phpexttype-vars-file(-f)\" option."
 			exit 1
@@ -674,21 +674,21 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_PHPEXTTYPE_VARS_FILE="$1"
 
-	elif [ "$1" = "-p" ] || [ "$1" = "-P" ] || [ "$1" = "--force-publish" ] || [ "$1" = "--FORCE-PUBLISH" ]; then
+	elif echo "$1" | grep -q -i -e "^-p$" -e "^--force-publish$"; then
 		if [ -n "${OPT_FORCE_PUBLISH}" ]; then
 			PRNERR "already set \"--force-publish(-p)\" or \"--not-publish(-np)\" option."
 			exit 1
 		fi
 		OPT_FORCE_PUBLISH="true"
 
-	elif [ "$1" = "-np" ] || [ "$1" = "-NP" ] || [ "$1" = "--not-publish" ] || [ "$1" = "--NOT-PUBLISH" ]; then
+	elif echo "$1" | grep -q -i -e "^-np$" -e "^--not-publish$"; then
 		if [ -n "${OPT_FORCE_PUBLISH}" ]; then
 			PRNERR "already set \"--force-publish(-p)\" or \"--not-publish(-np)\" option."
 			exit 1
 		fi
 		OPT_FORCE_PUBLISH="false"
 
-	elif [ "$1" = "-num" ] || [ "$1" = "-NUM" ] || [ "$1" = "--build-number" ] || [ "$1" = "--BUILD-NUMBER" ]; then
+	elif echo "$1" | grep -q -i -e "^-num$" -e "^--build-number$"; then
 		if [ -n "${OPT_BUILD_NUMBER}" ]; then
 			PRNERR "already set \"--build-number(-num)\" option."
 			exit 1
@@ -704,7 +704,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_BUILD_NUMBER="$1"
 
-	elif [ "$1" = "-devname" ] || [ "$1" = "-DEVNAME" ] || [ "$1" = "--developer-fullname" ] || [ "$1" = "--DEVELOPER-FULLNAME" ]; then
+	elif echo "$1" | grep -q -i -e "^-devname$" -e "^--developer-fullname$"; then
 		if [ -n "${OPT_DEVELOPER_EMAIL}" ]; then
 			PRNERR "already set \"--developer-fullname(-devname)\" option."
 			exit 1
@@ -716,7 +716,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_DEVELOPER_EMAIL="$1"
 
-	elif [ "$1" = "-devmail" ] || [ "$1" = "-DEVMAIL" ] || [ "$1" = "--developer-email" ] || [ "$1" = "--DEVELOPER-EMAIL" ]; then
+	elif echo "$1" | grep -q -i -e "^-devmail$" -e "^--developer-email$"; then
 		if [ -n "${OPT_DEVELOPER_FULLNAME}" ]; then
 			PRNERR "already set \"--developer-email(-devmail)\" option."
 			exit 1
@@ -728,21 +728,21 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_DEVELOPER_FULLNAME="$1"
 
-	elif [ "$1" = "-usepc" ] || [ "$1" = "-USEPC" ] || [ "$1" = "--use-packagecloudio-repo" ] || [ "$1" = "--USE-PACKAGECLOUDIO-REPO" ]; then
+	elif echo "$1" | grep -q -i -e "^-usepc$" -e "^--use-packagecloudio-repo$"; then
 		if [ -n "${OPT_USE_PACKAGECLOUD_REPO}" ]; then
 			PRNERR "already set \"--use-packagecloudio-repo(-usepc)\" or \"--not-use-packagecloudio-repo(-notpc)\" option."
 			exit 1
 		fi
 		OPT_USE_PACKAGECLOUD_REPO=1
 
-	elif [ "$1" = "-notpc" ] || [ "$1" = "-NOTPC" ] || [ "$1" = "--not-use-packagecloudio-repo" ] || [ "$1" = "--NOT-USE-PACKAGECLOUDIO-REPO" ]; then
+	elif echo "$1" | grep -q -i -e "^-notpc$" -e "^--not-use-packagecloudio-repo$"; then
 		if [ -n "${OPT_USE_PACKAGECLOUD_REPO}" ]; then
 			PRNERR "already set \"--use-packagecloudio-repo(-usepc)\" or \"--not-use-packagecloudio-repo(-notpc)\" option."
 			exit 1
 		fi
 		OPT_USE_PACKAGECLOUD_REPO=0
 
-	elif [ "$1" = "-pctoken" ] || [ "$1" = "-PCTOKEN" ] || [ "$1" = "--packagecloudio-token" ] || [ "$1" = "--PACKAGECLOUDIO-TOKEN" ]; then
+	elif echo "$1" | grep -q -i -e "^-pctoken$" -e "^--packagecloudio-token$"; then
 		if [ -n "${OPT_PACKAGECLOUD_TOKEN}" ]; then
 			PRNERR "already set \"--packagecloudio-token(-pctoken)\" option."
 			exit 1
@@ -754,7 +754,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_PACKAGECLOUD_TOKEN="$1"
 
-	elif [ "$1" = "-pcowner" ] || [ "$1" = "-PCOWNER" ] || [ "$1" = "--packagecloudio-owner" ] || [ "$1" = "--PACKAGECLOUDIO-OWNER" ]; then
+	elif echo "$1" | grep -q -i -e "^-pcowner$" -e "^--packagecloudio-owner$"; then
 		if [ -n "${OPT_PACKAGECLOUD_OWNER}" ]; then
 			PRNERR "already set \"--packagecloudio-owner(-pcowner)\" option."
 			exit 1
@@ -766,7 +766,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_PACKAGECLOUD_OWNER="$1"
 
-	elif [ "$1" = "-pcprepo" ] || [ "$1" = "-PCPREPO" ] || [ "$1" = "--packagecloudio-publish-repo" ] || [ "$1" = "--PACKAGECLOUDIO-PUBLICH-REPO" ]; then
+	elif echo "$1" | grep -q -i -e "^-pcprepo$" -e "^--packagecloudio-publish-repo$"; then
 		if [ -n "${OPT_PACKAGECLOUD_PUBLISH_REPO}" ]; then
 			PRNERR "already set \"--packagecloudio-publish-repo(-pcprepo)\" option."
 			exit 1
@@ -778,7 +778,7 @@ while [ $# -ne 0 ]; do
 		fi
 		OPT_PACKAGECLOUD_PUBLISH_REPO="$1"
 
-	elif [ "$1" = "-pcdlrepo" ] || [ "$1" = "-PCDLREPO" ] || [ "$1" = "--packagecloudio-download-repo" ] || [ "$1" = "--PACKAGECLOUDIO-DOWNLOAD-REPO" ]; then
+	elif echo "$1" | grep -q -i -e "^-pcdlrepo$" -e "^--packagecloudio-download-repo$"; then
 		if [ -n "${OPT_PACKAGECLOUD_DOWNLOAD_REPO}" ]; then
 			PRNERR "already set \"--packagecloudio-download-repo(-pcdlrepo)\" option."
 			exit 1
