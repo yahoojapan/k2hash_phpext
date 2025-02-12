@@ -5,8 +5,9 @@ k2hash php extension
 [![GitHub forks](https://img.shields.io/github/forks/yahoojapan/k2hash_phpext.svg)](https://github.com/yahoojapan/k2hash_phpext/network)
 [![GitHub stars](https://img.shields.io/github/stars/yahoojapan/k2hash_phpext.svg)](https://github.com/yahoojapan/k2hash_phpext/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/yahoojapan/k2hash_phpext.svg)](https://github.com/yahoojapan/k2hash_phpext/issues)
-[![debian packages](https://img.shields.io/badge/deb-packagecloud.io-844fec.svg)](https://packagecloud.io/antpickax/stable)
 [![RPM packages](https://img.shields.io/badge/rpm-packagecloud.io-844fec.svg)](https://packagecloud.io/antpickax/stable)
+[![debian packages](https://img.shields.io/badge/deb-packagecloud.io-844fec.svg)](https://packagecloud.io/antpickax/stable)
+[![ALPINE packages](https://img.shields.io/badge/apk-packagecloud.io-844fec.svg)](https://packagecloud.io/antpickax/stable)
 
 - K2HASH PHP Extension library  
 K2HASH is NoSQL Key Value Store(KVS) library by Yahoo! JAPAN.
@@ -33,9 +34,9 @@ $ sudo apt-get update -y
 $ sudo apt-get install curl -y
 $ curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.deb.sh | sudo bash
 
-$ sudo apt-get install -y php8.3 libapache2-mod-php8.3
-$ sudo update-alternatives --set php-config /usr/bin/php-config8.3
-$ sudo update-alternatives --set php /usr/bin/php8.3
+$ sudo apt-get install -y php8.4 libapache2-mod-php8.4
+$ sudo update-alternatives --set php-config /usr/bin/php-config8.4
+$ sudo update-alternatives --set php /usr/bin/php8.4
 $ sudo apt-get install -y k2hash php-pecl-k2hash
 ```
 - Fedora derived RPM based Linux(Fedora, CentOS, CentOS Stream, RHEL, etc.) users can install it by following the steps below:
@@ -47,8 +48,17 @@ $ curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.r
 $ sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 $ sudo dnf install https://rpms.remirepo.net/enterprise/remi-release-9.rpm
 $ sudo dnf module reset php
-$ sudo dnf module install php:remi-8.3
+$ sudo dnf module install php:remi-8.4
 $ sudo dnf install -y php-pecl-k2hash
+```
+- ALPINE based Linux users can install it by following the steps below:
+```
+# apk update
+
+# curl -s https://packagecloud.io/install/repositories/antpickax/stable/script.alpine.sh | sh
+
+# apk add php84 php84-dev php84-tokenizer
+$ apk add php84-pecl-k2hash
 ```
 
 ### Documents
@@ -58,8 +68,9 @@ $ sudo dnf install -y php-pecl-k2hash
 - [About AntPickax](https://antpick.ax/)
 
 ### Packages
-- [RPM packages(packagecloud.io)](https://packagecloud.io/antpickax/stable)
-- [Debian packages(packagecloud.io)](https://packagecloud.io/antpickax/stable)
+- [RPM packages(packagecloud.io)](https://packagecloud.io/app/antpickax/stable/search?q=php&filter=rpm&filter=rpm&dist=&arch=)
+- [Debian packages(packagecloud.io)](https://packagecloud.io/app/antpickax/stable/search?q=php&filter=deb&dist=&arch=)
+- [ALPINE packages(packagecloud.io)](https://packagecloud.io/app/antpickax/stable/search?q=php&filter=alpine&dist=&arch=)
 
 ### License
 This software is released under the MIT License, see the license file.

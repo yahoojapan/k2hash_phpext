@@ -173,18 +173,18 @@ while [ $# -ne 0 ]; do
 	if [ -z "$1" ]; then
 		break
 
-	elif [ "$1" = "-h" ] || [ "$1" = "-H" ] || [ "$1" = "--help" ] || [ "$1" = "--HELP" ]; then
+	elif echo "$1" | grep -q -i -e "^-h$" -e "^--help$"; then
 		func_usage "${PRGNAME}"
 		exit 0
 
-	elif [ "$1" = "-c" ] || [ "$1" = "-C" ] || [ "$1" = "--clean" ] || [ "$1" = "--CLEAN" ]; then
+	elif echo "$1" | grep -q -i -e "^-c$" -e "^--clean$"; then
 		if [ "${IS_CLEAN}" -ne 0 ]; then
 			PRNERR "Already --clean(-c) option is specified."
 			exit 1
 		fi
 		IS_CLEAN=1
 
-	elif [ "$1" = "-b" ] || [ "$1" = "-B" ] || [ "$1" = "--buildnum" ] || [ "$1" = "--BUILDNUM" ]; then
+	elif echo "$1" | grep -q -i -e "^-b$" -e "^--buildnum$"; then
 		if [ "${BUILD_NUMBER}" -ne 0 ]; then
 			PRNERR "Already --buildnum(-b) option is specified(${BUILD_NUMBER})."
 			exit 1
@@ -204,7 +204,7 @@ while [ $# -ne 0 ]; do
 		fi
 		BUILD_NUMBER="$1"
 
-	elif [ "$1" = "-y" ] || [ "$1" = "-Y" ] || [ "$1" = "--yes" ] || [ "$1" = "--YES" ]; then
+	elif echo "$1" | grep -q -i -e "^-y$" -e "^--yes$"; then
 		if [ "${NO_INTERACTIVE}" -ne 0 ]; then
 			PRNERR "Already --yes(-y) option is specified."
 			exit 1
@@ -244,9 +244,9 @@ if [ "${NO_INTERACTIVE}" -eq 0 ] && [ "${IS_CLEAN}" -ne 1 ]; then
 		printf '[INPUT] Confirm (y/n) : '
 		read -r CONFIRM
 
-		if [ "${CONFIRM}" = "y" ] || [ "${CONFIRM}" = "Y" ] || [ "${CONFIRM}" = "yes" ] || [ "${CONFIRM}" = "YES" ]; then
+		if echo "${CONFIRM}" | grep -q -i -e "^y$" -e "^yes$"; then
 			IS_CONFIRMED=1
-		elif [ "${CONFIRM}" = "n" ] || [ "${CONFIRM}" = "N" ] || [ "${CONFIRM}" = "no" ] || [ "${CONFIRM}" = "NO" ]; then
+		elif echo "${CONFIRM}" | grep -q -i -e "^n$" -e "^no$"; then
 			PRNINFO "Interrupt this processing, bye..."
 			exit 0
 		fi

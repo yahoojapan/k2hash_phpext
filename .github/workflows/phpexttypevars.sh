@@ -149,6 +149,10 @@ elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.2" -e "PHP82" -e "8.2" -e "82"; 
 elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.3" -e "PHP83" -e "8.3" -e "83"; then
 	PHPVER_NOPERIOD="83"
 	PHPVER_WITHPERIOD="8.3"
+
+elif echo "${CI_PHPTYPE}" | grep -q -i -e "PHP8.4" -e "PHP84" -e "8.4" -e "84"; then
+	PHPVER_NOPERIOD="84"
+	PHPVER_WITHPERIOD="8.4"
 fi
 
 #
@@ -186,30 +190,6 @@ elif echo "${CI_OSTYPE}" | grep -q -i -e "ubuntu:24.04" -e "ubuntu:noble"; then
 
 elif echo "${CI_OSTYPE}" | grep -q -i -e "ubuntu:22.04" -e "ubuntu:jammy"; then
 	DIST_TAG="ubuntu/jammy"
-	PKG_EXT="deb"
-	PKG_OUTPUT_DIR="packages"
-
-	INSTALLER_BIN="apt-get"
-	UPDATE_CMD="update"
-	UPDATE_CMD_ARG=""
-	INSTALL_CMD="install"
-	INSTALL_CMD_ARG=""
-	INSTALL_AUTO_ARG="-y"
-	INSTALL_QUIET_ARG="-qq"
-	INSTALL_PKG_LIST="git lintian debhelper pkg-config ruby-dev rubygems rubygems-integration procps shtool k2hash-dev"
-
-	INSTALL_PHP_PRE_ADD_REPO="ca-certificates apt-transport-https software-properties-common"
-	INSTALL_PHP_REPO="ppa:ondrej/php"
-	INSTALL_PHP_PKG_LIST="dh-php php${PHPVER_WITHPERIOD} php${PHPVER_WITHPERIOD}-dev libapache2-mod-php${PHPVER_WITHPERIOD}"
-	INSTALL_PHP_OPT=""
-	INSTALL_PHP_POST_CONFIG="update-alternatives --set php-config /usr/bin/php-config${PHPVER_WITHPERIOD}"
-	INSTALL_PHP_POST_BIN="update-alternatives --set php /usr/bin/php${PHPVER_WITHPERIOD}"
-	SWITCH_PHP_COMMAND=""
-
-	IS_OS_UBUNTU=1
-
-elif echo "${CI_OSTYPE}" | grep -q -i -e "ubuntu:20.04" -e "ubuntu:focal"; then
-	DIST_TAG="ubuntu/focal"
 	PKG_EXT="deb"
 	PKG_OUTPUT_DIR="packages"
 
@@ -378,6 +358,38 @@ elif echo "${CI_OSTYPE}" | grep -q -i "fedora:40"; then
 	SWITCH_PHP_COMMAND="scl enable php${PHPVER_NOPERIOD} --"
 
 	IS_OS_FEDORA=1
+
+elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.21"; then
+	DIST_TAG="alpine/v3.21"
+	PKG_EXT="apk"
+	PKG_OUTPUT_DIR="packages"
+
+	INSTALLER_BIN="apk"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG="--no-progress"
+	INSTALL_CMD="add"
+	INSTALL_CMD_ARG="--no-progress --no-cache"
+	INSTALL_AUTO_ARG=""
+	INSTALL_QUIET_ARG="-q"
+	INSTALL_PKG_LIST="bash sudo alpine-sdk util-linux-misc musl-locales ruby-dev procps k2hash-dev"
+
+	INSTALL_PHP_PRE_ADD_REPO=""
+	INSTALL_PHP_REPO=""
+	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD} php${PHPVER_NOPERIOD}-dev"
+	INSTALL_PHP_OPT=""
+	INSTALL_PHP_POST_CONFIG=""
+	INSTALL_PHP_POST_BIN=""
+	SWITCH_PHP_COMMAND=""
+
+	IS_OS_ALPINE=1
+
+	# [FIXME]
+	# We want to use PHP8.4 for ALPINE3.21, but phpize is not included in php84-dev.
+	# Therefore, at the moment (February 2025), we will use PHP8.3.
+	#
+	if [ "${PHPVER_NOPERIOD}" != "83" ]; then
+		NOT_PROVIDED_PHPVER=1
+	fi
 
 elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.20"; then
 	DIST_TAG="alpine/v3.20"
