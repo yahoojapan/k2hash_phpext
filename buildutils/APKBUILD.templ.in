@@ -36,6 +36,7 @@ _package_version=%%PACKAGE_VERSION%%
 _package_revision=%%BUILD_NUMBER%%
 _package_phpver=%%PACKAGE_PHPVERSION%%
 _package_desc="%%PACKAGE_DESC%%"
+_configure_option=%%CONFIGUREOPT%%
 _source_archive_url=%%SOURCE_ARCHIVE_URL%%
 
 #---------------------------------------------------------------
@@ -100,8 +101,44 @@ unpack() {
 }
 
 build() {
-	phpize
-	./configure --prefix=/usr
+	# [NOTE]
+	# In alpine3.21/3.22, phpize does not exist, and instead phpize84
+	# exists.
+	#
+	if ! _phpize_cmd=$(command -v phpize); then
+		if ! _phpize_cmd=$(command -v phpize84); then
+			if ! _phpize_cmd=$(command -v phpize83); then
+				if ! _phpize_cmd=$(command -v phpize82); then
+					_phpize_cmd="phpize"
+				fi
+			fi
+		fi
+	fi
+
+	# [NOTE]
+	# If _configure_option is specified, it will be used.
+	# If not, the option for setting the php-config path will be checked
+	# and set here. Because, in alpine3.21/3.22, php-config does not exist,
+	# and instead php-config84.
+	#
+	if [ -z "$_configure_option" ]; then
+		if ! _phpconfig_cmd=$(command -v php-config); then
+			if _phpconfig_cmd=$(command -v php-config84); then
+				_php_config_opt="--with-php-config=$_phpconfig_cmd"
+			else
+				if _phpconfig_cmd=$(command -v php-config83); then
+					_php_config_opt="--with-php-config=$_phpconfig_cmd"
+				else
+					if _phpconfig_cmd=$(command -v php-config82); then
+						_php_config_opt="--with-php-config=$_phpconfig_cmd"
+					fi
+				fi
+			fi
+		fi
+	fi
+
+	$_phpize_cmd
+	./configure --prefix=/usr $_configure_option
 	make
 }
 

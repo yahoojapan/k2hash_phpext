@@ -94,6 +94,13 @@ func_usage()
 	echo "        --buildnum(-b) <build number>  specify build number for packaging(default 1)"
 	echo "        --yes(-y)                      runs no interactive mode."
 	echo ""
+	echo "Environment:"
+	echo "        DEBEMAIL                       Use this value to create an RSA key."
+	echo "        DEBFULLNAME                    Use this value to create an RSA key."
+	echo "        GITHUB_REF_TYPE                Github Actions CI sets \"branch\" or \"tag\"."
+	echo "        ABUILD_OPT                     abuild common option for running as root user."
+	echo "        CONFIGUREOPT                   specify options when running configure."
+	echo ""
 	echo "Note:   about <build number>"
 	echo "        Specify a number starting from 1, just like other OS builds."
 	echo "        However, ALPINE packages are 0-based, so the specified \"<build number> - 1\""
@@ -291,12 +298,15 @@ PRNTITLE "Get package information"
 #						  Unset and otherwise("branch") indicate that the call was
 #						  not made by the release process.
 #	ABUILD_OPT			: abuild common option for running as root user.
+#	CONFIGUREOPT		: Parameters passed to configure.
+#						  This variable is automatically passed when invoking this
+#						  script.
 #
 PRNINFO "Check Environments and variables"
 
 if [ -z "${DEBEMAIL}" ]; then
-	PRNWARN "DEBEMAIL environment is not set, so set default \"${USER}@$(hostname)\""
-	DEBEMAIL="${USER}@$(hostname)"
+	PRNWARN "DEBEMAIL environment is not set, so set default \"${USER}@$(hostname -f)\""
+	DEBEMAIL="${USER}@$(hostname -f)"
 fi
 
 if [ -z "${DEBFULLNAME}" ]; then
@@ -344,11 +354,48 @@ fi
 #--------------------------------------------------------------
 PRNINFO "Check package name and version"
 
+# [NOTE]
+# Some OS only have the phpizeXX command instead of phpize, so we'll check here.
+# ex) Alpine 3.22/3.21 only has php84/phpize84/php-config84.
+#
+if ! PHPBIN=$(command -v php); then
+	if ! PHPBIN=$(command -v php84); then
+		if ! PHPBIN=$(command -v php83); then
+			if ! PHPBIN=$(command -v php82); then
+				PRNERR "Not found \"php\" or \"phpXX\" command."
+				return 1
+			fi
+		fi
+	fi
+fi
+
+if ! PHPIZECMD=$(command -v phpize); then
+	if ! PHPIZECMD=$(command -v phpize84); then
+		if ! PHPIZECMD=$(command -v phpize83); then
+			if ! PHPIZECMD=$(command -v phpize82); then
+				PRNERR "Not found \"phpize\" or \"phpizeXX\" command."
+				return 1
+			fi
+		fi
+	fi
+fi
+if ! PHPCONFIGCMD=$(command -v php-config); then
+	if ! PHPCONFIGCMD=$(command -v php-config84); then
+		if ! PHPCONFIGCMD=$(command -v php-config83); then
+			if ! PHPCONFIGCMD=$(command -v php-config82); then
+				PRNERR "Not found \"php-config\" or \"php-configXX\" command."
+				return 1
+			fi
+		fi
+	fi
+fi
+PHPCONFIG_CONFIGURE_OPT="--with-php-config=${PHPCONFIGCMD}"
+
 PACKAGE_NAME=$(head -n 1 "${SRCTOP}"/ChangeLog | awk '{print $1}' | tr -d '\n')
 PACKAGE_VERSION=$(head -n 1 "${SRCTOP}"/ChangeLog | sed -e 's/[(]//g' -e 's/[)]//g' | awk '{print $2}' | sed -e 's/-.*$//g' | tr -d '\n')
 
-PACKAGE_PHPMAJORVERSION=$(php -r 'echo PHP_MAJOR_VERSION;')
-PACKAGE_PHPMINORVERSION=$(php -r 'echo PHP_MINOR_VERSION;')
+PACKAGE_PHPMAJORVERSION=$("${PHPBIN}" -r 'echo PHP_MAJOR_VERSION;')
+PACKAGE_PHPMINORVERSION=$("${PHPBIN}" -r 'echo PHP_MINOR_VERSION;')
 
 if [ "${PACKAGE_PHPMAJORVERSION}" = "8" ] && [ "${PACKAGE_PHPMINORVERSION}" = "0" ]; then
 	#
@@ -382,6 +429,9 @@ echo "    PACKAGE DESCRIPTION = ${PACKAGE_DESC}"
 echo "    PACKAGE VERSION     = ${PACKAGE_VERSION}"
 echo "    BUILD NUMBER        = ${BUILD_NUMBER}"
 echo "    PHP VERSION         = ${PACKAGE_PHPVERSION}"
+echo "    PHP BINARY          = ${PHPBIN}"
+echo "    PHPIZE              = ${PHPIZECMD}"
+echo "    PHP CONFIG          = ${PHPCONFIGCMD}"
 echo ""
 echo "    APK_TOPDIR          = ${APK_TOPDIR}"
 echo "    NO_INTERACTIVE      = ${NO_INTERACTIVE}"
@@ -390,6 +440,7 @@ echo "    GITHUB_REF_TYPE     = ${GITHUB_REF_TYPE}"
 echo "    SOURCE_ARCHIVE_URL  = ${SOURCE_ARCHIVE_URL}"
 echo "    BUILD_NUMBER        = ${BUILD_NUMBER}"
 echo "    ABUILD_OPT          = ${ABUILD_OPT}"
+echo "    CONFIGUREOPT        = ${CONFIGUREOPT}"
 echo ""
 
 PRNSUCCESS "Got package information"
@@ -422,16 +473,16 @@ fi
 #--------------------------------------------------------------
 PRNTITLE "Run phpize"
 
-if ! phpize; then
-	PRNERR "Failed to run phpize."
+if ! "${PHPIZECMD}"; then
+	PRNERR "Failed to run ${PHPIZECMD}."
 	exit 1
 fi
 PRNSUCCESS "phpize done"
 
 PRNTITLE "Run configure"
 
-if ! ./configure; then
-	PRNERR "Failed to run configure."
+if ! ./configure "${PHPCONFIG_CONFIGURE_OPT}"; then
+	PRNERR "Failed to run \"configure ${PHPCONFIG_CONFIGURE_OPT}\""
 	exit 1
 fi
 PRNSUCCESS "configure done"
@@ -650,6 +701,7 @@ PRNINFO "Create APKBUILD file from template"
 if ! sed -e "s#%%PACKAGE_PHPVER_NAME%%#${PACKAGE_PHPVER_NAME}#g"							\
 		-e "s#%%PACKAGE_VERSION%%#${PACKAGE_VERSION}#g"										\
 		-e "s#%%BUILD_NUMBER%%#${BUILD_NUMBER}#g"											\
+		-e "s#%%CONFIGUREOPT%%#${CONFIGUREOPT}#g"											\
 		-e "s#%%PACKAGE_DESC%%#${PACKAGE_DESC}#g"											\
 		-e "s#%%PACKAGE_PHPVERSION%%#${PACKAGE_PHPVERSION}#g"								\
 		-e "s#%%SOURCE_ARCHIVE_URL%%#${SOURCE_ARCHIVE_SEPARATOR}${SOURCE_ARCHIVE_URL}#g"	\

@@ -261,8 +261,27 @@ run_pre_configuration()
 		return 1
 	fi
 
-	if ! /bin/sh -c "${SWITCH_PHP_COMMAND} phpize"; then
-		PRNERR "Failed to run \"phpize\" before configration."
+	# [NOTE]
+	# Some OS only have the phpizeXX command instead of phpize, so we'll check here.
+	# ex) Alpine 3.22/3.21 only has phpize84.
+	#
+	PIPIZECMD="phpize"
+	if ! /bin/sh -c "${SWITCH_PHP_COMMAND} command -v ${PIPIZECMD} >/dev/null 2>&1"; then
+		PIPIZECMD="phpize84"
+		if ! /bin/sh -c "${SWITCH_PHP_COMMAND} command -v ${PIPIZECMD} >/dev/null 2>&1"; then
+			PIPIZECMD="phpize83"
+			if ! /bin/sh -c "${SWITCH_PHP_COMMAND} command -v ${PIPIZECMD} >/dev/null 2>&1"; then
+				PIPIZECMD="phpize82"
+				if ! /bin/sh -c "${SWITCH_PHP_COMMAND} command -v ${PIPIZECMD} >/dev/null 2>&1"; then
+					PRNERR "Not found \"phpize\" or \"phpizeXX\" command."
+					return 1
+				fi
+			fi
+		fi
+	fi
+
+	if ! /bin/sh -c "${SWITCH_PHP_COMMAND} ${PIPIZECMD}"; then
+		PRNERR "Failed to run \"${PIPIZECMD}\" before configration."
 		return 1
 	fi
 	return 0
@@ -273,7 +292,31 @@ run_pre_configuration()
 #
 run_configuration()
 {
-	if ! /bin/sh -c "${SWITCH_PHP_COMMAND} ./configure"; then
+	# [NOTE]
+	# Some OS only have the phpizeXX command instead of phpize, so we'll check here.
+	# ex) Alpine 3.22/3.21 only has php-config84.
+	#
+	if PHPCONFIGCMD=$(/bin/sh -c "${SWITCH_PHP_COMMAND} command -v php-config"); then
+		# default
+		CONFIGURE_PHP_EXT_OPT=""
+	else
+		if PHPCONFIGCMD=$(/bin/sh -c "${SWITCH_PHP_COMMAND} command -v php-config84"); then
+			CONFIGURE_PHP_EXT_OPT="--with-php-config=${PHPCONFIGCMD}"
+		else
+			if PHPCONFIGCMD=$(/bin/sh -c "${SWITCH_PHP_COMMAND} command -v php-config83"); then
+				CONFIGURE_PHP_EXT_OPT="--with-php-config=${PHPCONFIGCMD}"
+			else
+				if PHPCONFIGCMD=$(/bin/sh -c "${SWITCH_PHP_COMMAND} command -v php-config82"); then
+					CONFIGURE_PHP_EXT_OPT="--with-php-config=${PHPCONFIGCMD}"
+				else
+					PRNWARN "Not found \"php-config\" or \"php-configXX\" command, so do not specify \"--with-php-config\" option."
+					CONFIGURE_PHP_EXT_OPT=""
+				fi
+			fi
+		fi
+	fi
+
+	if ! /bin/sh -c "${SWITCH_PHP_COMMAND} ./configure ${CONFIGURE_PHP_EXT_OPT}"; then
 		PRNERR "Failed to run \"configure\"."
 		return 1
 	fi
@@ -557,47 +600,9 @@ run_publish_package()
 			PRNERR "Token for uploading to packagecloud.io is not specified."
 			return 1
 		fi
-
-		# [NOTE]
-		# The Ruby environment of some OS uses RVM (Ruby Version Manager) and requires a Bash shell environment.
-		#
-		if [ "${IS_OS_DEBIAN}" -eq 1 ] && echo "${CI_OSTYPE}" | sed -e 's#:##g' | grep -q -i -e 'debian10' -e 'debianbuster'; then
-			#
-			# Case for Debian 10(buster)
-			#
-			{
-				#
-				# Create bash script for run package_cloud command, because using RVM(Ruby Version Manager).
-				#
-				echo '#!/bin/bash'
-				echo ''
-				echo 'source /etc/profile.d/rvm.sh'
-				echo ''
-				echo 'if ! '"PACKAGECLOUD_TOKEN=${CI_PACKAGECLOUD_TOKEN} package_cloud push ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG} ${SRCTOP}/${PKG_OUTPUT_DIR}/*.${PKG_EXT}; then"
-				echo '	exit 1'
-				echo 'fi'
-				echo ''
-				echo 'exit 0'
-			} > /tmp/run_package_cloud.sh
-			chmod +x /tmp/run_package_cloud.sh
-
-			#
-			# Run bash script
-			#
-			if ({ RUNCMD /tmp/run_package_cloud.sh || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
-				PRNERR "Failed to publish *.${PKG_EXT} packages to ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG}"
-				rm -f /tmp/run_package_cloud.sh
-				return 1
-			fi
-			rm -f /tmp/run_package_cloud.sh
-		else
-			#
-			# Case for other than Debian 10(buster)
-			#
-			if ! PACKAGECLOUD_TOKEN="${CI_PACKAGECLOUD_TOKEN}" /bin/sh -c "package_cloud push ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG} ${SRCTOP}/${PKG_OUTPUT_DIR}/*.${PKG_EXT}"; then
-				PRNERR "Failed to publish *.${PKG_EXT} packages to ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG}"
-				return 1
-			fi
+		if ! PACKAGECLOUD_TOKEN="${CI_PACKAGECLOUD_TOKEN}" /bin/sh -c "package_cloud push ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG} ${SRCTOP}/${PKG_OUTPUT_DIR}/*.${PKG_EXT}"; then
+			PRNERR "Failed to publish *.${PKG_EXT} packages to ${CI_PACKAGECLOUD_OWNER}/${CI_PACKAGECLOUD_PUBLISH_REPO}/${DIST_TAG}"
+			return 1
 		fi
 	else
 		PRNINFO "Not need to publish packages"
@@ -862,7 +867,7 @@ else
 	fi
 	if [ -z "${CI_DEVELOPER_EMAIL}" ]; then
 		PRNWARN "DEVELOPER_EMAIL is not set in the options or environment variables. There is no choice but to set the default value."
-		CI_DEVELOPER_EMAIL="antpickax-support@mail.yahoo.co.jp"
+		CI_DEVELOPER_EMAIL="ml-antpickax-support@lycorp.co.jp"
 	fi
 fi
 
@@ -1485,95 +1490,9 @@ if [ "${CI_DO_PUBLISH}" -eq 1 ]; then
 			exit 1
 		fi
 
-	elif [ "${IS_OS_DEBIAN}" -eq 1 ] && echo "${CI_OSTYPE}" | sed -e 's#:##g' | grep -q -i -e 'debian10' -e 'debianbuster'; then
-		#
-		# Case for Debian 10/buster (default ruby 2.5)
-		#
-
-		#
-		# Set RVM(Ruby Version Manager) and install Ruby 2.7 and package_cloud
-		#
-		# [NOTE]
-		# Install Ruby2.7 using RVM tools.
-		# Installation and running RVM tools must be done in Bash.
-		# This set of installations will create a Bash script and run it.
-		#
-		# The script does the following:
-		# First, we need to install the GPG key before installing RVM.
-		# This is done with one of the following commands:
-		#
-		#	sudo gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-		#		or
-		#	command curl -sSL https://rvm.io/mpapis.asc | sudo gpg --import -
-		#	command curl -sSL https://rvm.io/pkuczynski.asc | sudo gpg --import -
-		#
-		# After that, install RVM installation, RVM environment settings, Ruby2.7 installation, and package_cloud tools.
-		#
-		# [NOTE]
-		# The RVM installation requires running from a bash shell.
-		# So create a Bash script and run it.
-		{
-			echo '#!/bin/bash'
-			echo ''
-			echo 'if ! curl -sSL https://rvm.io/mpapis.asc | gpg --import - 2>&1; then'
-			echo '	echo "Failed to run [ curl -sSL https://rvm.io/mpapis.asc | gpg --import - ] command."'
-			echo '	exit 1'
-			echo 'fi'
-			echo 'if ! curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - 2>&1; then'
-			echo '	echo "Failed to run [ curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - ] command."'
-			echo '	exit 1'
-			echo 'fi'
-			echo ''
-			echo 'if ! curl -sSL https://get.rvm.io | bash -s stable --ruby 2>&1; then'
-			echo '	echo "Failed to install RVM tool."'
-			echo '	exit 1'
-			echo 'fi'
-			echo ''
-			echo 'if [ ! -f /etc/profile.d/rvm.sh ]; then'
-			echo '	echo "Not found /etc/profile.d/rvm.sh file."'
-			echo '	exit 1'
-			echo 'fi'
-			echo 'source /etc/profile.d/rvm.sh'
-			echo ''
-			echo 'if ! rvm get stable --autolibs=enable 2>&1; then'
-			echo '	echo "Failed to get/update RVM stable."'
-			echo '	exit 1'
-			echo 'fi'
-			echo 'if ! usermod -a -G rvm root 2>&1; then'
-			echo '	echo "Failed to add rvm user to root group."'
-			echo '	exit 1'
-			echo 'fi'
-			echo 'if ! rvm install ruby-2.7 2>&1; then'
-			echo '	echo "Failed to install ruby 2.7."'
-			echo '	exit 1'
-			echo 'fi'
-			echo 'if ! rvm --default use ruby-2.7 2>&1; then'
-			echo '	echo "Failed to set ruby 2.7 as default."'
-			echo '	exit 1'
-			echo 'fi'
-			echo ''
-			echo 'if ! '"${GEM_BIN} ${GEM_INSTALL_CMD} package_cloud 2>&1; then"
-			echo '	echo "Failed to install packagecloud.io upload tools"'
-			echo '	exit 1'
-			echo 'fi'
-			echo ''
-			echo 'exit 0'
-		} > /tmp/rvm_setup.sh
-		chmod +x /tmp/rvm_setup.sh
-
-		#
-		# Run bash script
-		#
-		if ({ RUNCMD /tmp/rvm_setup.sh || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
-			PRNERR "Failed to set up RVM."
-			rm -f /tmp/rvm_setup.sh
-			exit 1
-		fi
-		rm -f /tmp/rvm_setup.sh
-
 	else
 		#
-		# Case for other than Alpine / Debian 10 / Rocky Linux 8
+		# Case for other than Alpine / Rocky Linux 8
 		#
 		if ({ RUNCMD "${GEM_BIN}" "${GEM_INSTALL_CMD}" rake package_cloud || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 			PRNERR "Failed to install packagecloud.io upload tools"
@@ -1619,11 +1538,23 @@ if [ "${RUN_CPPCHECK}" -eq 1 ]; then
 				PRNERR "Failed to enable powertools"
 				exit 1
 			fi
-		else
+		elif echo "${CI_OSTYPE}" | sed -e 's#:##g' | grep -q -i 'rockylinux9'; then
 			#
-			# Rocky 9 or later
+			# Rocky 9
 			#
 			if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+				PRNERR "Failed to install epel repository"
+				exit 1
+			fi
+			if ({ RUNCMD "${INSTALLER_BIN}" config-manager --enable epel || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
+				PRNERR "Failed to enable epel repository"
+				exit 1
+			fi
+		else
+			#
+			# Rocky 10 or later
+			#
+			if ({ RUNCMD "${INSTALLER_BIN}" "${INSTALL_CMD}" "${INSTALL_CMD_ARG}" "${INSTALL_AUTO_ARG}" https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm || echo > "${PIPEFAILURE_FILE}"; } | sed -e 's/^/    /g') && rm "${PIPEFAILURE_FILE}" >/dev/null 2>&1; then
 				PRNERR "Failed to install epel repository"
 				exit 1
 			fi
