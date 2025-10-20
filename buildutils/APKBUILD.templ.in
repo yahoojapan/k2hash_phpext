@@ -123,17 +123,16 @@ build() {
 	#
 	if [ -z "$_configure_option" ]; then
 		if ! _phpconfig_cmd=$(command -v php-config); then
-			if _phpconfig_cmd=$(command -v php-config84); then
-				_php_config_opt="--with-php-config=$_phpconfig_cmd"
-			else
-				if _phpconfig_cmd=$(command -v php-config83); then
-					_php_config_opt="--with-php-config=$_phpconfig_cmd"
-				else
-					if _phpconfig_cmd=$(command -v php-config82); then
-						_php_config_opt="--with-php-config=$_phpconfig_cmd"
+			if ! _phpconfig_cmd=$(command -v php-config84); then
+				if ! _phpconfig_cmd=$(command -v php-config83); then
+					if ! _phpconfig_cmd=$(command -v php-config82); then
+						_phpconfig_cmd=""
 					fi
 				fi
 			fi
+		fi
+		if [ -n "$_phpconfig_cmd" ]; then
+			_configure_option="--with-php-config=$_phpconfig_cmd"
 		fi
 	fi
 
