@@ -432,6 +432,30 @@ elif echo "${CI_OSTYPE}" | grep -q -i "fedora:43"; then
 
 	IS_OS_FEDORA=1
 
+elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.24"; then
+	DIST_TAG="alpine/v3.24"
+	PKG_EXT="apk"
+	PKG_OUTPUT_DIR="packages"
+
+	INSTALLER_BIN="apk"
+	UPDATE_CMD="update"
+	UPDATE_CMD_ARG="--no-progress"
+	INSTALL_CMD="add"
+	INSTALL_CMD_ARG="--no-progress --no-cache"
+	INSTALL_AUTO_ARG=""
+	INSTALL_QUIET_ARG="-q"
+	INSTALL_PKG_LIST="bash sudo alpine-sdk util-linux-misc musl-locales ruby-dev procps k2hash-dev"
+
+	INSTALL_PHP_PRE_ADD_REPO=""
+	INSTALL_PHP_REPO=""
+	INSTALL_PHP_PKG_LIST="php${PHPVER_NOPERIOD} php${PHPVER_NOPERIOD}-dev"
+	INSTALL_PHP_OPT=""
+	INSTALL_PHP_POST_CONFIG=""
+	INSTALL_PHP_POST_BIN=""
+	SWITCH_PHP_COMMAND=""
+
+	IS_OS_ALPINE=1
+
 elif echo "${CI_OSTYPE}" | grep -q -i "alpine:3.23"; then
 	DIST_TAG="alpine/v3.23"
 	PKG_EXT="apk"
